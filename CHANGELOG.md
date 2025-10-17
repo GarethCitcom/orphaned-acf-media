@@ -5,6 +5,20 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-10-18
+
+### Fixed
+- **Critical Oxygen Builder 6 Detection**: Added proper support for Breakdance-based Oxygen Builder 6 meta fields
+- **Enhanced Meta Field Support**: Now checks _breakdance_data, breakdance_data, _breakdance_tree_json, and _breakdance_css
+- **Improved Template Detection**: Added support for breakdance_template, breakdance_block, breakdance_header, and breakdance_footer post types
+- **Better CSS Detection**: Enhanced detection of Breakdance compiled CSS and cache files
+- **Plugin Recognition**: Improved detection of both classic Oxygen Builder and Breakdance-based Oxygen Builder 6
+
+### Improved
+- **Dual Version Support**: Maintains backward compatibility with classic Oxygen Builder while adding full v6 support
+- **Enhanced Safety Coverage**: More comprehensive detection of media usage in Oxygen Builder 6 environments
+- **Better Page Builder Support**: Enhanced integration with modern page builder architectures
+
 ## [1.2.0] - 2025-10-17
 
 ### Added

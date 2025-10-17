@@ -4,7 +4,7 @@ Tags: media, cleanup, acf, advanced-custom-fields, attachments, orphaned, optimi
 Requires at least: 5.0
 Tested up to: 6.8.3
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -191,6 +191,17 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 
 == Changelog ==
 
+= 1.2.1 - 2025-10-18 =
+
+**Critical Fix: Enhanced Oxygen Builder 6 Detection**
+
+* 🔧 **Fixed Oxygen Builder 6 Detection**: Added proper support for Breakdance-based Oxygen Builder 6 meta fields
+* ✅ **New Meta Field Support**: Now checks _breakdance_data, breakdance_data, _breakdance_tree_json, and _breakdance_css
+* ✅ **Enhanced Template Detection**: Added support for breakdance_template, breakdance_block, breakdance_header, and breakdance_footer post types
+* ✅ **Improved CSS Detection**: Enhanced detection of Breakdance compiled CSS and cache files
+* ✅ **Dual Version Support**: Maintains backward compatibility with classic Oxygen Builder while adding full v6 support
+* ✅ **Better Plugin Detection**: Enhanced detection of both classic Oxygen and Breakdance-based Oxygen Builder 6
+
 = 1.2.0 - 2025-10-17 =
 
 **Oxygen Builder Integration & Enhanced Safety**
@@ -232,6 +243,9 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 * ✅ **WordPress Standards**: Built following WordPress coding standards with proper nonces, capability checks, and security measures
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+CRITICAL FIX: Enhanced Oxygen Builder 6 detection! Now properly detects media used in Breakdance-based Oxygen Builder 6 with support for _breakdance_data and other v6 meta fields. Essential update for Oxygen Builder 6 users.
 
 = 1.2.0 =
 MAJOR FEATURE: Oxygen Builder integration! Now safely detects media used in Oxygen Builder content, templates, reusable parts, CSS, and global settings. Essential for Oxygen users to prevent accidental deletion of builder assets.

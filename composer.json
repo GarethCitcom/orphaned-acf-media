@@ -2,7 +2,7 @@
     "name": "citcom/orphaned-acf-media",
     "description": "A comprehensive WordPress plugin that finds and safely removes media files not used in ACF fields",
     "type": "wordpress-plugin",
-    "version": "1.1.0",
+    "version": "1.2.1",
     "keywords": [
         "wordpress",
         "plugin",
@@ -18,8 +18,8 @@
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "CitCom",
-            "email": "support@citcom.co.uk",
+            "name": "Gareth Hale, CitCom.",
+            "email": "gareth@citcom.co.uk",
             "homepage": "https://citcom.co.uk",
             "role": "Developer"
         }

@@ -4,8 +4,8 @@
  * Plugin Name: Orphaned ACF Media
  * Plugin URI: https://plugins.citcom.support/orphaned-acf-media
  * Description: Find and delete media files that are not used in any ACF fields. Helps clean up unused attachments in your WordPress site.
- * Version: 1.2.0
- * Author: CitCom.
+ * Version: 1.2.1
+ * Author: Gareth Hale, CitCom.
  * Author URI: https://citcom.co.uk
  * License: GPL2
  * Text Domain: orphaned-acf-media
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ORPHANED_ACF_MEDIA_VERSION', '1.2.0');
+define('ORPHANED_ACF_MEDIA_VERSION', '1.2.1');
 define('ORPHANED_ACF_MEDIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ORPHANED_ACF_MEDIA_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -140,7 +140,7 @@ class OrphanedACFMedia
                         <li><?php _e('Navigation Menus', 'orphaned-acf-media'); ?></li>
                         <li><?php _e('Theme Customizer Settings', 'orphaned-acf-media'); ?></li>
                         <li><?php _e('Site Icon & Custom Headers/Backgrounds', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Oxygen Builder Content & Templates', 'orphaned-acf-media'); ?></li>
+                        <li><?php _e('Oxygen Builder 6 & Classic Content (Breakdance-based)', 'orphaned-acf-media'); ?></li>
                     </ul>
                 </div>
 
@@ -728,7 +728,7 @@ class OrphanedACFMedia
             return true;
         }
 
-        // 11. Check Oxygen Builder content
+        // 11. Check Oxygen Builder content (v6 Breakdance-based + Classic)
         if ($this->check_usage_in_oxygen_builder($attachment_id, $file_url, $filename)) {
             return true;
         }
@@ -846,14 +846,81 @@ class OrphanedACFMedia
     {
         global $wpdb;
 
-        // Check if Oxygen Builder is active
-        if (!defined('CT_VERSION') && !is_plugin_active('oxygen/functions.php')) {
+        // Check if Oxygen Builder is active (classic or v6)
+        $oxygen_classic_active = defined('CT_VERSION') || is_plugin_active('oxygen/functions.php');
+        $oxygen_v6_active = is_plugin_active('oxygen/functions.php') || class_exists('Breakdance\\Lib\\PluginAPI');
+
+        if (!$oxygen_classic_active && !$oxygen_v6_active) {
             return false;
         }
 
-        // Oxygen stores content in several ways, let's check all of them
+        // === OXYGEN BUILDER 6 (BREAKDANCE-BASED) CHECKS ===
 
-        // 1. Check ct_builder_shortcodes meta (main Oxygen content storage)
+        // 1. Check _breakdance_data meta (Oxygen 6 / Breakdance main storage)
+        $breakdance_query = $wpdb->prepare("
+            SELECT COUNT(*)
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = '_breakdance_data'
+            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
+        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+
+        if ($wpdb->get_var($breakdance_query) > 0) {
+            return true;
+        }
+
+        // 2. Check breakdance_data meta (alternative storage)
+        $breakdance_alt_query = $wpdb->prepare("
+            SELECT COUNT(*)
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = 'breakdance_data'
+            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
+        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+
+        if ($wpdb->get_var($breakdance_alt_query) > 0) {
+            return true;
+        }
+
+        // 3. Check _breakdance_tree_json meta (JSON tree structure)
+        $breakdance_tree_query = $wpdb->prepare("
+            SELECT COUNT(*)
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = '_breakdance_tree_json'
+            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
+        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+
+        if ($wpdb->get_var($breakdance_tree_query) > 0) {
+            return true;
+        }
+
+        // 4. Check _breakdance_css meta (compiled CSS)
+        $breakdance_css_query = $wpdb->prepare("
+            SELECT COUNT(*)
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = '_breakdance_css'
+            AND (meta_value LIKE %s OR meta_value LIKE %s)
+        ", '%' . $file_url . '%', '%' . $filename . '%');
+
+        if ($wpdb->get_var($breakdance_css_query) > 0) {
+            return true;
+        }
+
+        // 5. Check breakdance templates and global blocks
+        $breakdance_templates_query = $wpdb->prepare("
+            SELECT COUNT(*)
+            FROM {$wpdb->posts} p
+            INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+            WHERE p.post_type IN ('breakdance_template', 'breakdance_block', 'breakdance_header', 'breakdance_footer')
+            AND pm.meta_key IN ('_breakdance_data', 'breakdance_data', '_breakdance_tree_json')
+            AND (pm.meta_value LIKE %s OR pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
+        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+
+        if ($wpdb->get_var($breakdance_templates_query) > 0) {
+            return true;
+        }
+
+        // === CLASSIC OXYGEN BUILDER CHECKS (LEGACY SUPPORT) ===
+
+        // 6. Check ct_builder_shortcodes meta (classic Oxygen content storage)
         $oxygen_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
@@ -865,7 +932,7 @@ class OrphanedACFMedia
             return true;
         }
 
-        // 2. Check ct_builder_json meta (alternative storage format)
+        // 7. Check ct_builder_json meta (classic alternative storage format)
         $oxygen_json_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
@@ -877,7 +944,7 @@ class OrphanedACFMedia
             return true;
         }
 
-        // 3. Check Oxygen templates (ct_template post type)
+        // 8. Check classic Oxygen templates (ct_template post type)
         $oxygen_templates_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->posts} p
@@ -891,7 +958,7 @@ class OrphanedACFMedia
             return true;
         }
 
-        // 4. Check Oxygen reusable parts (oxy_user_library post type)
+        // 9. Check classic Oxygen reusable parts (oxy_user_library post type)
         $oxygen_parts_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->posts} p
@@ -905,39 +972,41 @@ class OrphanedACFMedia
             return true;
         }
 
-        // 5. Check Oxygen stylesheets (oxygen_vsb_css_cache)
-        $oxygen_css_query = $wpdb->prepare("
+        // === SHARED CHECKS FOR BOTH VERSIONS ===
+
+        // 10. Check Oxygen/Breakdance stylesheets and compiled CSS
+        $css_cache_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->options}
-            WHERE option_name LIKE 'oxygen_vsb_css_cache_%%'
+            WHERE (option_name LIKE 'oxygen_vsb_css_cache_%%' OR option_name LIKE 'breakdance_css_cache_%%' OR option_name LIKE '_breakdance_css_%%')
             AND (option_value LIKE %s OR option_value LIKE %s)
         ", '%' . $file_url . '%', '%' . $filename . '%');
 
-        if ($wpdb->get_var($oxygen_css_query) > 0) {
+        if ($wpdb->get_var($css_cache_query) > 0) {
             return true;
         }
 
-        // 6. Check Oxygen custom CSS and JS
-        $oxygen_custom_query = $wpdb->prepare("
+        // 11. Check custom CSS and JS (both classic and v6)
+        $custom_styles_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
-            WHERE meta_key IN ('ct_builder_css', 'ct_builder_js', 'ct_custom_css', 'ct_custom_js')
+            WHERE meta_key IN ('ct_builder_css', 'ct_builder_js', 'ct_custom_css', 'ct_custom_js', '_breakdance_css', '_breakdance_js', 'breakdance_custom_css', 'breakdance_custom_js')
             AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
         ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
 
-        if ($wpdb->get_var($oxygen_custom_query) > 0) {
+        if ($wpdb->get_var($custom_styles_query) > 0) {
             return true;
         }
 
-        // 7. Check Oxygen global settings
-        $oxygen_settings_query = $wpdb->prepare("
+        // 12. Check global settings for both versions
+        $global_settings_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->options}
-            WHERE option_name LIKE 'oxygen_vsb_%%'
+            WHERE (option_name LIKE 'oxygen_vsb_%%' OR option_name LIKE 'breakdance_%%' OR option_name LIKE '_breakdance_%%')
             AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
         ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
 
-        if ($wpdb->get_var($oxygen_settings_query) > 0) {
+        if ($wpdb->get_var($global_settings_query) > 0) {
             return true;
         }
 
