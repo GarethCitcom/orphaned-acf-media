@@ -1,0 +1,66 @@
+{
+    "name": "citcom/orphaned-acf-media",
+    "description": "A comprehensive WordPress plugin that finds and safely removes media files not used in ACF fields",
+    "type": "wordpress-plugin",
+    "version": "1.1.0",
+    "keywords": [
+        "wordpress",
+        "plugin",
+        "media",
+        "cleanup",
+        "acf",
+        "advanced-custom-fields",
+        "optimization",
+        "storage",
+        "maintenance"
+    ],
+    "homepage": "https://plugins.citcom.support/orphaned-acf-media",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "CitCom",
+            "email": "support@citcom.co.uk",
+            "homepage": "https://citcom.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/citcom/orphaned-acf-media/issues",
+        "forum": "https://wordpress.org/support/plugin/orphaned-acf-media",
+        "source": "https://github.com/citcom/orphaned-acf-media",
+        "docs": "https://plugins.citcom.support/orphaned-acf-media/docs"
+    },
+    "require": {
+        "php": ">=7.4",
+        "wordpress": ">=5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "wp-coding-standards/wpcs": "^2.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "CitCom\\OrphanedACFMedia\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "phpcs": "phpcs --standard=WordPress .",
+        "phpcbf": "phpcbf --standard=WordPress .",
+        "lint": "find . -name '*.php' -exec php -l {} \\;"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "wordpress-plugin": {
+            "slug": "orphaned-acf-media",
+            "version": "1.1.0",
+            "requires": "5.0",
+            "tested": "6.8.3",
+            "requires-php": "7.4"
+        }
+    }
+}

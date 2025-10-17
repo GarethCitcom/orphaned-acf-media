@@ -1,0 +1,134 @@
+# Changelog
+
+All notable changes to the Orphaned ACF Media plugin will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.2.0] - 2025-10-17
+
+### Added
+- **Oxygen Builder Integration**: Comprehensive support for Oxygen Builder 6 content detection
+- **Multi-Format Detection**: Checks ct_builder_shortcodes, ct_builder_json, and all Oxygen storage formats
+- **Template Protection**: Scans Oxygen templates (ct_template post type) and user library parts (oxy_user_library)
+- **CSS/JS Safety**: Detects media usage in Oxygen custom CSS, JavaScript, and compiled stylesheets (oxygen_vsb_css_cache)
+- **Global Settings Check**: Scans Oxygen VSB settings and global configurations for media references
+- **Auto-Detection**: Automatically detects if Oxygen Builder plugin is active on the website
+
+### Improved
+- **Enhanced Safety Coverage**: Now protects media used in 11+ different areas including page builders
+- **Better Builder Support**: First page builder to receive dedicated integration support
+- **Comprehensive Protection**: Covers all known Oxygen Builder storage methods and content types
+
+### Security
+- **Page Builder Safety**: Prevents accidental deletion of media files used in Oxygen Builder designs
+- **Template Preservation**: Protects media used in reusable templates and components
+
+## [1.1.0] - 2025-10-17
+
+### Added
+- **Scan Progress Indicator**: Real-time progress bar during media scanning with percentage completion and status messages
+- **Media Library Integration**: New "Library" button to view attachments directly in WordPress Media Library
+- **Smart Button States**: Dynamic enable/disable of "Delete All Safe Files" button based on available files
+- **File Count Display**: Button shows exact number of safe files available for deletion
+
+### Improved
+- **Auto-Apply Filters**: Filters now apply instantly when selections change without requiring manual "Apply" button
+- **User Interface**: Streamlined interface with removal of unnecessary "Apply Filters" button
+- **Visual Feedback**: Enhanced progress tracking and status messages throughout all operations
+- **Button Layout**: Optimized action button arrangement for better usability and responsive design
+- **User Experience**: More intuitive workflow with automatic updates and clearer visual cues
+
+### Removed
+- Manual "Apply Filters" button (filters now auto-apply)
+
+## [1.0.0] - 2025-10-17
+
+### Added - Initial Release
+
+#### 🛡️ Comprehensive Safety System
+- **Multi-layered Safety Checks**: Implemented comprehensive safety verification across 10+ usage areas including ACF fields, featured images, post content, widgets, navigation menus, theme customizer, and site settings
+- **Real-time Verification**: Added final safety check performed immediately before each deletion operation
+- **Detailed Usage Analysis**: Created system to show exactly where each media file is used across the website
+- **Backup Warnings**: Integrated clear backup recommendations and comprehensive safety documentation throughout the interface
+
+#### 🔍 Advanced Filtering & Search
+- **Server-side Filtering**: Implemented robust filtering by file type (images, videos, audio, PDFs, documents) and safety status with backend processing
+- **Consistent Results**: Ensured filters work correctly across all paginated results with proper server-side implementation
+- **Smart Categorization**: Added automatic file type detection and safety status classification based on comprehensive analysis
+- **Real-time Updates**: Created system where filters apply immediately with accurate result counts and proper pagination updates
+
+#### 📊 Intelligent Pagination
+- **Efficient Handling**: Designed architecture to handle large media libraries with thousands of files using optimized queries and caching
+- **Customizable Display**: Implemented user-selectable pagination options (25, 50, 100, 200 items per page) with proper state management
+- **Performance Optimized**: Created smart caching system using WordPress transients for improved performance on subsequent scans
+- **Accurate Counts**: Added comprehensive counting system showing total files found and safe-to-delete counts across all filtered pages
+
+#### ⚡ Bulk Operations
+- **Selective Deletion**: Implemented checkbox-based multi-file selection with proper state management across pagination
+- **Delete All Safe Files**: Created one-click deletion system for all confirmed safe-to-delete files with comprehensive batch processing
+- **Progress Tracking**: Added real-time progress monitoring with detailed reporting, success/failure counts, and user feedback
+- **Batch Processing**: Implemented server-friendly batch processing system that handles large operations efficiently without timeout issues
+- **Error Handling**: Created comprehensive error reporting and recovery system with detailed user feedback and logging
+
+#### 💻 Professional Interface
+- **WordPress Standards**: Designed clean, responsive interface following WordPress admin design guidelines and accessibility standards
+- **Accessibility Features**: Implemented proper ARIA labels, keyboard navigation support, and screen reader compatibility
+- **Mobile Responsive**: Created fully responsive design that works perfectly on tablets, mobile devices, and desktop computers
+- **Intuitive Controls**: Designed clear navigation system with helpful tooltips, documentation, and contextual help
+
+#### 🔧 Technical Infrastructure
+- **Smart Caching System**: Implemented WordPress transient-based caching with proper invalidation and refresh mechanisms
+- **Database Optimization**: Created efficient database queries with proper indexing and minimal performance impact
+- **Security Implementation**: Added comprehensive security with nonce verification, capability checks, input sanitization, and SQL injection prevention
+- **Error Management**: Built robust error handling with user-friendly messages, detailed logging, and proper recovery procedures
+
+#### 📋 Safety & Validation
+- **ACF Integration**: Deep integration with Advanced Custom Fields including standard fields, repeater fields, flexible content, and options pages
+- **WordPress Core Compatibility**: Comprehensive checking of featured images, post content, widgets, navigation menus, and core WordPress features
+- **Theme Integration**: Full compatibility checking with theme customizer, site icons, custom headers/backgrounds, and theme modification settings
+- **Advanced Detection**: Implemented detection of user profile pictures, serialized data, gallery relationships, and custom post type meta fields
+
+#### 🎯 User Experience
+- **Comprehensive Documentation**: Created extensive documentation including usage guides, troubleshooting, and best practices
+- **Safety Warnings**: Integrated clear backup recommendations and safety guidelines throughout the user interface
+- **Progress Feedback**: Implemented real-time feedback systems for all operations with clear status indicators and completion messages
+- **Flexible Workflow**: Designed workflow that accommodates both careful selective deletion and efficient bulk cleanup operations
+
+### Technical Specifications
+
+#### Performance Features
+- WordPress transient-based caching system for improved performance
+- Server-friendly batch processing in manageable chunks
+- Memory-efficient queries optimized for large datasets
+- Non-blocking background operations with progress tracking
+
+#### Security Features
+- CSRF protection via WordPress nonces for all AJAX operations
+- Restricted access to users with `manage_options` capability
+- Complete input sanitization and validation for all user inputs
+- Prepared statements for all database queries preventing SQL injection
+
+#### Compatibility
+- WordPress 5.0+ compatibility with full testing up to WordPress 6.4
+- PHP 7.4+ support with modern coding standards
+- Advanced Custom Fields (ACF) integration with all field types
+- Mobile and tablet responsive design with touch-friendly controls
+
+#### Database Optimization
+- Efficient queries with proper indexing and minimal server impact
+- Non-intrusive scanning that doesn't affect site performance
+- Automatic cache management with smart invalidation
+- Transaction safety with proper error handling and rollback capabilities
+
+### Known Limitations
+- Requires Advanced Custom Fields (ACF) plugin to be installed and activated
+- Deletion operations are permanent and cannot be undone (backup recommended)
+- Very specialized media usage patterns might not be detected
+- Performance on shared hosting may vary based on server resources
+
+### Future Development
+- Enhanced integration with popular page builders
+- Advanced reporting and analytics features
+- Automated scheduling for regular cleanup operations
+- Extended file type support and detection capabilities
