@@ -17,32 +17,32 @@
         "faq": "<h4>Is it safe to use this plugin?</h4><br><p>Yes! The plugin includes multiple layers of safety checks and will never delete a file that is actually in use. It checks ACF fields, featured images, post content, widgets, menus, theme customizer settings, and more. However, we always recommend creating a backup before any deletion operations.</p><br><h4>What file types does it support?</h4><br><p>The plugin works with all WordPress media file types including images (JPG, PNG, GIF, WebP, SVG), videos (MP4, AVI, MOV, etc.), audio files (MP3, WAV, OGG, etc.), PDFs, and documents (DOC, XLS, PPT, etc.).</p><br><h4>Can I filter the results?</h4><br><p>Yes! You can filter by file type and safety status. The filtering is done server-side so it works correctly across all paginated results.</p><br><h4>How does the bulk delete work?</h4><br><p>You can select individual files for bulk deletion, or use 'Delete All Safe Files' to remove all confirmed safe-to-delete files at once. The process includes progress tracking and detailed reporting.</p><br><h4>What if I have thousands of media files?</h4><br><p>The plugin is designed to handle large media libraries efficiently with pagination, caching, and batch processing. You can adjust the items per page setting (25-200) based on your server performance.</p><br><h4>Does it work with other plugins?</h4><br><p>The plugin specifically focuses on ACF field usage but also checks for usage in other common WordPress areas. It's compatible with most themes and plugins, though very specialized media usage might not be detected.</p>"
     },
     "banners": {
-        "low": "https://plugins.citcom.support/orphaned-acf-media/assets/banner-772x250.jpg",
-        "high": "https://plugins.citcom.support/orphaned-acf-media/assets/banner-1544x500.jpg"
+        "low": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/banner-772x250.jpg",
+        "high": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/banner-1544x500.jpg"
     },
     "icons": {
-        "1x": "https://plugins.citcom.support/orphaned-acf-media/assets/icon-128x128.jpg",
-        "2x": "https://plugins.citcom.support/orphaned-acf-media/assets/icon-256x256.jpg"
+        "1x": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/icon-128x128.jpg",
+        "2x": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/icon-256x256.jpg"
     },
     "screenshots": [
         {
-            "src": "https://plugins.citcom.support/orphaned-acf-media/assets/screenshot-1.jpg",
+            "src": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/screenshot-1.jpg",
             "caption": "Main plugin interface with safety warnings and scan controls"
         },
         {
-            "src": "https://plugins.citcom.support/orphaned-acf-media/assets/screenshot-2.jpg",
+            "src": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/screenshot-2.jpg",
             "caption": "Results table with filtering options and pagination controls"
         },
         {
-            "src": "https://plugins.citcom.support/orphaned-acf-media/assets/screenshot-3.jpg",
+            "src": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/screenshot-3.jpg",
             "caption": "Detailed safety status information showing file usage across website"
         },
         {
-            "src": "https://plugins.citcom.support/orphaned-acf-media/assets/screenshot-4.jpg",
+            "src": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/screenshot-4.jpg",
             "caption": "Bulk operations with progress tracking and comprehensive reporting"
         },
         {
-            "src": "https://plugins.citcom.support/orphaned-acf-media/assets/screenshot-5.jpg",
+            "src": "https://plugins.citcom.support/orphaned-acf-media/plugin-assets/screenshot-5.jpg",
             "caption": "Advanced filtering by file type and safety status with server-side processing"
         }
     ],
