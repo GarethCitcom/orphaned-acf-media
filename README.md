@@ -1,6 +1,6 @@
 # Orphaned ACF Media
 
-A comprehensive WordPress plugin that finds and safely removes media files that are not used in any ACF (Advanced Custom Fields) fields. Features advanced safety checks, filtering, pagination, and bulk operations to help clean up unused attachments and free up server storage space.
+A comprehensive WordPress plugin that finds and safely removes media files that are not used in any ACF (Advanced Custom Fields) fields. Features advanced safety checks, Oxygen Builder integration, filtering, pagination, and bulk operations to help clean up unused attachments and free up server storage space.
 
 ## 🚀 Features
 
