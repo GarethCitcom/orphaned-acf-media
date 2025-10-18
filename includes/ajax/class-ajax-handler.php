@@ -180,10 +180,10 @@ class OrphanedACFMedia_AJAX
             }
 
             $total_files = count($safe_media);
-            
+
             // Get the batch slice
             $batch_media = array_slice($safe_media, $batch_offset, $batch_size);
-            
+
             if (empty($batch_media)) {
                 // No more files to process
                 wp_send_json_success(array(

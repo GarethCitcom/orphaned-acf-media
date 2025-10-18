@@ -880,11 +880,11 @@ class OrphanedACFMedia_MediaScanner
     {
         // Get all orphaned media with a large page size
         $result = $this->get_orphaned_media(1, 9999, true, 'all', 'safe');
-        
+
         if (!isset($result['media']) || !is_array($result['media'])) {
             return array();
         }
-        
+
         return array_filter($result['media'], function ($media) {
             return isset($media['is_truly_orphaned']) && $media['is_truly_orphaned'] === true;
         });
