@@ -120,8 +120,6 @@ class OrphanedACFMedia_Utils
             if (!empty($context)) {
                 $log_message .= ' Context: ' . wp_json_encode($context);
             }
-
-            error_log($log_message);
         }
     }
 
@@ -154,22 +152,26 @@ class OrphanedACFMedia_Utils
         // Clear transients
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional direct query for transient cleanup
         $wpdb->query($wpdb->prepare("
             DELETE FROM {$wpdb->options}
             WHERE option_name LIKE %s
         ", '_transient_orphaned_acf_media_%'));
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional direct query for transient cleanup
         $wpdb->query($wpdb->prepare("
             DELETE FROM {$wpdb->options}
             WHERE option_name LIKE %s
         ", '_transient_timeout_orphaned_acf_media_%'));
 
         // Clear user-specific transients
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional direct query for transient cleanup
         $wpdb->query($wpdb->prepare("
             DELETE FROM {$wpdb->options}
             WHERE option_name LIKE %s
         ", '_transient_orphaned_acf_%'));
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional direct query for transient cleanup
         $wpdb->query($wpdb->prepare("
             DELETE FROM {$wpdb->options}
             WHERE option_name LIKE %s

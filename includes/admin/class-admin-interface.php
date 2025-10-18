@@ -340,6 +340,7 @@ class OrphanedACFMedia_Admin
             <p>
                 <?php
                 printf(
+                    /* translators: %s: Plugin name (Advanced Custom Fields) */
                     esc_html__('Orphaned ACF Media requires the %s plugin to be installed and activated.', 'orphaned-acf-media'),
                     '<strong>' . esc_html__('Advanced Custom Fields', 'orphaned-acf-media') . '</strong>'
                 );

@@ -43,7 +43,7 @@ class OrphanedACFMedia_AJAX
     public function handle_scan_orphaned_media()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'orphaned_acf_media_nonce')) {
             wp_die('Security check failed');
         }
 
@@ -55,7 +55,7 @@ class OrphanedACFMedia_AJAX
         // Sanitize input parameters
         $page = isset($_POST['page']) ? intval(wp_unslash($_POST['page'])) : 1;
         $per_page = isset($_POST['per_page']) ? intval(wp_unslash($_POST['per_page'])) : 50;
-        $scan_all = isset($_POST['scan_all']) ? wp_unslash($_POST['scan_all']) === 'true' : false;
+        $scan_all = isset($_POST['scan_all']) ? sanitize_text_field(wp_unslash($_POST['scan_all'])) === 'true' : false;
         $file_type_filter = isset($_POST['file_type_filter']) ? sanitize_text_field(wp_unslash($_POST['file_type_filter'])) : 'all';
         $safety_status_filter = isset($_POST['safety_status_filter']) ? sanitize_text_field(wp_unslash($_POST['safety_status_filter'])) : 'all';
 
@@ -64,7 +64,6 @@ class OrphanedACFMedia_AJAX
 
             wp_send_json_success($result);
         } catch (Exception $e) {
-            error_log('OrphanedACFMedia: Error in scan_orphaned_media - ' . $e->getMessage());
             wp_send_json_error(array('message' => 'An error occurred while scanning for orphaned media.'));
         }
     }
@@ -75,7 +74,7 @@ class OrphanedACFMedia_AJAX
     public function handle_delete_orphaned_media()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'orphaned_acf_media_nonce')) {
             wp_die('Security check failed');
         }
 
@@ -85,7 +84,7 @@ class OrphanedACFMedia_AJAX
         }
 
         // Get and validate attachment IDs
-        $attachment_ids = isset($_POST['attachment_ids']) ? wp_unslash($_POST['attachment_ids']) : array();
+        $attachment_ids = isset($_POST['attachment_ids']) ? array_map('intval', wp_unslash($_POST['attachment_ids'])) : array();
 
         if (!is_array($attachment_ids) || empty($attachment_ids)) {
             wp_send_json_error(array('message' => 'No attachment IDs provided.'));
@@ -158,7 +157,7 @@ class OrphanedACFMedia_AJAX
     public function handle_delete_all_safe_orphaned_media()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'orphaned_acf_media_nonce')) {
             wp_die('Security check failed');
         }
 
@@ -243,7 +242,6 @@ class OrphanedACFMedia_AJAX
 
             wp_send_json_success($response);
         } catch (Exception $e) {
-            error_log('OrphanedACFMedia: Error in delete_all_safe_orphaned_media - ' . $e->getMessage());
             wp_send_json_error(array('message' => 'An error occurred while deleting safe files: ' . $e->getMessage()));
         }
     }
@@ -254,7 +252,7 @@ class OrphanedACFMedia_AJAX
     public function handle_clear_orphaned_cache()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'orphaned_acf_media_nonce')) {
             wp_send_json_error(array('message' => 'Security check failed'));
         }
 
@@ -269,7 +267,6 @@ class OrphanedACFMedia_AJAX
                 'message' => 'Cache cleared successfully'
             ));
         } catch (Exception $e) {
-            error_log('OrphanedACFMedia: Error clearing cache - ' . $e->getMessage());
             wp_send_json_error(array('message' => 'Failed to clear cache'));
         }
     }
@@ -284,11 +281,13 @@ class OrphanedACFMedia_AJAX
 
         // Clear transients
         global $wpdb;
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional direct query for transient cleanup
         $wpdb->query($wpdb->prepare("
             DELETE FROM {$wpdb->options}
             WHERE option_name LIKE %s
         ", '_transient_orphaned_acf_media_%'));
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional direct query for transient cleanup
         $wpdb->query($wpdb->prepare("
             DELETE FROM {$wpdb->options}
             WHERE option_name LIKE %s
