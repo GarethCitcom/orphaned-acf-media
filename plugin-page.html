@@ -408,7 +408,7 @@
                     <div class="plugin-meta">
                         <div class="meta-item">
                             <span class="meta-label">Current Version</span>
-                            <span class="meta-value">1.3.2</span>
+                            <span class="meta-value">2.0.0</span>
                         </div>
                         <div class="meta-item">
                             <span class="meta-label">Last Updated</span>
@@ -445,12 +445,56 @@
             <section class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        🎉 What's New in Version 1.3.3
+                        🎉 What's New in Version 2.0.0
                     </h2>
                 </div>
                 <div class="section-content">
                     <div class="changelog">
-                        <div class="changelog-version">User Experience Improvements</div>
+                        <div class="changelog-version">Complete Architecture Refactor</div>
+                        <ul class="changelog-list">
+                            <li><strong>Modular Architecture:</strong> Transformed 1,415-line monolithic file into
+                                clean, maintainable object-oriented structure</li>
+                            <li><strong>Organized Components:</strong> Created dedicated classes for Media Scanner,
+                                Admin Interface, AJAX Handler, and Utilities</li>
+                            <li><strong>Enhanced Maintainability:</strong> Single responsibility classes with clear
+                                separation of concerns for easier development</li>
+                            <li><strong>Future-Ready:</strong> Plugin architecture ready for future features and API
+                                integrations</li>
+                            <li><strong>Performance Optimized:</strong> Improved caching system and memory management
+                                across all components</li>
+                        </ul>
+                    </div>
+
+                    <div class="changelog">
+                        <div class="changelog-version">Enhanced Oxygen Builder Support</div>
+                        <ul class="changelog-list">
+                            <li><strong>Fixed Detection Path:</strong> Corrected Oxygen Builder plugin detection from
+                                oxygen/functions.php to oxygen/plugin.php</li>
+                            <li><strong>Oxygen Builder v6 Compatibility:</strong> Comprehensive integration with
+                                _oxygen_data field support</li>
+                            <li><strong>Enhanced Query System:</strong> Optimized catch-all meta queries for better page
+                                builder content detection</li>
+                            <li><strong>Improved Safety Checks:</strong> More reliable detection of Oxygen Builder
+                                content and templates</li>
+                        </ul>
+                    </div>
+
+                    <div class="changelog">
+                        <div class="changelog-version">Bug Fixes & Improvements</div>
+                        <ul class="changelog-list">
+                            <li><strong>Cache Clearing Fix:</strong> Resolved "An error occurred while clearing cache"
+                                by implementing missing AJAX handler</li>
+                            <li><strong>Query Optimization:</strong> Removed over-escaping in catch-all queries that
+                                prevented proper detection</li>
+                            <li><strong>Debug Cleanup:</strong> Removed all debug logging from production code for clean
+                                release</li>
+                            <li><strong>Enhanced Error Handling:</strong> Better error handling and comprehensive
+                                logging across all components</li>
+                        </ul>
+                    </div>
+
+                    <div class="changelog">
+                        <div class="changelog-version">Previous Version 1.3.3 - User Experience Improvements</div>
                         <ul class="changelog-list">
                             <li><strong>Added User Consent:</strong> Implemented backup consent system requiring user
                                 confirmation before enabling scan operations</li>
@@ -468,374 +512,370 @@
                                 orphaned media is found for better usability</li>
                         </ul>
                     </div>
+                    <ul class="changelog-list">
+                        <li><strong>ACF Extended Support:</strong> Added full compatibility with ACF Extended
+                            Performance Mode consolidated 'acf' meta field</li>
+                        <li><strong>Enhanced Detection:</strong> Now detects media usage in consolidated ACF data
+                            storage for improved performance setups</li>
+                        <li><strong>Comprehensive Coverage:</strong> Checks both standard ACF field storage and
+                            Performance Mode consolidated storage</li>
+                        <li><strong>Options Support:</strong> Includes ACF Extended Performance Mode detection for
+                            ACF options pages</li>
+                        <li><strong>Technical Improvement:</strong> Prevents false positives when ACF Extended
+                            Performance Mode is enabled</li>
+                        <li><strong>Documentation:</strong> Added comprehensive technical documentation explaining
+                            ACF Extended compatibility</li>
+                    </ul>
+                </div>
 
-                    <div class="changelog">
-                        <div class="changelog-version">Previous Version 1.3.2 - ACF Extended Performance Mode
-                            Compatibility</div>
-                        <ul class="changelog-list">
-                            <li><strong>ACF Extended Support:</strong> Added full compatibility with ACF Extended
-                                Performance Mode consolidated 'acf' meta field</li>
-                            <li><strong>Enhanced Detection:</strong> Now detects media usage in consolidated ACF data
-                                storage for improved performance setups</li>
-                            <li><strong>Comprehensive Coverage:</strong> Checks both standard ACF field storage and
-                                Performance Mode consolidated storage</li>
-                            <li><strong>Options Support:</strong> Includes ACF Extended Performance Mode detection for
-                                ACF options pages</li>
-                            <li><strong>Technical Improvement:</strong> Prevents false positives when ACF Extended
-                                Performance Mode is enabled</li>
-                            <li><strong>Documentation:</strong> Added comprehensive technical documentation explaining
-                                ACF Extended compatibility</li>
-                        </ul>
+                <div class="changelog">
+                    <div class="changelog-version">Previous Version 1.3.1 - Bug Fixes & User Experience Improvements
                     </div>
+                    <ul class="changelog-list">
+                        <li><strong>Fixed Pagination Performance:</strong> Page navigation now instant with subtle
+                            opacity fade instead of showing full scanning progress</li>
+                        <li><strong>Fixed "Delete All Safe Files" Button:</strong> Corrected property checking from
+                            safety_status to is_truly_orphaned for proper safe file detection</li>
+                        <li><strong>Enhanced Error Messages:</strong> Improved user guidance with more descriptive
+                            messages for scan requirements and file states</li>
+                        <li><strong>Better Button States:</strong> "Delete All Safe Files" now shows "Scan Required"
+                            when no scan data is available</li>
+                        <li><strong>Improved User Feedback:</strong> Added specific notifications for different
+                            deletion scenarios and requirements</li>
+                        <li><strong>Cache Consistency:</strong> Fixed cache handling issues to ensure reliable safe
+                            file detection across all operations</li>
+                        <li><strong>UI Polish:</strong> Enhanced button initialization and state management for
+                            better user experience</li>
+                    </ul>
+                </div>
 
-                    <div class="changelog">
-                        <div class="changelog-version">Previous Version 1.3.1 - Bug Fixes & User Experience Improvements
-                        </div>
-                        <ul class="changelog-list">
-                            <li><strong>Fixed Pagination Performance:</strong> Page navigation now instant with subtle
-                                opacity fade instead of showing full scanning progress</li>
-                            <li><strong>Fixed "Delete All Safe Files" Button:</strong> Corrected property checking from
-                                safety_status to is_truly_orphaned for proper safe file detection</li>
-                            <li><strong>Enhanced Error Messages:</strong> Improved user guidance with more descriptive
-                                messages for scan requirements and file states</li>
-                            <li><strong>Better Button States:</strong> "Delete All Safe Files" now shows "Scan Required"
-                                when no scan data is available</li>
-                            <li><strong>Improved User Feedback:</strong> Added specific notifications for different
-                                deletion scenarios and requirements</li>
-                            <li><strong>Cache Consistency:</strong> Fixed cache handling issues to ensure reliable safe
-                                file detection across all operations</li>
-                            <li><strong>UI Polish:</strong> Enhanced button initialization and state management for
-                                better user experience</li>
-                        </ul>
+                <div class="changelog">
+                    <div class="changelog-version">Previous Version 1.3.0 - Performance Optimization & WordPress
+                        Plugin Repository Compliance</div>
+                    <ul class="changelog-list">
+                        <li><strong>Comprehensive Caching System:</strong> Added wp_cache implementation for all
+                            database queries to significantly improve performance</li>
+                        <li><strong>WordPress Repository Ready:</strong> Fixed all Plugin Check warnings and errors
+                            for WordPress.org submission</li>
+                        <li><strong>Enhanced Input Validation:</strong> Improved $_POST handling with proper
+                            wp_unslash() and isset() checks</li>
+                        <li><strong>SQL Security Hardening:</strong> Fixed all SQL preparation issues and properly
+                            escaped LIKE wildcards</li>
+                        <li><strong>Performance Optimized:</strong> Added 5-minute caching for all media usage
+                            checks reducing database load</li>
+                        <li><strong>Cache Management:</strong> Enhanced cache clearing with wp_cache_flush_group for
+                            organized cache control</li>
+                        <li><strong>Method-Level Caching:</strong> Individual caching for ACF fields, content,
+                            widgets, customizer, and Oxygen Builder checks</li>
+                        <li><strong>Scalability Improved:</strong> Better performance with large media libraries
+                            through intelligent caching strategies</li>
+                    </ul>
+
+                    <div class="changelog-version">Previous Release (v1.2.2): Critical Oxygen Builder 6 JSON
+                        Structure Parsing</div>
+                    <ul class="changelog-list">
+                        <li><strong>Critical Fix:</strong> Now correctly parses the actual _oxygen_data meta field
+                            with complex JSON structure</li>
+                        <li><strong>JSON Parser:</strong> Added comprehensive parsing for {"tree_json_string":
+                            "..."} structure used by Oxygen v6</li>
+                        <li><strong>Media Pattern Detection:</strong> Detects media references in nested JSON
+                            including ID, filename, URL, and media object structures</li>
+                        <li><strong>Recursive Search:</strong> Implements deep search through complex nested Oxygen
+                            element trees</li>
+                        <li><strong>Multiple Patterns:</strong> Checks for "id":5964, "filename":"file.png", URLs,
+                            srcset, and media arrays</li>
+                        <li><strong>Database-Verified:</strong> Based on actual Oxygen v6 database structure
+                            analysis and testing</li>
+                        <li><strong>Real-World Compatible:</strong> Verified against actual Oxygen Builder 6
+                            installations</li>
+                    </ul>
+
+                    <div class="changelog-version">Previous Release (v1.2.0): Oxygen Builder Integration</div>
+                    <ul class="changelog-list">
+                        <li>Oxygen Builder Support: Comprehensive safety checks for Oxygen Builder content,
+                            templates, and reusable parts</li>
+                        <li>Multi-Storage Detection: Checks ct_builder_shortcodes, ct_builder_json, and all Oxygen
+                            content formats</li>
+                        <li>Template Protection: Scans Oxygen templates (ct_template) and user library parts
+                            (oxy_user_library)</li>
+                        <li>CSS/JS Safety: Detects media usage in Oxygen custom CSS, JavaScript, and compiled
+                            stylesheets</li>
+                        <li>Global Settings: Checks Oxygen VSB settings and global configurations for media
+                            references</li>
+                        <li>Auto-Detection: Automatically detects if Oxygen Builder is active on the website</li>
+                    </ul>
+                </div>
+        </div>
+        </section>
+
+        <!-- Installation Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    🔧 Installation
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="installation-steps">
+                    <div class="installation-step">
+                        <strong>Download the plugin zip file</strong><br>
+                        Click the download button above to get the latest version
                     </div>
-
-                    <div class="changelog">
-                        <div class="changelog-version">Previous Version 1.3.0 - Performance Optimization & WordPress
-                            Plugin Repository Compliance</div>
-                        <ul class="changelog-list">
-                            <li><strong>Comprehensive Caching System:</strong> Added wp_cache implementation for all
-                                database queries to significantly improve performance</li>
-                            <li><strong>WordPress Repository Ready:</strong> Fixed all Plugin Check warnings and errors
-                                for WordPress.org submission</li>
-                            <li><strong>Enhanced Input Validation:</strong> Improved $_POST handling with proper
-                                wp_unslash() and isset() checks</li>
-                            <li><strong>SQL Security Hardening:</strong> Fixed all SQL preparation issues and properly
-                                escaped LIKE wildcards</li>
-                            <li><strong>Performance Optimized:</strong> Added 5-minute caching for all media usage
-                                checks reducing database load</li>
-                            <li><strong>Cache Management:</strong> Enhanced cache clearing with wp_cache_flush_group for
-                                organized cache control</li>
-                            <li><strong>Method-Level Caching:</strong> Individual caching for ACF fields, content,
-                                widgets, customizer, and Oxygen Builder checks</li>
-                            <li><strong>Scalability Improved:</strong> Better performance with large media libraries
-                                through intelligent caching strategies</li>
-                        </ul>
-
-                        <div class="changelog-version">Previous Release (v1.2.2): Critical Oxygen Builder 6 JSON
-                            Structure Parsing</div>
-                        <ul class="changelog-list">
-                            <li><strong>Critical Fix:</strong> Now correctly parses the actual _oxygen_data meta field
-                                with complex JSON structure</li>
-                            <li><strong>JSON Parser:</strong> Added comprehensive parsing for {"tree_json_string":
-                                "..."} structure used by Oxygen v6</li>
-                            <li><strong>Media Pattern Detection:</strong> Detects media references in nested JSON
-                                including ID, filename, URL, and media object structures</li>
-                            <li><strong>Recursive Search:</strong> Implements deep search through complex nested Oxygen
-                                element trees</li>
-                            <li><strong>Multiple Patterns:</strong> Checks for "id":5964, "filename":"file.png", URLs,
-                                srcset, and media arrays</li>
-                            <li><strong>Database-Verified:</strong> Based on actual Oxygen v6 database structure
-                                analysis and testing</li>
-                            <li><strong>Real-World Compatible:</strong> Verified against actual Oxygen Builder 6
-                                installations</li>
-                        </ul>
-
-                        <div class="changelog-version">Previous Release (v1.2.0): Oxygen Builder Integration</div>
-                        <ul class="changelog-list">
-                            <li>Oxygen Builder Support: Comprehensive safety checks for Oxygen Builder content,
-                                templates, and reusable parts</li>
-                            <li>Multi-Storage Detection: Checks ct_builder_shortcodes, ct_builder_json, and all Oxygen
-                                content formats</li>
-                            <li>Template Protection: Scans Oxygen templates (ct_template) and user library parts
-                                (oxy_user_library)</li>
-                            <li>CSS/JS Safety: Detects media usage in Oxygen custom CSS, JavaScript, and compiled
-                                stylesheets</li>
-                            <li>Global Settings: Checks Oxygen VSB settings and global configurations for media
-                                references</li>
-                            <li>Auto-Detection: Automatically detects if Oxygen Builder is active on the website</li>
-                        </ul>
+                    <div class="installation-step">
+                        <strong>Upload to your /wp-content/plugins/ directory</strong><br>
+                        Extract the ZIP file and upload the folder to your plugins directory
+                    </div>
+                    <div class="installation-step">
+                        <strong>Activate through WordPress admin</strong><br>
+                        Go to Plugins → Installed Plugins and activate "Orphaned ACF Media"
+                    </div>
+                    <div class="installation-step">
+                        <strong>Ensure ACF plugin is active</strong><br>
+                        The Advanced Custom Fields plugin must be installed and activated
+                    </div>
+                    <div class="installation-step">
+                        <strong>Start cleaning your media library</strong><br>
+                        Navigate to Media → Orphaned ACF Media and begin scanning!
                     </div>
                 </div>
-            </section>
 
-            <!-- Installation Section -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        🔧 Installation
-                    </h2>
+                <div class="warning-box">
+                    <div class="warning-title">
+                        ⚠️ Important Backup Warning
+                    </div>
+                    <div class="warning-content">
+                        Although this plugin includes comprehensive safety checks and multiple layers of protection,
+                        we strongly recommend creating a complete backup of your website (including files and
+                        database) before performing any media deletion operations.
+                    </div>
                 </div>
-                <div class="section-content">
-                    <div class="installation-steps">
-                        <div class="installation-step">
-                            <strong>Download the plugin zip file</strong><br>
-                            Click the download button above to get the latest version
+            </div>
+        </section>
+
+        <!-- Plugin Description -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    📖 About Orphaned ACF Media
+                </h2>
+            </div>
+            <div class="section-content">
+                <p class="plugin-description">
+                    <strong>Orphaned ACF Media</strong> is a comprehensive WordPress plugin that helps you identify
+                    and safely remove media files that are not used in any Advanced Custom Fields (ACF) fields.
+                    Perfect for cleaning up your WordPress media library and freeing up valuable server storage
+                    space.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            � Performance Optimized
                         </div>
-                        <div class="installation-step">
-                            <strong>Upload to your /wp-content/plugins/ directory</strong><br>
-                            Extract the ZIP file and upload the folder to your plugins directory
-                        </div>
-                        <div class="installation-step">
-                            <strong>Activate through WordPress admin</strong><br>
-                            Go to Plugins → Installed Plugins and activate "Orphaned ACF Media"
-                        </div>
-                        <div class="installation-step">
-                            <strong>Ensure ACF plugin is active</strong><br>
-                            The Advanced Custom Fields plugin must be installed and activated
-                        </div>
-                        <div class="installation-step">
-                            <strong>Start cleaning your media library</strong><br>
-                            Navigate to Media → Orphaned ACF Media and begin scanning!
+                        <div class="feature-description">
+                            Comprehensive wp_cache implementation with 5-minute caching for all database queries.
+                            Significantly improved performance for large media libraries with intelligent caching
+                            strategies.
                         </div>
                     </div>
 
-                    <div class="warning-box">
-                        <div class="warning-title">
-                            ⚠️ Important Backup Warning
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            �🛡️ Comprehensive Safety System
                         </div>
-                        <div class="warning-content">
-                            Although this plugin includes comprehensive safety checks and multiple layers of protection,
-                            we strongly recommend creating a complete backup of your website (including files and
-                            database) before performing any media deletion operations.
+                        <div class="feature-description">
+                            Multi-layered safety checks across 10+ usage areas with real-time verification before
+                            each deletion and detailed usage analysis.
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <!-- Plugin Description -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        📖 About Orphaned ACF Media
-                    </h2>
-                </div>
-                <div class="section-content">
-                    <p class="plugin-description">
-                        <strong>Orphaned ACF Media</strong> is a comprehensive WordPress plugin that helps you identify
-                        and safely remove media files that are not used in any Advanced Custom Fields (ACF) fields.
-                        Perfect for cleaning up your WordPress media library and freeing up valuable server storage
-                        space.
-                    </p>
-
-                    <div class="feature-grid">
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                � Performance Optimized
-                            </div>
-                            <div class="feature-description">
-                                Comprehensive wp_cache implementation with 5-minute caching for all database queries.
-                                Significantly improved performance for large media libraries with intelligent caching
-                                strategies.
-                            </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            🔍 Advanced Filtering & Search
                         </div>
-
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                �🛡️ Comprehensive Safety System
-                            </div>
-                            <div class="feature-description">
-                                Multi-layered safety checks across 10+ usage areas with real-time verification before
-                                each deletion and detailed usage analysis.
-                            </div>
+                        <div class="feature-description">
+                            Server-side filtering by file type and safety status with consistent results across all
+                            paginated pages and real-time application.
                         </div>
+                    </div>
 
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                🔍 Advanced Filtering & Search
-                            </div>
-                            <div class="feature-description">
-                                Server-side filtering by file type and safety status with consistent results across all
-                                paginated pages and real-time application.
-                            </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            📊 Intelligent Pagination
                         </div>
-
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                📊 Intelligent Pagination
-                            </div>
-                            <div class="feature-description">
-                                Efficient handling of large media libraries (1000+ files) with customizable display
-                                options and smart caching system.
-                            </div>
+                        <div class="feature-description">
+                            Efficient handling of large media libraries (1000+ files) with customizable display
+                            options and smart caching system.
                         </div>
+                    </div>
 
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                ⚡ Bulk Operations
-                            </div>
-                            <div class="feature-description">
-                                Select and delete multiple files with progress tracking, detailed reporting, and batch
-                                processing for server-friendly operations.
-                            </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            ⚡ Bulk Operations
                         </div>
-
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                💻 Professional Interface
-                            </div>
-                            <div class="feature-description">
-                                Clean, responsive WordPress admin design with mobile-friendly interface and
-                                accessibility features.
-                            </div>
+                        <div class="feature-description">
+                            Select and delete multiple files with progress tracking, detailed reporting, and batch
+                            processing for server-friendly operations.
                         </div>
+                    </div>
 
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                🎯 Perfect Integration
-                            </div>
-                            <div class="feature-description">
-                                Seamlessly integrates with WordPress core, ACF plugin, and follows all WordPress coding
-                                standards and best practices.
-                            </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            💻 Professional Interface
                         </div>
+                        <div class="feature-description">
+                            Clean, responsive WordPress admin design with mobile-friendly interface and
+                            accessibility features.
+                        </div>
+                    </div>
 
-                        <div class="feature-card">
-                            <div class="feature-title">
-                                🏗️ Oxygen Builder 6 & Classic Support
-                            </div>
-                            <div class="feature-description">
-                                Enhanced integration with both Oxygen Builder 6 (Breakdance-based) and classic versions.
-                                Includes templates, reusable parts, custom CSS/JS, global settings, and comprehensive
-                                Breakdance meta field detection.
-                            </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            🎯 Perfect Integration
+                        </div>
+                        <div class="feature-description">
+                            Seamlessly integrates with WordPress core, ACF plugin, and follows all WordPress coding
+                            standards and best practices.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            🏗️ Oxygen Builder 6 & Classic Support
+                        </div>
+                        <div class="feature-description">
+                            Enhanced integration with both Oxygen Builder 6 (Breakdance-based) and classic versions.
+                            Includes templates, reusable parts, custom CSS/JS, global settings, and comprehensive
+                            Breakdance meta field detection.
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Safety Features -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        🛡️ Comprehensive Safety Checks
-                    </h2>
-                </div>
-                <div class="section-content">
-                    <p class="safety-intro">
-                        The plugin performs comprehensive safety checks across multiple areas to ensure no files are
-                        accidentally deleted:
-                    </p>
+        <!-- Safety Features -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    🛡️ Comprehensive Safety Checks
+                </h2>
+            </div>
+            <div class="section-content">
+                <p class="safety-intro">
+                    The plugin performs comprehensive safety checks across multiple areas to ensure no files are
+                    accidentally deleted:
+                </p>
 
-                    <div class="safety-checklist">
-                        <div class="safety-item">
-                            <strong>ACF Field Usage</strong><br>
-                            Standard fields, repeaters, flexible content, options pages
-                        </div>
-                        <div class="safety-item">
-                            <strong>WordPress Core</strong><br>
-                            Featured images, post content, page content
-                        </div>
-                        <div class="safety-item">
-                            <strong>Widgets & Menus</strong><br>
-                            Widget content, navigation menu items
-                        </div>
-                        <div class="safety-item">
-                            <strong>Theme Customization</strong><br>
-                            Customizer settings, site icons, custom headers
-                        </div>
-                        <div class="safety-item">
-                            <strong>Advanced Detection</strong><br>
-                            Serialized data, gallery relationships, custom fields
-                        </div>
-                        <div class="safety-item">
-                            <strong>Database References</strong><br>
-                            All meta tables, user profiles, options
-                        </div>
-                        <div class="safety-item">
-                            <strong>Oxygen Builder 6 & Classic</strong><br>
-                            Breakdance-based v6 (_breakdance_data), classic templates, reusable parts, CSS/JS, global
-                            settings
-                        </div>
+                <div class="safety-checklist">
+                    <div class="safety-item">
+                        <strong>ACF Field Usage</strong><br>
+                        Standard fields, repeaters, flexible content, options pages
+                    </div>
+                    <div class="safety-item">
+                        <strong>WordPress Core</strong><br>
+                        Featured images, post content, page content
+                    </div>
+                    <div class="safety-item">
+                        <strong>Widgets & Menus</strong><br>
+                        Widget content, navigation menu items
+                    </div>
+                    <div class="safety-item">
+                        <strong>Theme Customization</strong><br>
+                        Customizer settings, site icons, custom headers
+                    </div>
+                    <div class="safety-item">
+                        <strong>Advanced Detection</strong><br>
+                        Serialized data, gallery relationships, custom fields
+                    </div>
+                    <div class="safety-item">
+                        <strong>Database References</strong><br>
+                        All meta tables, user profiles, options
+                    </div>
+                    <div class="safety-item">
+                        <strong>Oxygen Builder 6 & Classic</strong><br>
+                        Breakdance-based v6 (_breakdance_data), classic templates, reusable parts, CSS/JS, global
+                        settings
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Requirements -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        📋 Requirements
-                    </h2>
-                </div>
-                <div class="section-content">
-                    <div class="requirements-grid">
-                        <div class="requirement-item">
-                            <div class="requirement-icon">📱</div>
-                            <strong>WordPress 5.0+</strong><br>
-                            <small>Tested up to 6.4</small>
-                        </div>
-                        <div class="requirement-item">
-                            <div class="requirement-icon">🔧</div>
-                            <strong>PHP 7.4+</strong><br>
-                            <small>Optimized for PHP 8.x</small>
-                        </div>
-                        <div class="requirement-item">
-                            <div class="requirement-icon">🎯</div>
-                            <strong>ACF Plugin</strong><br>
-                            <small>Advanced Custom Fields</small>
-                        </div>
-                        <div class="requirement-item">
-                            <div class="requirement-icon">👤</div>
-                            <strong>Admin Access</strong><br>
-                            <small>Administrator capabilities</small>
-                        </div>
+        <!-- Requirements -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    📋 Requirements
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="requirements-grid">
+                    <div class="requirement-item">
+                        <div class="requirement-icon">📱</div>
+                        <strong>WordPress 5.0+</strong><br>
+                        <small>Tested up to 6.4</small>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">🔧</div>
+                        <strong>PHP 7.4+</strong><br>
+                        <small>Optimized for PHP 8.x</small>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">🎯</div>
+                        <strong>ACF Plugin</strong><br>
+                        <small>Advanced Custom Fields</small>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">👤</div>
+                        <strong>Admin Access</strong><br>
+                        <small>Administrator capabilities</small>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Support -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        💬 Support & Resources
-                    </h2>
-                </div>
-                <div class="section-content">
-                    <p class="support-intro">
-                        Need help with the plugin? Choose from our comprehensive support options:
-                    </p>
+        <!-- Support -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    💬 Support & Resources
+                </h2>
+            </div>
+            <div class="section-content">
+                <p class="support-intro">
+                    Need help with the plugin? Choose from our comprehensive support options:
+                </p>
 
-                    <div class="support-grid">
-                        <div class="support-card">
-                            <div class="support-icon">📚</div>
-                            <div class="support-title">Documentation</div>
-                            <p>Comprehensive guides, FAQ, and usage examples to get you started quickly.</p>
-                            <a href="#" class="support-link">View Docs</a>
-                        </div>
+                <div class="support-grid">
+                    <div class="support-card">
+                        <div class="support-icon">📚</div>
+                        <div class="support-title">Documentation</div>
+                        <p>Comprehensive guides, FAQ, and usage examples to get you started quickly.</p>
+                        <a href="#" class="support-link">View Docs</a>
+                    </div>
 
-                        <div class="support-card">
-                            <div class="support-icon">💬</div>
-                            <div class="support-title">Community Support</div>
-                            <p>WordPress.org plugin forums with community-driven help and solutions.</p>
-                            <a href="#" class="support-link">Join Community</a>
-                        </div>
+                    <div class="support-card">
+                        <div class="support-icon">💬</div>
+                        <div class="support-title">Community Support</div>
+                        <p>WordPress.org plugin forums with community-driven help and solutions.</p>
+                        <a href="#" class="support-link">Join Community</a>
+                    </div>
 
-                        <div class="support-card">
-                            <div class="support-icon">🐛</div>
-                            <div class="support-title">Bug Reports</div>
-                            <p>Report technical issues, suggest features, and contribute to development.</p>
-                            <a href="#" class="support-link">Report Issue</a>
-                        </div>
+                    <div class="support-card">
+                        <div class="support-icon">🐛</div>
+                        <div class="support-title">Bug Reports</div>
+                        <p>Report technical issues, suggest features, and contribute to development.</p>
+                        <a href="#" class="support-link">Report Issue</a>
+                    </div>
 
-                        <div class="support-card">
-                            <div class="support-icon">🎯</div>
-                            <div class="support-title">Premium Support</div>
-                            <p>Priority support, custom implementation, and WordPress consultation services.</p>
-                            <a href="https://citcom.support" class="support-link">Get Premium Support</a>
-                        </div>
+                    <div class="support-card">
+                        <div class="support-icon">🎯</div>
+                        <div class="support-title">Premium Support</div>
+                        <p>Priority support, custom implementation, and WordPress consultation services.</p>
+                        <a href="https://citcom.support" class="support-link">Get Premium Support</a>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
         </div>
     </main>

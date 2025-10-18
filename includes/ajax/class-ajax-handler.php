@@ -1,0 +1,266 @@
+<?php
+
+/**
+ * AJAX Handler Class
+ *
+ * Handles all AJAX requests for the plugin
+ *
+ * @package OrphanedACFMedia
+ * @since 2.0.0
+ */
+
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+class OrphanedACFMedia_AJAX
+{
+
+    private $media_scanner;
+
+    public function __construct()
+    {
+        // Initialize media scanner
+        $this->media_scanner = new OrphanedACFMedia_MediaScanner();
+    }
+
+    /**
+     * Register AJAX hooks
+     */
+    public function register_hooks()
+    {
+        add_action('wp_ajax_scan_orphaned_media', array($this, 'handle_scan_orphaned_media'));
+        add_action('wp_ajax_delete_orphaned_media', array($this, 'handle_delete_orphaned_media'));
+        add_action('wp_ajax_delete_all_safe_orphaned_media', array($this, 'handle_delete_all_safe_orphaned_media'));
+        add_action('wp_ajax_clear_orphaned_cache', array($this, 'handle_clear_orphaned_cache'));
+    }
+
+    /**
+     * Handle scan orphaned media AJAX request
+     */
+    public function handle_scan_orphaned_media()
+    {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+            wp_die('Security check failed');
+        }
+
+        // Check user capabilities
+        if (!current_user_can('manage_options')) {
+            wp_die('Insufficient permissions');
+        }
+
+        // Sanitize input parameters
+        $page = isset($_POST['page']) ? intval(wp_unslash($_POST['page'])) : 1;
+        $per_page = isset($_POST['per_page']) ? intval(wp_unslash($_POST['per_page'])) : 50;
+        $scan_all = isset($_POST['scan_all']) ? wp_unslash($_POST['scan_all']) === 'true' : false;
+        $file_type_filter = isset($_POST['file_type_filter']) ? sanitize_text_field(wp_unslash($_POST['file_type_filter'])) : 'all';
+        $safety_status_filter = isset($_POST['safety_status_filter']) ? sanitize_text_field(wp_unslash($_POST['safety_status_filter'])) : 'all';
+
+        try {
+            $result = $this->media_scanner->get_orphaned_media($page, $per_page, $scan_all, $file_type_filter, $safety_status_filter);
+
+            wp_send_json_success($result);
+        } catch (Exception $e) {
+            error_log('OrphanedACFMedia: Error in scan_orphaned_media - ' . $e->getMessage());
+            wp_send_json_error(array('message' => 'An error occurred while scanning for orphaned media.'));
+        }
+    }
+
+    /**
+     * Handle delete orphaned media AJAX request
+     */
+    public function handle_delete_orphaned_media()
+    {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+            wp_die('Security check failed');
+        }
+
+        // Check user capabilities
+        if (!current_user_can('manage_options')) {
+            wp_die('Insufficient permissions');
+        }
+
+        // Get and validate attachment IDs
+        $attachment_ids = isset($_POST['attachment_ids']) ? wp_unslash($_POST['attachment_ids']) : array();
+
+        if (!is_array($attachment_ids) || empty($attachment_ids)) {
+            wp_send_json_error(array('message' => 'No attachment IDs provided.'));
+        }
+
+        $deleted_count = 0;
+        $failed_deletions = array();
+        $results = array();
+
+        foreach ($attachment_ids as $attachment_id) {
+            $attachment_id = intval($attachment_id);
+
+            if ($attachment_id <= 0) {
+                continue;
+            }
+
+            // Final safety check before deletion
+            if (
+                !$this->media_scanner->is_attachment_used_in_acf($attachment_id) &&
+                !$this->media_scanner->is_attachment_used_elsewhere($attachment_id)
+            ) {
+
+                $deleted = wp_delete_attachment($attachment_id, true);
+
+                if ($deleted) {
+                    $deleted_count++;
+                    $results[] = array(
+                        'id' => $attachment_id,
+                        'status' => 'deleted',
+                        'message' => 'Successfully deleted'
+                    );
+                } else {
+                    $failed_deletions[] = $attachment_id;
+                    $results[] = array(
+                        'id' => $attachment_id,
+                        'status' => 'failed',
+                        'message' => 'Failed to delete attachment'
+                    );
+                }
+            } else {
+                $failed_deletions[] = $attachment_id;
+                $results[] = array(
+                    'id' => $attachment_id,
+                    'status' => 'skipped',
+                    'message' => 'File is in use - skipped for safety'
+                );
+            }
+        }
+
+        // Clear cache after deletions
+        $this->clear_orphaned_cache();
+
+        $response = array(
+            'deleted_count' => $deleted_count,
+            'failed_count' => count($failed_deletions),
+            'results' => $results,
+            'message' => sprintf(
+                'Deleted %d file(s). %d file(s) could not be deleted.',
+                $deleted_count,
+                count($failed_deletions)
+            )
+        );
+
+        wp_send_json_success($response);
+    }
+
+    /**
+     * Handle delete all safe orphaned media AJAX request
+     */
+    public function handle_delete_all_safe_orphaned_media()
+    {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+            wp_die('Security check failed');
+        }
+
+        // Check user capabilities
+        if (!current_user_can('manage_options')) {
+            wp_die('Insufficient permissions');
+        }
+
+        try {
+            // Get all safe to delete media
+            $safe_media = $this->media_scanner->get_all_safe_to_delete_media();
+
+            if (empty($safe_media)) {
+                wp_send_json_error(array('message' => 'No safe files found to delete. Please perform a scan first.'));
+            }
+
+            $deleted_count = 0;
+            $failed_deletions = array();
+            $total_files = count($safe_media);
+
+            foreach ($safe_media as $media) {
+                $attachment_id = $media['id'];
+
+                // Final safety check
+                if ($media['is_truly_orphaned']) {
+                    $deleted = wp_delete_attachment($attachment_id, true);
+
+                    if ($deleted) {
+                        $deleted_count++;
+                    } else {
+                        $failed_deletions[] = $attachment_id;
+                    }
+                } else {
+                    $failed_deletions[] = $attachment_id;
+                }
+            }
+
+            // Clear cache after deletions
+            $this->clear_orphaned_cache();
+
+            $response = array(
+                'deleted_count' => $deleted_count,
+                'failed_count' => count($failed_deletions),
+                'total_files' => $total_files,
+                'message' => sprintf(
+                    'Deleted %d out of %d safe files. %d file(s) could not be deleted.',
+                    $deleted_count,
+                    $total_files,
+                    count($failed_deletions)
+                )
+            );
+
+            wp_send_json_success($response);
+        } catch (Exception $e) {
+            error_log('OrphanedACFMedia: Error in delete_all_safe_orphaned_media - ' . $e->getMessage());
+            wp_send_json_error(array('message' => 'An error occurred while deleting safe files.'));
+        }
+    }
+
+    /**
+     * Handle clear cache AJAX request
+     */
+    public function handle_clear_orphaned_cache()
+    {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+            wp_send_json_error(array('message' => 'Security check failed'));
+        }
+
+        // Check capabilities
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => 'Insufficient permissions'));
+        }
+
+        try {
+            $this->clear_orphaned_cache();
+            wp_send_json_success(array(
+                'message' => 'Cache cleared successfully'
+            ));
+        } catch (Exception $e) {
+            error_log('OrphanedACFMedia: Error clearing cache - ' . $e->getMessage());
+            wp_send_json_error(array('message' => 'Failed to clear cache'));
+        }
+    }
+
+    /**
+     * Clear orphaned media cache
+     */
+    private function clear_orphaned_cache()
+    {
+        // Clear WordPress cache
+        wp_cache_flush_group('orphaned_acf_media');
+
+        // Clear transients
+        global $wpdb;
+        $wpdb->query($wpdb->prepare("
+            DELETE FROM {$wpdb->options}
+            WHERE option_name LIKE %s
+        ", '_transient_orphaned_acf_media_%'));
+
+        $wpdb->query($wpdb->prepare("
+            DELETE FROM {$wpdb->options}
+            WHERE option_name LIKE %s
+        ", '_transient_timeout_orphaned_acf_media_%'));
+    }
+}

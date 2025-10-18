@@ -2,14 +2,24 @@
 
 A comprehensive WordPress plugin that finds and safely removes media files that are not used in any ACF (Advanced Custom Fields) fields. Features advanced safety checks, Oxygen Builder integration, filtering, pagination, and bulk operations to help clean up unused attachments and free up server storage space.
 
+**Version 2.0.0** introduces a completely refactored modular architecture, transforming the plugin from a monolithic structure into a modern, maintainable, and extensible WordPress plugin with enhanced performance and reliability.
+
 ## 🚀 Features
 
 ### 🛡️ **Comprehensive Safety System**
 - **Multi-layered Safety Checks**: Scans ACF fields, featured images, post content, widgets, navigation menus, theme customizer, and site settings
 - **ACF Extended Support**: Full compatibility with ACF Extended Performance Mode (consolidated 'acf' meta field)
+- **Oxygen Builder v6 Support**: Complete integration with Oxygen Builder including `_oxygen_data` fields
 - **Real-time Verification**: Final safety check performed before each deletion operation
 - **Detailed Usage Analysis**: Shows exactly where each media file is used across your website
 - **Backup Warnings**: Clear recommendations and safety documentation
+
+### 🏗️ **Modern Architecture (v2.0.0)**
+- **Modular Design**: Completely refactored from 1,415-line monolithic file into organized components
+- **Object-Oriented Structure**: Clean separation of concerns with dedicated classes for each functionality
+- **Enhanced Performance**: Optimized caching, memory management, and database queries
+- **Improved Maintainability**: Each component has focused responsibility for easier development and debugging
+- **Future-Proof**: Extensible architecture ready for new features and integrations
 
 ### 🔍 **Advanced Filtering & Search**
 - **Server-side Filtering**: Filter by file type (images, videos, audio, PDFs, documents) and safety status
@@ -35,6 +45,56 @@ A comprehensive WordPress plugin that finds and safely removes media files that 
 - **Accessibility**: Proper ARIA labels, keyboard navigation, and screen reader support
 - **Mobile Responsive**: Works perfectly on tablets and mobile devices
 - **Intuitive Controls**: Clear navigation with helpful tooltips and documentation
+
+## 🏗️ Architecture Overview (v2.0.0)
+
+Version 2.0.0 introduces a completely refactored modular architecture that transforms the plugin from a 1,415-line monolithic file into organized, maintainable components.
+
+### Directory Structure
+```
+wp-content/plugins/orphaned-acf-media/
+├── includes/
+│   ├── core/
+│   │   └── class-media-scanner.php     # Media detection and scanning logic
+│   ├── admin/
+│   │   └── class-admin-interface.php   # Admin page rendering and UI
+│   ├── ajax/
+│   │   └── class-ajax-handler.php      # AJAX request handling
+│   ├── utils/
+│   │   └── class-utils.php             # Shared utility functions
+│   └── orphaned-acf-media-refactored.php # Main plugin controller
+├── assets/
+│   ├── admin.css                       # Admin page styles
+│   └── admin.js                        # Admin page JavaScript
+└── orphaned-acf-media.php             # Plugin entry point
+```
+
+### Key Components
+
+#### Media Scanner (`includes/core/`)
+- **Comprehensive Detection**: ACF fields, content, widgets, menus, customizer, Oxygen Builder
+- **Advanced Caching**: WordPress object cache with automatic invalidation
+- **Performance Optimized**: Efficient database queries and memory management
+- **Safety Focused**: Multiple verification layers before any deletion
+
+#### Admin Interface (`includes/admin/`)
+- **Professional UI**: WordPress standards-compliant responsive design
+- **User Experience**: Backup consent system, loading indicators, intuitive navigation
+- **Accessibility**: ARIA labels, keyboard navigation, screen reader support
+- **Mobile Ready**: Tablet and mobile device compatibility
+
+#### AJAX Handler (`includes/ajax/`)
+- **Security First**: Nonce verification, capability checks, input sanitization
+- **Error Handling**: Comprehensive error logging and user feedback
+- **Batch Processing**: Server-friendly operations with progress tracking
+- **API Ready**: Structured for future REST API integration
+
+### Benefits of Refactored Architecture
+- **Maintainability**: Single responsibility classes with clear separation of concerns
+- **Performance**: Optimized caching, memory usage, and database operations
+- **Extensibility**: Easy to add new features and integrations
+- **Testing**: Components can be unit tested in isolation
+- **Debugging**: Issues can be traced to specific components quickly
 
 ## 📋 Requirements
 
@@ -226,6 +286,19 @@ GNU General Public License for more details.
 - **Plugin Directory**: [https://plugins.citcom.support](https://plugins.citcom.support)
 
 ## 📝 Changelog
+
+### Version 2.0.0 - Major Architecture Refactor & Oxygen Builder Fix
+- 🏗️ **Complete Architecture Refactor**: Transformed 1,415-line monolithic file into modular object-oriented structure
+- 📁 **Organized Structure**: Created includes/ folder with core/, admin/, ajax/, and utils/ components
+- 🔧 **Fixed Oxygen Builder Detection**: Corrected plugin detection from `oxygen/functions.php` to `oxygen/plugin.php`
+- ✅ **Enhanced Oxygen Support**: Comprehensive Oxygen Builder v6 integration with `_oxygen_data` field detection
+- 🚀 **Improved Performance**: Optimized caching system and memory management across all components
+- 🛡️ **Enhanced Safety**: Modular safety checks with better error handling and logging
+- 🎯 **Better Maintainability**: Single responsibility classes for easier development and debugging
+- 🔄 **Fixed Cache Clearing**: Added missing AJAX handler for cache refresh functionality
+- 📊 **Comprehensive Debugging**: Added detailed logging system for troubleshooting detection issues
+- 🧹 **Code Cleanup**: Removed debug logging and cleaned up temporary files
+- 📚 **Updated Documentation**: Merged refactoring documentation into main README
 
 ### Version 1.3.3 - User Experience Improvements
 - ✅ **Added User Consent**: Implemented backup consent system requiring user confirmation before enabling scan operations

@@ -427,7 +427,9 @@
                 safetyStatus = 'Used in Content';
                 safetyClass = 'warning';
             } else {
-                safetyStatus = 'Usage Unknown';
+                // If not truly orphaned but no specific usage flags, it must be used somewhere
+                // Default to "Used in Content" since it's not safe to delete
+                safetyStatus = 'Used in Content';
                 safetyClass = 'warning';
             }
 
@@ -435,6 +437,9 @@
                 usageDetailsHtml = '<div class="usage-details"><ul>' +
                     media.usage_details.map(detail => `<li>${escapeHtml(detail)}</li>`).join('') +
                     '</ul></div>';
+            } else if (!media.is_truly_orphaned) {
+                // If no usage details but file is not safe to delete, show generic message
+                usageDetailsHtml = '<div class="usage-details"><small>File detected as in use</small></div>';
             }
         }
 

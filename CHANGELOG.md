@@ -5,6 +5,39 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-10-18
+
+### Added
+- **Complete Architecture Refactor**: Transformed 1,415-line monolithic file into modular object-oriented structure with includes/ folder organization
+- **Modular Components**: Created dedicated classes for Media Scanner, Admin Interface, AJAX Handler, and Utilities
+- **Enhanced Oxygen Builder Support**: Fixed detection and added comprehensive Oxygen Builder v6 integration with `_oxygen_data` field support
+- **Advanced Debugging System**: Comprehensive logging for troubleshooting detection issues and performance monitoring
+- **Cache Refresh Functionality**: Added missing AJAX handler for cache clearing operations
+
+### Fixed
+- **Oxygen Builder Detection**: Corrected plugin detection path from `oxygen/functions.php` to `oxygen/plugin.php`
+- **Cache Clearing Error**: Fixed "An error occurred while clearing cache" by implementing missing AJAX handler
+- **Query Optimization**: Removed over-escaping in catch-all queries that prevented Oxygen Builder detection
+- **Usage Detection Logic**: Enhanced catch-all meta queries to properly detect page builder content
+
+### Improved
+- **Performance**: Optimized caching system and memory management across all components
+- **Maintainability**: Single responsibility classes with clear separation of concerns for easier development
+- **Safety System**: Modular safety checks with better error handling and comprehensive logging
+- **Code Organization**: Logical grouping of related functionality in dedicated directories
+- **Extensibility**: Plugin architecture ready for future features and API integrations
+
+### Changed
+- **File Structure**: Reorganized into includes/ folder with core/, admin/, ajax/, and utils/ subdirectories
+- **Class Architecture**: Converted to object-oriented structure with dedicated controller classes
+- **Loading System**: Improved dependency management and component initialization
+- **Error Handling**: Enhanced error logging and user feedback across all operations
+
+### Removed
+- **Debug Logging**: Cleaned up temporary debug code and logging statements
+- **Monolithic Code**: Replaced single large file with organized modular structure
+- **Temporary Files**: Removed test files and debugging utilities
+
 ## [1.3.3] - 2025-10-18
 
 ### Added
