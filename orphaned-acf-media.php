@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: Orphaned ACF Media
  * Plugin URI: https://plugins.citcom.support/orphaned-acf-media

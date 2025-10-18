@@ -1,14 +1,14 @@
 <?php
-
 /**
- * Plugin Name: Orphaned ACF Media
- * Plugin URI: https://plugins.citcom.support/orphaned-acf-media
- * Description: Find and delete media files that are not used in any ACF fields. Helps clean up unused attachments in your WordPress site.
- * Version: 2.0.0
- * Author: Gareth Hale, CitCom.
- * Author URI: https://citcom.co.uk
- * License: GPL2
- * Text Domain: orphaned-acf-media
+ * Orphaned ACF Media - Refactored Core Plugin Controller
+ *
+ * This file contains the main plugin controller class that orchestrates
+ * all plugin components and functionality.
+ *
+ * @package OrphanedACFMedia
+ * @version 2.0.0
+ * @author Gareth Hale, CitCom.
+ * @link https://citcom.co.uk
  */
 
 // Prevent direct access
