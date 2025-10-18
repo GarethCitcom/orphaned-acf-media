@@ -4,7 +4,7 @@ Tags: media, cleanup, acf, advanced-custom-fields, attachments, orphaned, optimi
 Requires at least: 5.0
 Tested up to: 6.8.3
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -191,6 +191,30 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 
 == Changelog ==
 
+= 1.3.0 - 2025-10-18 =
+
+**Performance Optimization & WordPress Plugin Repository Compliance**
+
+* 🚀 **Comprehensive Caching System**: Added wp_cache implementation for all database queries to significantly improve performance
+* ✅ **WordPress Repository Ready**: Fixed all Plugin Check warnings and errors for WordPress.org submission
+* ✅ **Enhanced Input Validation**: Improved $_POST handling with proper wp_unslash() and isset() checks
+* ✅ **SQL Security Hardening**: Fixed all SQL preparation issues and properly escaped LIKE wildcards
+* ✅ **Performance Optimized**: Added 5-minute caching for all media usage checks reducing database load
+* ✅ **Cache Management**: Enhanced cache clearing with wp_cache_flush_group for organized cache control
+* ✅ **Method-Level Caching**: Individual caching for ACF fields, content, widgets, customizer, and Oxygen Builder checks
+* ✅ **Scalability Improved**: Better performance with large media libraries through intelligent caching strategies
+
+= 1.2.2 - 2025-10-18 =
+
+**Critical Fix: Proper Oxygen Builder 6 JSON Structure Parsing**
+
+* 🔧 **Fixed Oxygen Builder 6 Detection**: Now correctly parses the actual _oxygen_data meta field with complex JSON structure
+* ✅ **JSON Parser**: Added comprehensive JSON parsing for {"tree_json_string": "..."} structure used by Oxygen v6
+* ✅ **Media Pattern Detection**: Detects media references in nested JSON including ID, filename, URL, and media object structures
+* ✅ **Recursive Search**: Implements deep search through complex nested Oxygen element trees
+* ✅ **Multiple Search Patterns**: Checks for "id":5964, "filename":"file.png", URLs, srcset, and media arrays
+* ✅ **Database-Verified**: Based on actual Oxygen v6 database structure analysis and testing
+
 = 1.2.1 - 2025-10-18 =
 
 **Critical Fix: Enhanced Oxygen Builder 6 Detection**
@@ -200,7 +224,7 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 * ✅ **Enhanced Template Detection**: Added support for breakdance_template, breakdance_block, breakdance_header, and breakdance_footer post types
 * ✅ **Improved CSS Detection**: Enhanced detection of Breakdance compiled CSS and cache files
 * ✅ **Dual Version Support**: Maintains backward compatibility with classic Oxygen Builder while adding full v6 support
-* ✅ **Better Plugin Detection**: Enhanced detection of both classic Oxygen and Breakdance-based Oxygen Builder 6
+* ✅ **Better Plugin Detection**: Enhanced detection of both classic and Breakdance-based Oxygen Builder 6
 
 = 1.2.0 - 2025-10-17 =
 
@@ -243,6 +267,9 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 * ✅ **WordPress Standards**: Built following WordPress coding standards with proper nonces, capability checks, and security measures
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+CRITICAL FIX: Proper Oxygen Builder 6 JSON parsing! Now correctly parses the actual _oxygen_data field with complex nested JSON structures. Essential update for Oxygen Builder 6 users to prevent accidental media deletion.
 
 = 1.2.1 =
 CRITICAL FIX: Enhanced Oxygen Builder 6 detection! Now properly detects media used in Breakdance-based Oxygen Builder 6 with support for _breakdance_data and other v6 meta fields. Essential update for Oxygen Builder 6 users.

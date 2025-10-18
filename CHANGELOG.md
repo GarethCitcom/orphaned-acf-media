@@ -5,6 +5,50 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-10-18
+
+### Added
+- **Comprehensive Caching System**: Implemented wp_cache for all database queries to significantly improve performance
+- **Method-Level Caching**: Individual caching strategies for ACF fields, content, widgets, customizer, and Oxygen Builder checks
+- **Cache Management**: Enhanced cache clearing with wp_cache_flush_group for organized cache control
+- **Performance Optimization**: 5-minute caching duration for optimal balance between performance and data freshness
+
+### Fixed
+- **WordPress Repository Compliance**: Resolved all Plugin Check warnings and errors for WordPress.org submission
+- **Input Validation Security**: Enhanced $_POST handling with proper wp_unslash() and isset() checks
+- **SQL Security Hardening**: Fixed all SQL preparation issues and properly escaped LIKE wildcards with placeholders
+- **Direct Database Query Warnings**: Added appropriate caching to address all WordPress.DB.DirectDatabaseQuery warnings
+
+### Improved
+- **Database Performance**: Reduced database load through intelligent caching of repeated queries
+- **UI Responsiveness**: Faster response times for media scanning operations, especially with large libraries
+- **Resource Efficiency**: Lower server resource usage during bulk operations and repeated scans
+- **Scalability**: Better performance with larger WordPress installations and extensive media libraries
+
+### Security
+- **Enhanced Input Sanitization**: All user inputs now properly validated, unslashed, and sanitized
+- **SQL Injection Prevention**: All database queries use proper $wpdb->prepare() with placeholders
+- **Nonce Validation**: Improved security checks for all AJAX operations
+
+## [1.2.2] - 2025-10-18
+
+### Fixed
+- **Critical Oxygen Builder 6 JSON Parsing**: Now correctly parses the actual _oxygen_data meta field with complex JSON structure
+- **Proper JSON Structure Handling**: Added comprehensive parsing for {"tree_json_string": "..."} structure used by Oxygen v6
+- **Media Pattern Detection**: Detects media references in nested JSON including ID, filename, URL, and media object structures
+- **Recursive Search Algorithm**: Implements deep search through complex nested Oxygen element trees
+- **Database-Verified Detection**: Based on actual Oxygen v6 database structure analysis and real-world testing
+
+### Added
+- **Multiple Search Patterns**: Checks for "id":5964, "filename":"file.png", URLs, srcset, and media arrays
+- **JSON Parser Methods**: New check_oxygen_v6_data_structure() and recursive_media_search() methods
+- **Comprehensive Pattern Matching**: Handles escaped URLs, partial filenames, and nested media objects
+
+### Improved
+- **Accurate Detection**: Now properly identifies media usage in actual Oxygen Builder 6 installations
+- **Performance Optimized**: Efficient JSON parsing with targeted pattern matching
+- **Real-World Compatibility**: Verified against actual Oxygen v6 database structures
+
 ## [1.2.1] - 2025-10-18
 
 ### Fixed

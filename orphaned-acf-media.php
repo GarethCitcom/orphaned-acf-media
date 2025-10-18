@@ -4,7 +4,7 @@
  * Plugin Name: Orphaned ACF Media
  * Plugin URI: https://plugins.citcom.support/orphaned-acf-media
  * Description: Find and delete media files that are not used in any ACF fields. Helps clean up unused attachments in your WordPress site.
- * Version: 1.2.1
+ * Version: 1.3.0
  * Author: Gareth Hale, CitCom.
  * Author URI: https://citcom.co.uk
  * License: GPL2
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ORPHANED_ACF_MEDIA_VERSION', '1.2.1');
+define('ORPHANED_ACF_MEDIA_VERSION', '1.3.0');
 define('ORPHANED_ACF_MEDIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ORPHANED_ACF_MEDIA_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -126,36 +126,36 @@ class OrphanedACFMedia
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
             <div class="orphaned-acf-media-header">
-                <p><?php _e('This tool helps you find and delete media files that are not used in any ACF fields. Files may still be used elsewhere on your website - check the Safety Status column for details.', 'orphaned-acf-media'); ?></p>
-                <p class="safety-note"><strong><?php _e('Note:', 'orphaned-acf-media'); ?></strong> <?php _e('A final safety check is performed before each deletion. Files found to be in use will not be deleted.', 'orphaned-acf-media'); ?></p>
+                <p><?php esc_html_e('This tool helps you find and delete media files that are not used in any ACF fields. Files may still be used elsewhere on your website - check the Safety Status column for details.', 'orphaned-acf-media'); ?></p>
+                <p class="safety-note"><strong><?php esc_html_e('Note:', 'orphaned-acf-media'); ?></strong> <?php esc_html_e('A final safety check is performed before each deletion. Files found to be in use will not be deleted.', 'orphaned-acf-media'); ?></p>
 
                 <div class="safety-warning">
-                    <h3><span class="dashicons dashicons-warning"></span> <?php _e('Safety Features', 'orphaned-acf-media'); ?></h3>
-                    <p><?php _e('This plugin includes comprehensive safety checks to prevent accidental deletion of media files. It scans for usage in:', 'orphaned-acf-media'); ?></p>
+                    <h3><span class="dashicons dashicons-warning"></span> <?php esc_html_e('Safety Features', 'orphaned-acf-media'); ?></h3>
+                    <p><?php esc_html_e('This plugin includes comprehensive safety checks to prevent accidental deletion of media files. It scans for usage in:', 'orphaned-acf-media'); ?></p>
                     <ul>
-                        <li><?php _e('ACF Fields (all types including repeaters)', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Featured Images', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Post/Page Content', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Widgets & Sidebars', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Navigation Menus', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Theme Customizer Settings', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Site Icon & Custom Headers/Backgrounds', 'orphaned-acf-media'); ?></li>
-                        <li><?php _e('Oxygen Builder 6 & Classic Content (Breakdance-based)', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('ACF Fields (all types including repeaters)', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('Featured Images', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('Post/Page Content', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('Widgets & Sidebars', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('Navigation Menus', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('Theme Customizer Settings', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('Site Icon & Custom Headers/Backgrounds', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('Oxygen Builder 6 & Classic Content (_oxygen_data)', 'orphaned-acf-media'); ?></li>
                     </ul>
                 </div>
 
                 <div class="backup-warning">
-                    <h3><span class="dashicons dashicons-warning"></span> <?php _e('Important Backup Warning', 'orphaned-acf-media'); ?></h3>
-                    <p><?php _e('Although this plugin includes comprehensive safety checks and multiple layers of protection, we strongly recommend creating a complete backup of your website (including files and database) before performing any media deletion operations.', 'orphaned-acf-media'); ?></p>
-                    <p><?php _e('While every precaution has been taken to safely identify and remove only truly orphaned media files, we cannot be held responsible for any unintended deletions. Always backup first!', 'orphaned-acf-media'); ?></p>
+                    <h3><span class="dashicons dashicons-warning"></span> <?php esc_html_e('Important Backup Warning', 'orphaned-acf-media'); ?></h3>
+                    <p><?php esc_html_e('Although this plugin includes comprehensive safety checks and multiple layers of protection, we strongly recommend creating a complete backup of your website (including files and database) before performing any media deletion operations.', 'orphaned-acf-media'); ?></p>
+                    <p><?php esc_html_e('While every precaution has been taken to safely identify and remove only truly orphaned media files, we cannot be held responsible for any unintended deletions. Always backup first!', 'orphaned-acf-media'); ?></p>
                 </div>
 
                 <div class="scan-buttons">
                     <button id="scan-orphaned-media" class="button button-primary">
-                        <?php _e('Scan for Orphaned Media', 'orphaned-acf-media'); ?>
+                        <?php esc_html_e('Scan for Orphaned Media', 'orphaned-acf-media'); ?>
                     </button>
-                    <button id="refresh-scan" class="button" title="<?php _e('Clear cache and perform fresh scan', 'orphaned-acf-media'); ?>">
-                        <?php _e('Refresh', 'orphaned-acf-media'); ?>
+                    <button id="refresh-scan" class="button" title="<?php esc_attr_e('Clear cache and perform fresh scan', 'orphaned-acf-media'); ?>">
+                        <?php esc_html_e('Refresh', 'orphaned-acf-media'); ?>
                     </button>
                 </div>
             </div>
@@ -164,13 +164,13 @@ class OrphanedACFMedia
                 <div class="orphaned-media-controls">
                     <div class="bulk-actions-left">
                         <button id="select-all-orphaned" class="button">
-                            <?php _e('Select All (This Page)', 'orphaned-acf-media'); ?>
+                            <?php esc_html_e('Select All (This Page)', 'orphaned-acf-media'); ?>
                         </button>
                         <button id="bulk-delete-orphaned" class="button button-secondary" disabled>
-                            <?php _e('Delete Selected', 'orphaned-acf-media'); ?>
+                            <?php esc_html_e('Delete Selected', 'orphaned-acf-media'); ?>
                         </button>
                         <button id="delete-all-safe" class="button button-safe">
-                            <?php _e('Delete All "Safe to Delete" Files', 'orphaned-acf-media'); ?>
+                            <?php esc_html_e('Delete All "Safe to Delete" Files', 'orphaned-acf-media'); ?>
                         </button>
                     </div>
                     <div class="orphaned-info">
@@ -181,47 +181,47 @@ class OrphanedACFMedia
 
                 <div class="table-filters">
                     <div class="custom-filter-group">
-                        <label for="file-type-filter"><?php _e('Filter by File Type:', 'orphaned-acf-media'); ?></label>
+                        <label for="file-type-filter"><?php esc_html_e('Filter by File Type:', 'orphaned-acf-media'); ?></label>
                         <select id="file-type-filter">
-                            <option value="all"><?php _e('All File Types', 'orphaned-acf-media'); ?></option>
-                            <option value="images"><?php _e('Images', 'orphaned-acf-media'); ?></option>
-                            <option value="videos"><?php _e('Videos', 'orphaned-acf-media'); ?></option>
-                            <option value="audio"><?php _e('Audio', 'orphaned-acf-media'); ?></option>
-                            <option value="pdfs"><?php _e('PDFs', 'orphaned-acf-media'); ?></option>
-                            <option value="documents"><?php _e('Documents', 'orphaned-acf-media'); ?></option>
+                            <option value="all"><?php esc_html_e('All File Types', 'orphaned-acf-media'); ?></option>
+                            <option value="images"><?php esc_html_e('Images', 'orphaned-acf-media'); ?></option>
+                            <option value="videos"><?php esc_html_e('Videos', 'orphaned-acf-media'); ?></option>
+                            <option value="audio"><?php esc_html_e('Audio', 'orphaned-acf-media'); ?></option>
+                            <option value="pdfs"><?php esc_html_e('PDFs', 'orphaned-acf-media'); ?></option>
+                            <option value="documents"><?php esc_html_e('Documents', 'orphaned-acf-media'); ?></option>
                         </select>
                     </div>
 
                     <div class="custom-filter-group">
-                        <label for="safety-status-filter"><?php _e('Filter by Safety Status:', 'orphaned-acf-media'); ?></label>
+                        <label for="safety-status-filter"><?php esc_html_e('Filter by Safety Status:', 'orphaned-acf-media'); ?></label>
                         <select id="safety-status-filter">
-                            <option value="all"><?php _e('All Status Types', 'orphaned-acf-media'); ?></option>
-                            <option value="safe"><?php _e('Safe to Delete', 'orphaned-acf-media'); ?></option>
-                            <option value="used-acf"><?php _e('Used in ACF Fields', 'orphaned-acf-media'); ?></option>
-                            <option value="used-content"><?php _e('Used in Content', 'orphaned-acf-media'); ?></option>
-                            <option value="used-both"><?php _e('Used in ACF & Content', 'orphaned-acf-media'); ?></option>
+                            <option value="all"><?php esc_html_e('All Status Types', 'orphaned-acf-media'); ?></option>
+                            <option value="safe"><?php esc_html_e('Safe to Delete', 'orphaned-acf-media'); ?></option>
+                            <option value="used-acf"><?php esc_html_e('Used in ACF Fields', 'orphaned-acf-media'); ?></option>
+                            <option value="used-content"><?php esc_html_e('Used in Content', 'orphaned-acf-media'); ?></option>
+                            <option value="used-both"><?php esc_html_e('Used in ACF & Content', 'orphaned-acf-media'); ?></option>
                         </select>
                     </div>
 
                     <div class="filter-actions">
-                        <button id="clear-filters" class="button"><?php _e('Clear', 'orphaned-acf-media'); ?></button>
+                        <button id="clear-filters" class="button"><?php esc_html_e('Clear', 'orphaned-acf-media'); ?></button>
                         <span class="filter-results-count"></span>
                     </div>
                 </div>
 
                 <div class="pagination-controls top-pagination" style="display: none;">
                     <div class="pagination-buttons">
-                        <button id="first-page" class="button" disabled>&laquo; <?php _e('First', 'orphaned-acf-media'); ?></button>
-                        <button id="prev-page" class="button" disabled>&lsaquo; <?php _e('Previous', 'orphaned-acf-media'); ?></button>
+                        <button id="first-page" class="button" disabled>&laquo; <?php esc_html_e('First', 'orphaned-acf-media'); ?></button>
+                        <button id="prev-page" class="button" disabled>&lsaquo; <?php esc_html_e('Previous', 'orphaned-acf-media'); ?></button>
                         <span class="page-numbers">
                             <input type="number" id="current-page-input" value="1" min="1" class="small-text">
-                            <span class="page-of"><?php _e('of', 'orphaned-acf-media'); ?> <span id="total-pages">1</span></span>
+                            <span class="page-of"><?php esc_html_e('of', 'orphaned-acf-media'); ?> <span id="total-pages">1</span></span>
                         </span>
-                        <button id="next-page" class="button" disabled><?php _e('Next', 'orphaned-acf-media'); ?> &rsaquo;</button>
-                        <button id="last-page" class="button" disabled><?php _e('Last', 'orphaned-acf-media'); ?> &raquo;</button>
+                        <button id="next-page" class="button" disabled><?php esc_html_e('Next', 'orphaned-acf-media'); ?> &rsaquo;</button>
+                        <button id="last-page" class="button" disabled><?php esc_html_e('Last', 'orphaned-acf-media'); ?> &raquo;</button>
                     </div>
                     <div class="items-per-page">
-                        <label for="items-per-page-select"><?php _e('Items per page:', 'orphaned-acf-media'); ?></label>
+                        <label for="items-per-page-select"><?php esc_html_e('Items per page:', 'orphaned-acf-media'); ?></label>
                         <select id="items-per-page-select">
                             <option value="25">25</option>
                             <option value="50" selected>50</option>
@@ -237,13 +237,13 @@ class OrphanedACFMedia
                             <th scope="col" class="manage-column column-cb check-column">
                                 <input type="checkbox" id="cb-select-all" />
                             </th>
-                            <th scope="col" class="manage-column"><?php _e('Thumbnail', 'orphaned-acf-media'); ?></th>
-                            <th scope="col" class="manage-column"><?php _e('Filename', 'orphaned-acf-media'); ?></th>
-                            <th scope="col" class="manage-column"><?php _e('File Type', 'orphaned-acf-media'); ?></th>
-                            <th scope="col" class="manage-column"><?php _e('Upload Date', 'orphaned-acf-media'); ?></th>
-                            <th scope="col" class="manage-column"><?php _e('File Size', 'orphaned-acf-media'); ?></th>
-                            <th scope="col" class="manage-column"><?php _e('Safety Status', 'orphaned-acf-media'); ?></th>
-                            <th scope="col" class="manage-column"><?php _e('Actions', 'orphaned-acf-media'); ?></th>
+                            <th scope="col" class="manage-column"><?php esc_html_e('Thumbnail', 'orphaned-acf-media'); ?></th>
+                            <th scope="col" class="manage-column"><?php esc_html_e('Filename', 'orphaned-acf-media'); ?></th>
+                            <th scope="col" class="manage-column"><?php esc_html_e('File Type', 'orphaned-acf-media'); ?></th>
+                            <th scope="col" class="manage-column"><?php esc_html_e('Upload Date', 'orphaned-acf-media'); ?></th>
+                            <th scope="col" class="manage-column"><?php esc_html_e('File Size', 'orphaned-acf-media'); ?></th>
+                            <th scope="col" class="manage-column"><?php esc_html_e('Safety Status', 'orphaned-acf-media'); ?></th>
+                            <th scope="col" class="manage-column"><?php esc_html_e('Actions', 'orphaned-acf-media'); ?></th>
                         </tr>
                     </thead>
                     <tbody id="orphaned-media-list">
@@ -253,19 +253,19 @@ class OrphanedACFMedia
 
                 <div class="pagination-controls bottom-pagination" style="display: none;">
                     <div class="pagination-buttons">
-                        <button class="button first-page-btn" disabled>&laquo; <?php _e('First', 'orphaned-acf-media'); ?></button>
-                        <button class="button prev-page-btn" disabled>&lsaquo; <?php _e('Previous', 'orphaned-acf-media'); ?></button>
+                        <button class="button first-page-btn" disabled>&laquo; <?php esc_html_e('First', 'orphaned-acf-media'); ?></button>
+                        <button class="button prev-page-btn" disabled>&lsaquo; <?php esc_html_e('Previous', 'orphaned-acf-media'); ?></button>
                         <span class="page-numbers">
                             <span class="page-display"></span>
                         </span>
-                        <button class="button next-page-btn" disabled><?php _e('Next', 'orphaned-acf-media'); ?> &rsaquo;</button>
-                        <button class="button last-page-btn" disabled><?php _e('Last', 'orphaned-acf-media'); ?> &raquo;</button>
+                        <button class="button next-page-btn" disabled><?php esc_html_e('Next', 'orphaned-acf-media'); ?> &rsaquo;</button>
+                        <button class="button last-page-btn" disabled><?php esc_html_e('Last', 'orphaned-acf-media'); ?> &raquo;</button>
                     </div>
                 </div>
             </div>
 
             <div id="loading-spinner" style="display: none;">
-                <p id="scanning-status"><?php _e('Scanning media files...', 'orphaned-acf-media'); ?></p>
+                <p id="scanning-status"><?php esc_html_e('Scanning media files...', 'orphaned-acf-media'); ?></p>
                 <div class="scanning-progress">
                     <div class="progress-bar">
                         <div class="progress-fill" id="scan-progress-fill"></div>
@@ -500,6 +500,9 @@ class OrphanedACFMedia
         $cache_key = 'orphaned_acf_media_ids_' . md5(get_current_user_id());
         delete_transient($cache_key);
         delete_transient('orphaned_acf_media_total_count');
+
+        // Clear all wp_cache entries for orphaned ACF media
+        wp_cache_flush_group('orphaned_acf_media');
     }
 
     /**
@@ -566,10 +569,17 @@ class OrphanedACFMedia
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
             WHERE meta_value = %s
-            AND meta_key NOT LIKE '_%%'
-        ", $attachment_id);
+            AND meta_key NOT LIKE %s
+        ", $attachment_id, '\\_%');
 
-        $count = $wpdb->get_var($meta_query);
+        // Check cache first
+        $cache_key = 'orphaned_acf_meta_' . $attachment_id;
+        $count = wp_cache_get($cache_key, 'orphaned_acf_media');
+
+        if (false === $count) {
+            $count = $wpdb->get_var($meta_query);
+            wp_cache_set($cache_key, $count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
 
         if ($count > 0) {
             return true;
@@ -580,10 +590,17 @@ class OrphanedACFMedia
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
             WHERE meta_value LIKE %s
-            AND meta_key NOT LIKE '_%%'
-        ", '%"' . $attachment_id . '"%');
+            AND meta_key NOT LIKE %s
+        ", '%"' . $attachment_id . '"%', '\\_%');
 
-        $serialized_count = $wpdb->get_var($serialized_query);
+        // Check cache first for serialized data
+        $serialized_cache_key = 'orphaned_acf_serialized_' . $attachment_id;
+        $serialized_count = wp_cache_get($serialized_cache_key, 'orphaned_acf_media');
+
+        if (false === $serialized_count) {
+            $serialized_count = $wpdb->get_var($serialized_query);
+            wp_cache_set($serialized_cache_key, $serialized_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
 
         if ($serialized_count > 0) {
             return true;
@@ -593,11 +610,18 @@ class OrphanedACFMedia
         $options_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->options}
-            WHERE option_name LIKE 'options_%%'
+            WHERE option_name LIKE %s
             AND (option_value = %s OR option_value LIKE %s)
-        ", $attachment_id, '%"' . $attachment_id . '"%');
+        ", 'options\\_%', $attachment_id, '%"' . $attachment_id . '"%');
 
-        $options_count = $wpdb->get_var($options_query);
+        // Check cache first for ACF options
+        $options_cache_key = 'orphaned_acf_options_' . $attachment_id;
+        $options_count = wp_cache_get($options_cache_key, 'orphaned_acf_media');
+
+        if (false === $options_count) {
+            $options_count = $wpdb->get_var($options_query);
+            wp_cache_set($options_cache_key, $options_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
 
         return $options_count > 0;
     }
@@ -609,20 +633,31 @@ class OrphanedACFMedia
     {
         global $wpdb;
         $file_url = wp_get_attachment_url($attachment_id);
-        $file_path = parse_url($file_url, PHP_URL_PATH);
+        $file_path = wp_parse_url($file_url, PHP_URL_PATH);
         $filename = basename($file_path);
+
+
 
         // 1. Check post content for direct image references
         $content_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->posts}
-            WHERE post_content LIKE %s
-            OR post_content LIKE %s
-            OR post_content LIKE %s
+            WHERE (post_content LIKE CONCAT('%%', %s, '%%')
+            OR post_content LIKE CONCAT('%%', %s, '%%')
+            OR post_content LIKE CONCAT('%%', %s, '%%'))
             AND post_status IN ('publish', 'private', 'draft', 'future', 'pending')
-        ", '%' . $file_url . '%', '%' . $file_path . '%', '%' . $filename . '%');
+        ", $file_url, $file_path, $filename);
 
-        if ($wpdb->get_var($content_query) > 0) {
+        // Check cache first for content usage
+        $content_cache_key = 'orphaned_acf_content_' . md5($file_url . $file_path . $filename);
+        $content_count = wp_cache_get($content_cache_key, 'orphaned_acf_media');
+
+        if (false === $content_count) {
+            $content_count = $wpdb->get_var($content_query);
+            wp_cache_set($content_cache_key, $content_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($content_count > 0) {
             return true;
         }
 
@@ -634,7 +669,16 @@ class OrphanedACFMedia
             AND meta_value = %s
         ", $attachment_id);
 
-        if ($wpdb->get_var($featured_query) > 0) {
+        // Check cache first for featured image usage
+        $featured_cache_key = 'orphaned_acf_featured_' . $attachment_id;
+        $featured_count = wp_cache_get($featured_cache_key, 'orphaned_acf_media');
+
+        if (false === $featured_count) {
+            $featured_count = $wpdb->get_var($featured_query);
+            wp_cache_set($featured_cache_key, $featured_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($featured_count > 0) {
             return true;
         }
 
@@ -642,11 +686,20 @@ class OrphanedACFMedia
         $widget_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->options}
-            WHERE option_name LIKE 'widget_%%'
-            AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            WHERE option_name LIKE %s
+            AND (option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%'))
+        ", 'widget\\_%', $attachment_id, $file_url, $filename);
 
-        if ($wpdb->get_var($widget_query) > 0) {
+        // Check cache first for widget usage
+        $widget_cache_key = 'orphaned_acf_widget_' . md5($attachment_id . $file_url . $filename);
+        $widget_count = wp_cache_get($widget_cache_key, 'orphaned_acf_media');
+
+        if (false === $widget_count) {
+            $widget_count = $wpdb->get_var($widget_query);
+            wp_cache_set($widget_cache_key, $widget_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($widget_count > 0) {
             return true;
         }
 
@@ -654,11 +707,20 @@ class OrphanedACFMedia
         $customizer_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->options}
-            WHERE option_name LIKE 'theme_mods_%%'
-            AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            WHERE option_name LIKE %s
+            AND (option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%'))
+        ", 'theme\\_mods\\_%', $attachment_id, $file_url, $filename);
 
-        if ($wpdb->get_var($customizer_query) > 0) {
+        // Check cache first for customizer usage
+        $customizer_cache_key = 'orphaned_acf_customizer_' . md5($attachment_id . $file_url . $filename);
+        $customizer_count = wp_cache_get($customizer_cache_key, 'orphaned_acf_media');
+
+        if (false === $customizer_count) {
+            $customizer_count = $wpdb->get_var($customizer_query);
+            wp_cache_set($customizer_cache_key, $customizer_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($customizer_count > 0) {
             return true;
         }
 
@@ -668,10 +730,19 @@ class OrphanedACFMedia
             FROM {$wpdb->postmeta} pm
             INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
             WHERE p.post_type = 'nav_menu_item'
-            AND (pm.meta_value LIKE %s OR pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            AND (pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
-        if ($wpdb->get_var($menu_query) > 0) {
+        // Check cache first for menu usage
+        $menu_cache_key = 'orphaned_acf_menu_' . md5($attachment_id . $file_url . $filename);
+        $menu_count = wp_cache_get($menu_cache_key, 'orphaned_acf_media');
+
+        if (false === $menu_count) {
+            $menu_count = $wpdb->get_var($menu_query);
+            wp_cache_set($menu_cache_key, $menu_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($menu_count > 0) {
             return true;
         }
 
@@ -683,7 +754,16 @@ class OrphanedACFMedia
             AND post_type = 'attachment'
         ", $attachment_id);
 
-        if ($wpdb->get_var($parent_query) > 0) {
+        // Check cache first for parent usage
+        $parent_cache_key = 'orphaned_acf_parent_' . $attachment_id;
+        $parent_count = wp_cache_get($parent_cache_key, 'orphaned_acf_media');
+
+        if (false === $parent_count) {
+            $parent_count = $wpdb->get_var($parent_query);
+            wp_cache_set($parent_cache_key, $parent_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($parent_count > 0) {
             return true;
         }
 
@@ -707,11 +787,20 @@ class OrphanedACFMedia
         $all_meta_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
-            WHERE (meta_value = %s OR meta_value LIKE %s OR meta_value LIKE %s)
-            AND meta_key NOT LIKE '_%%'
-        ", $attachment_id, '%' . $file_url . '%', '%' . $filename . '%');
+            WHERE (meta_value = %s OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+            AND meta_key NOT LIKE %s
+        ", $attachment_id, $file_url, $filename, '\\_%');
 
-        if ($wpdb->get_var($all_meta_query) > 0) {
+        // Check cache first for all meta usage
+        $all_meta_cache_key = 'orphaned_acf_allmeta_' . md5($attachment_id . $file_url . $filename);
+        $all_meta_count = wp_cache_get($all_meta_cache_key, 'orphaned_acf_media');
+
+        if (false === $all_meta_count) {
+            $all_meta_count = $wpdb->get_var($all_meta_query);
+            wp_cache_set($all_meta_cache_key, $all_meta_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($all_meta_count > 0) {
             return true;
         }
 
@@ -720,19 +809,48 @@ class OrphanedACFMedia
             SELECT COUNT(*)
             FROM {$wpdb->usermeta}
             WHERE meta_value = %s
-            OR meta_value LIKE %s
-            OR meta_value LIKE %s
-        ", $attachment_id, '%' . $file_url . '%', '%' . $filename . '%');
+            OR meta_value LIKE CONCAT('%%', %s, '%%')
+            OR meta_value LIKE CONCAT('%%', %s, '%%')
+        ", $attachment_id, $file_url, $filename);
 
-        if ($wpdb->get_var($user_meta_query) > 0) {
+        // Check cache first for user meta usage
+        $user_meta_cache_key = 'orphaned_acf_usermeta_' . md5($attachment_id . $file_url . $filename);
+        $user_meta_count = wp_cache_get($user_meta_cache_key, 'orphaned_acf_media');
+
+        if (false === $user_meta_count) {
+            $user_meta_count = $wpdb->get_var($user_meta_query);
+            wp_cache_set($user_meta_cache_key, $user_meta_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($user_meta_count > 0) {
             return true;
         }
 
-        // 11. Check Oxygen Builder content (v6 Breakdance-based + Classic)
+        // 11. Check Oxygen Builder content (v6 with _oxygen_data + Classic)
         if ($this->check_usage_in_oxygen_builder($attachment_id, $file_url, $filename)) {
             return true;
         }
 
+        // 12. Direct database check for _oxygen_data (fallback)
+        $direct_oxygen_query = $wpdb->prepare("
+            SELECT COUNT(*)
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = '_oxygen_data'
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $filename, $file_url);
+
+        // Check cache first for direct oxygen usage
+        $direct_oxygen_cache_key = 'orphaned_acf_directoxygen_' . md5($attachment_id . $filename . $file_url);
+        $direct_oxygen_count = wp_cache_get($direct_oxygen_cache_key, 'orphaned_acf_media');
+
+        if (false === $direct_oxygen_count) {
+            $direct_oxygen_count = $wpdb->get_var($direct_oxygen_query);
+            wp_cache_set($direct_oxygen_cache_key, $direct_oxygen_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($direct_oxygen_count > 0) {
+            return true;
+        }
         return false;
     }
 
@@ -744,7 +862,7 @@ class OrphanedACFMedia
         global $wpdb;
         $usage_details = array();
         $file_url = wp_get_attachment_url($attachment_id);
-        $file_path = parse_url($file_url, PHP_URL_PATH);
+        $file_path = wp_parse_url($file_url, PHP_URL_PATH);
         $filename = basename($file_path);
 
         // Check various usage locations
@@ -781,54 +899,104 @@ class OrphanedACFMedia
     private function check_usage_in_featured_images($attachment_id, $file_url, $filename)
     {
         global $wpdb;
-        $query = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = '_thumbnail_id' AND meta_value = %s", $attachment_id);
-        return $wpdb->get_var($query) > 0;
+
+        // Check cache first
+        $cache_key = 'orphaned_acf_helper_featured_' . $attachment_id;
+        $result = wp_cache_get($cache_key, 'orphaned_acf_media');
+
+        if (false === $result) {
+            $query = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = '_thumbnail_id' AND meta_value = %s", $attachment_id);
+            $result = $wpdb->get_var($query) > 0;
+            wp_cache_set($cache_key, $result, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        return $result;
     }
 
     private function check_usage_in_post_content($attachment_id, $file_url, $filename)
     {
         global $wpdb;
-        $file_path = parse_url($file_url, PHP_URL_PATH);
-        $query = $wpdb->prepare("
-            SELECT COUNT(*) FROM {$wpdb->posts}
-            WHERE (post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s)
-            AND post_status IN ('publish', 'private', 'draft', 'future', 'pending')
-        ", '%' . $file_url . '%', '%' . $file_path . '%', '%' . $filename . '%');
-        return $wpdb->get_var($query) > 0;
+
+        // Check cache first
+        $cache_key = 'orphaned_acf_helper_content_' . md5($file_url . $filename);
+        $result = wp_cache_get($cache_key, 'orphaned_acf_media');
+
+        if (false === $result) {
+            $file_path = wp_parse_url($file_url, PHP_URL_PATH);
+            $query = $wpdb->prepare("
+                SELECT COUNT(*) FROM {$wpdb->posts}
+                WHERE (post_content LIKE CONCAT('%%', %s, '%%') OR post_content LIKE CONCAT('%%', %s, '%%') OR post_content LIKE CONCAT('%%', %s, '%%'))
+                AND post_status IN ('publish', 'private', 'draft', 'future', 'pending')
+            ", $file_url, $file_path, $filename);
+            $result = $wpdb->get_var($query) > 0;
+            wp_cache_set($cache_key, $result, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        return $result;
     }
 
     private function check_usage_in_widgets($attachment_id, $file_url, $filename)
     {
         global $wpdb;
-        $query = $wpdb->prepare("
-            SELECT COUNT(*) FROM {$wpdb->options}
-            WHERE option_name LIKE 'widget_%%'
-            AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
-        return $wpdb->get_var($query) > 0;
+
+        // Check cache first
+        $cache_key = 'orphaned_acf_helper_widgets_' . md5($attachment_id . $file_url . $filename);
+        $result = wp_cache_get($cache_key, 'orphaned_acf_media');
+
+        if (false === $result) {
+            $query = $wpdb->prepare("
+                SELECT COUNT(*) FROM {$wpdb->options}
+                WHERE option_name LIKE %s
+                AND (option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%'))
+            ", 'widget\\_%', $attachment_id, $file_url, $filename);
+            $result = $wpdb->get_var($query) > 0;
+            wp_cache_set($cache_key, $result, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        return $result;
     }
 
     private function check_usage_in_menus($attachment_id, $file_url, $filename)
     {
         global $wpdb;
-        $query = $wpdb->prepare("
-            SELECT COUNT(*) FROM {$wpdb->postmeta} pm
-            INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-            WHERE p.post_type = 'nav_menu_item'
-            AND (pm.meta_value LIKE %s OR pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
-        return $wpdb->get_var($query) > 0;
+
+        // Check cache first
+        $cache_key = 'orphaned_acf_helper_menus_' . md5($attachment_id . $file_url . $filename);
+        $result = wp_cache_get($cache_key, 'orphaned_acf_media');
+
+        if (false === $result) {
+            $query = $wpdb->prepare("
+                SELECT COUNT(*) FROM {$wpdb->postmeta} pm
+                INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+                WHERE p.post_type = 'nav_menu_item'
+                AND (pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%'))
+            ", $attachment_id, $file_url, $filename);
+            $result = $wpdb->get_var($query) > 0;
+            wp_cache_set($cache_key, $result, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        return $result;
     }
 
     private function check_usage_in_customizer($attachment_id, $file_url, $filename)
     {
         global $wpdb;
-        $query = $wpdb->prepare("
-            SELECT COUNT(*) FROM {$wpdb->options}
-            WHERE option_name LIKE 'theme_mods_%%'
-            AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
-        return $wpdb->get_var($query) > 0;
+
+        // Check cache first
+        $cache_key = 'orphaned_acf_helper_customizer_' . md5($attachment_id . $file_url . $filename);
+        $result = wp_cache_get($cache_key, 'orphaned_acf_media');
+
+        if (false === $result) {
+            $query = $wpdb->prepare("
+                SELECT COUNT(*) FROM {$wpdb->options}
+                WHERE option_name LIKE %s
+                AND (option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%'))
+            ", 'theme\\_mods\\_%', $attachment_id, $file_url, $filename);
+            $result = $wpdb->get_var($query) > 0;
+            wp_cache_set($cache_key, $result, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        return $result;
     }
 
     private function check_usage_in_site_settings($attachment_id, $file_url, $filename)
@@ -846,75 +1014,96 @@ class OrphanedACFMedia
     {
         global $wpdb;
 
+        // Check cache first for complete Oxygen Builder results
+        $oxygen_cache_key = 'orphaned_acf_oxygen_' . md5($attachment_id . $file_url . $filename);
+        $cached_result = wp_cache_get($oxygen_cache_key, 'orphaned_acf_media');
+
+        if (false !== $cached_result) {
+            return $cached_result;
+        }
+
         // Check if Oxygen Builder is active (classic or v6)
         $oxygen_classic_active = defined('CT_VERSION') || is_plugin_active('oxygen/functions.php');
         $oxygen_v6_active = is_plugin_active('oxygen/functions.php') || class_exists('Breakdance\\Lib\\PluginAPI');
 
         if (!$oxygen_classic_active && !$oxygen_v6_active) {
+            wp_cache_set($oxygen_cache_key, false, 'orphaned_acf_media', 300); // Cache negative result
             return false;
         }
 
-        // === OXYGEN BUILDER 6 (BREAKDANCE-BASED) CHECKS ===
+        // === OXYGEN BUILDER 6 ACTUAL META FIELD CHECKS ===
 
-        // 1. Check _breakdance_data meta (Oxygen 6 / Breakdance main storage)
+        // 1. Check _oxygen_data meta (ACTUAL Oxygen 6 storage - complex JSON structure)
+        // First do a quick LIKE search to narrow down candidates
+        $oxygen_v6_candidates = $wpdb->get_results($wpdb->prepare("
+            SELECT post_id, meta_value
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = '_oxygen_data'
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $filename, $file_url));
+
+        if (!empty($oxygen_v6_candidates)) {
+            foreach ($oxygen_v6_candidates as $post) {
+                if ($this->check_oxygen_v6_data_structure($post->meta_value, $attachment_id, $file_url, $filename)) {
+                    wp_cache_set($oxygen_cache_key, true, 'orphaned_acf_media', 300); // Cache positive result
+                    return true;
+                }
+            }
+        }
+
+        // 2. Check oxygen_data meta (alternative storage without underscore)
+        $oxygen_data_alt_candidates = $wpdb->get_results($wpdb->prepare("
+            SELECT post_id, meta_value
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = 'oxygen_data'
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $filename, $file_url));
+
+        if (!empty($oxygen_data_alt_candidates)) {
+            foreach ($oxygen_data_alt_candidates as $post) {
+                if ($this->check_oxygen_v6_data_structure($post->meta_value, $attachment_id, $file_url, $filename)) {
+                    return true;
+                }
+            }
+        }        // === LEGACY BREAKDANCE CHECKS (for thoroughness) ===
+
+        // 3. Check _breakdance_data meta (in case some installations use this)
         $breakdance_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
             WHERE meta_key = '_breakdance_data'
-            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($breakdance_query) > 0) {
             return true;
         }
 
-        // 2. Check breakdance_data meta (alternative storage)
+        // 4. Check breakdance_data meta (alternative storage)
         $breakdance_alt_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
             WHERE meta_key = 'breakdance_data'
-            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($breakdance_alt_query) > 0) {
             return true;
         }
 
-        // 3. Check _breakdance_tree_json meta (JSON tree structure)
-        $breakdance_tree_query = $wpdb->prepare("
-            SELECT COUNT(*)
-            FROM {$wpdb->postmeta}
-            WHERE meta_key = '_breakdance_tree_json'
-            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+        // === OXYGEN 6 TEMPLATE CHECKS ===
 
-        if ($wpdb->get_var($breakdance_tree_query) > 0) {
-            return true;
-        }
-
-        // 4. Check _breakdance_css meta (compiled CSS)
-        $breakdance_css_query = $wpdb->prepare("
-            SELECT COUNT(*)
-            FROM {$wpdb->postmeta}
-            WHERE meta_key = '_breakdance_css'
-            AND (meta_value LIKE %s OR meta_value LIKE %s)
-        ", '%' . $file_url . '%', '%' . $filename . '%');
-
-        if ($wpdb->get_var($breakdance_css_query) > 0) {
-            return true;
-        }
-
-        // 5. Check breakdance templates and global blocks
-        $breakdance_templates_query = $wpdb->prepare("
+        // 5. Check Oxygen 6 templates with _oxygen_data
+        $oxygen_v6_templates_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->posts} p
             INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-            WHERE p.post_type IN ('breakdance_template', 'breakdance_block', 'breakdance_header', 'breakdance_footer')
-            AND pm.meta_key IN ('_breakdance_data', 'breakdance_data', '_breakdance_tree_json')
-            AND (pm.meta_value LIKE %s OR pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            WHERE p.post_type IN ('ct_template', 'oxygen_template', 'breakdance_template', 'breakdance_block', 'breakdance_header', 'breakdance_footer')
+            AND pm.meta_key IN ('_oxygen_data', 'oxygen_data', '_breakdance_data', 'breakdance_data')
+            AND (pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
-        if ($wpdb->get_var($breakdance_templates_query) > 0) {
+        if ($wpdb->get_var($oxygen_v6_templates_query) > 0) {
             return true;
         }
 
@@ -925,8 +1114,8 @@ class OrphanedACFMedia
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
             WHERE meta_key = 'ct_builder_shortcodes'
-            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($oxygen_query) > 0) {
             return true;
@@ -937,8 +1126,8 @@ class OrphanedACFMedia
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
             WHERE meta_key = 'ct_builder_json'
-            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($oxygen_json_query) > 0) {
             return true;
@@ -951,8 +1140,8 @@ class OrphanedACFMedia
             INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
             WHERE p.post_type = 'ct_template'
             AND pm.meta_key IN ('ct_builder_shortcodes', 'ct_builder_json')
-            AND (pm.meta_value LIKE %s OR pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            AND (pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($oxygen_templates_query) > 0) {
             return true;
@@ -965,8 +1154,8 @@ class OrphanedACFMedia
             INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
             WHERE p.post_type = 'oxy_user_library'
             AND pm.meta_key IN ('ct_builder_shortcodes', 'ct_builder_json')
-            AND (pm.meta_value LIKE %s OR pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            AND (pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%') OR pm.meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($oxygen_parts_query) > 0) {
             return true;
@@ -978,9 +1167,9 @@ class OrphanedACFMedia
         $css_cache_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->options}
-            WHERE (option_name LIKE 'oxygen_vsb_css_cache_%%' OR option_name LIKE 'breakdance_css_cache_%%' OR option_name LIKE '_breakdance_css_%%')
-            AND (option_value LIKE %s OR option_value LIKE %s)
-        ", '%' . $file_url . '%', '%' . $filename . '%');
+            WHERE (option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s)
+            AND (option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%'))
+        ", 'oxygen\\_vsb\\_css\\_cache\\_%', 'breakdance\\_css\\_cache\\_%', '\\_oxygen\\_css\\_%', $file_url, $filename);
 
         if ($wpdb->get_var($css_cache_query) > 0) {
             return true;
@@ -990,9 +1179,9 @@ class OrphanedACFMedia
         $custom_styles_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->postmeta}
-            WHERE meta_key IN ('ct_builder_css', 'ct_builder_js', 'ct_custom_css', 'ct_custom_js', '_breakdance_css', '_breakdance_js', 'breakdance_custom_css', 'breakdance_custom_js')
-            AND (meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            WHERE meta_key IN ('ct_builder_css', 'ct_builder_js', 'ct_custom_css', 'ct_custom_js', '_oxygen_css', '_oxygen_js', 'oxygen_custom_css', 'oxygen_custom_js')
+            AND (meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%') OR meta_value LIKE CONCAT('%%', %s, '%%'))
+        ", $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($custom_styles_query) > 0) {
             return true;
@@ -1002,12 +1191,127 @@ class OrphanedACFMedia
         $global_settings_query = $wpdb->prepare("
             SELECT COUNT(*)
             FROM {$wpdb->options}
-            WHERE (option_name LIKE 'oxygen_vsb_%%' OR option_name LIKE 'breakdance_%%' OR option_name LIKE '_breakdance_%%')
-            AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-        ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $filename . '%');
+            WHERE (option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s)
+            AND (option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%') OR option_value LIKE CONCAT('%%', %s, '%%'))
+        ", 'oxygen\\_vsb\\_%', 'oxygen\\_%', 'breakdance\\_%', '\\_oxygen\\_%', $attachment_id, $file_url, $filename);
 
         if ($wpdb->get_var($global_settings_query) > 0) {
+            wp_cache_set($oxygen_cache_key, true, 'orphaned_acf_media', 300); // Cache positive result
             return true;
+        }
+
+        wp_cache_set($oxygen_cache_key, false, 'orphaned_acf_media', 300); // Cache negative result
+        return false;
+    }
+
+    /**
+     * Check Oxygen Builder 6 data structure for media usage
+     * Parses the complex JSON structure: {"tree_json_string": "..." } containing nested media references
+     */
+    private function check_oxygen_v6_data_structure($meta_value, $attachment_id, $file_url, $filename)
+    {
+        if (empty($meta_value)) {
+            return false;
+        }
+
+        // First, do a simple string search as a fallback
+        if (
+            strpos($meta_value, (string)$attachment_id) !== false ||
+            strpos($meta_value, $filename) !== false ||
+            strpos($meta_value, $file_url) !== false
+        ) {
+
+            // If we find a match, let's try the JSON parsing
+            $oxygen_data = json_decode($meta_value, true);
+
+            // If JSON parsing fails, but we found the attachment in the raw string, consider it used
+            if (!$oxygen_data) {
+                return true; // Found in raw content, assume it's used
+            }
+
+            // If we have tree_json_string, parse it
+            if (isset($oxygen_data['tree_json_string'])) {
+                $tree_data = json_decode($oxygen_data['tree_json_string'], true);
+                if ($tree_data) {
+                    // Convert to searchable string for comprehensive detection
+                    $searchable_content = json_encode($tree_data);
+
+                    // Check for media references in various formats used by Oxygen v6
+                    $search_patterns = [
+                        // Direct ID reference (as seen in the example: "id":5964)
+                        '"id":' . $attachment_id,
+                        '"id": ' . $attachment_id,
+
+                        // Filename reference (as seen: "filename":"youtube-shorts-logo-42480.png")
+                        '"filename":"' . $filename . '"',
+                        '"filename": "' . $filename . '"',
+
+                        // URL references (as seen in the example)
+                        $file_url,
+
+                        // Encoded URL references
+                        str_replace('/', '\/', $file_url),
+
+                        // Just the filename without extension for partial matches
+                        pathinfo($filename, PATHINFO_FILENAME),
+
+                        // Media array structure check (looks for media.id pattern)
+                        '"media":{"id":' . $attachment_id,
+                        '"media": {"id": ' . $attachment_id,
+
+                        // Alt attribute check
+                        '"alt":"' . $filename . '"',
+
+                        // Srcset pattern check
+                        'srcset":"' . $file_url,
+
+                        // WordPress upload path pattern for this file
+                        str_replace(home_url(), '', $file_url),
+                    ];
+
+                    foreach ($search_patterns as $pattern) {
+                        if (strpos($searchable_content, $pattern) !== false) {
+                            return true;
+                        }
+                    }
+
+                    // Additional recursive check for deeply nested structures
+                    return $this->recursive_media_search($tree_data, $attachment_id, $file_url, $filename);
+                }
+            }
+
+            // If we got here, we found the attachment in the raw meta but couldn't parse JSON properly
+            // Let's be safe and assume it's used
+            return true;
+        }
+
+        return false;
+    }
+    /**
+     * Recursively search through nested array structures for media references
+     */
+    private function recursive_media_search($data, $attachment_id, $file_url, $filename)
+    {
+        if (!is_array($data)) {
+            return false;
+        }
+
+        foreach ($data as $key => $value) {
+            // Check if current value matches our media
+            if (is_string($value)) {
+                if (
+                    strpos($value, (string)$attachment_id) !== false ||
+                    strpos($value, $file_url) !== false ||
+                    strpos($value, $filename) !== false
+                ) {
+                    return true;
+                }
+            }
+
+            // Recursively check arrays and objects
+            if (is_array($value) && $this->recursive_media_search($value, $attachment_id, $file_url, $filename)) {
+                return true;
+            }
         }
 
         return false;
@@ -1054,7 +1358,7 @@ class OrphanedACFMedia
     public function ajax_delete_orphaned_media()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(wp_unslash($_POST['nonce']), 'orphaned_acf_media_nonce')) {
             wp_die('Security check failed');
         }
 
@@ -1063,7 +1367,7 @@ class OrphanedACFMedia
             wp_die('Insufficient permissions');
         }
 
-        $attachment_id = intval($_POST['attachment_id']);
+        $attachment_id = isset($_POST['attachment_id']) ? intval(wp_unslash($_POST['attachment_id'])) : 0;
 
         // Final safety check before deletion
         if ($this->is_attachment_used_elsewhere($attachment_id)) {
@@ -1093,7 +1397,7 @@ class OrphanedACFMedia
     public function ajax_bulk_delete_orphaned_media()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(wp_unslash($_POST['nonce']), 'orphaned_acf_media_nonce')) {
             wp_die('Security check failed');
         }
 
@@ -1102,7 +1406,7 @@ class OrphanedACFMedia
             wp_die('Insufficient permissions');
         }
 
-        $attachment_ids = array_map('intval', $_POST['attachment_ids']);
+        $attachment_ids = isset($_POST['attachment_ids']) ? array_map('intval', wp_unslash($_POST['attachment_ids'])) : array();
         $deleted_count = 0;
         $failed_count = 0;
         $safety_blocked = 0;
@@ -1135,12 +1439,15 @@ class OrphanedACFMedia
 
         $message = '';
         if ($deleted_count > 0) {
+            /* translators: %d is the number of deleted media files */
             $message .= sprintf(__('Successfully deleted %d media files. ', 'orphaned-acf-media'), $deleted_count);
         }
         if ($safety_blocked > 0) {
+            /* translators: %d is the number of files blocked by safety checks */
             $message .= sprintf(__('%d files were blocked by safety checks (still in use). ', 'orphaned-acf-media'), $safety_blocked);
         }
         if ($failed_count > 0) {
+            /* translators: %d is the number of files that failed to delete */
             $message .= sprintf(__('%d files failed to delete due to errors.', 'orphaned-acf-media'), $failed_count);
         }
 
@@ -1164,7 +1471,7 @@ class OrphanedACFMedia
     public function ajax_delete_all_safe_media()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(wp_unslash($_POST['nonce']), 'orphaned_acf_media_nonce')) {
             wp_die('Security check failed');
         }
 
@@ -1174,8 +1481,8 @@ class OrphanedACFMedia
         }
 
         // Get batch size from request or use default
-        $batch_size = isset($_POST['batch_size']) ? intval($_POST['batch_size']) : 10;
-        $batch_offset = isset($_POST['batch_offset']) ? intval($_POST['batch_offset']) : 0;
+        $batch_size = isset($_POST['batch_size']) ? intval(wp_unslash($_POST['batch_size'])) : 10;
+        $batch_offset = isset($_POST['batch_offset']) ? intval(wp_unslash($_POST['batch_offset'])) : 0;
 
         // Get cached orphaned media IDs (same as main scan uses)
         $cache_key = 'orphaned_acf_media_ids_' . md5(get_current_user_id());
@@ -1236,7 +1543,8 @@ class OrphanedACFMedia
             'total_found' => $total_safe,
             'progress_percent' => $total_safe > 0 ? (($batch_offset + $processed_count) / $total_safe) * 100 : 100,
             'message' => sprintf(
-                __('Processed %d files. Deleted: %d, Failed: %d', 'orphaned-acf-media'),
+                /* translators: %1$d is processed files count, %2$d is deleted files count, %3$d is failed files count */
+                __('Processed %1$d files. Deleted: %2$d, Failed: %3$d', 'orphaned-acf-media'),
                 $processed_count,
                 $deleted_count,
                 $failed_count
@@ -1250,7 +1558,7 @@ class OrphanedACFMedia
     public function ajax_clear_orphaned_cache()
     {
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(wp_unslash($_POST['nonce']), 'orphaned_acf_media_nonce')) {
             wp_die('Security check failed');
         }
 
@@ -1276,7 +1584,7 @@ add_action('wp_ajax_scan_orphaned_media', 'handle_scan_orphaned_media');
 function handle_scan_orphaned_media()
 {
     // Verify nonce
-    if (!wp_verify_nonce($_POST['nonce'], 'orphaned_acf_media_nonce')) {
+    if (!isset($_POST['nonce']) || !wp_verify_nonce(wp_unslash($_POST['nonce']), 'orphaned_acf_media_nonce')) {
         wp_die('Security check failed');
     }
 
@@ -1285,13 +1593,13 @@ function handle_scan_orphaned_media()
         wp_die('Insufficient permissions');
     }
 
-    $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-    $per_page = isset($_POST['per_page']) ? intval($_POST['per_page']) : 50;
-    $scan_all = isset($_POST['scan_all']) ? (bool) $_POST['scan_all'] : false;
+    $page = isset($_POST['page']) ? intval(wp_unslash($_POST['page'])) : 1;
+    $per_page = isset($_POST['per_page']) ? intval(wp_unslash($_POST['per_page'])) : 50;
+    $scan_all = isset($_POST['scan_all']) ? (bool) wp_unslash($_POST['scan_all']) : false;
 
     // Filter parameters
-    $file_type_filter = isset($_POST['file_type_filter']) ? sanitize_text_field($_POST['file_type_filter']) : 'all';
-    $safety_status_filter = isset($_POST['safety_status_filter']) ? sanitize_text_field($_POST['safety_status_filter']) : 'all';
+    $file_type_filter = isset($_POST['file_type_filter']) ? sanitize_text_field(wp_unslash($_POST['file_type_filter'])) : 'all';
+    $safety_status_filter = isset($_POST['safety_status_filter']) ? sanitize_text_field(wp_unslash($_POST['safety_status_filter'])) : 'all';
 
     $plugin = new OrphanedACFMedia();
     $result = $plugin->get_orphaned_media($page, $per_page, $scan_all, $file_type_filter, $safety_status_filter);

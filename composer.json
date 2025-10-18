@@ -2,17 +2,13 @@
     "name": "citcom/orphaned-acf-media",
     "description": "A comprehensive WordPress plugin that finds and safely removes media files not used in ACF fields",
     "type": "wordpress-plugin",
-    "version": "1.2.1",
+    "version": "1.3.0",
     "keywords": [
-        "wordpress",
-        "plugin",
         "media",
         "cleanup",
-        "acf",
         "advanced-custom-fields",
-        "optimization",
-        "storage",
-        "maintenance"
+        "attachments",
+        "orphaned"
     ],
     "homepage": "https://plugins.citcom.support/orphaned-acf-media",
     "license": "GPL-2.0-or-later",
@@ -57,7 +53,7 @@
     "extra": {
         "wordpress-plugin": {
             "slug": "orphaned-acf-media",
-            "version": "1.1.0",
+            "version": "1.3.0",
             "requires": "5.0",
             "tested": "6.8.3",
             "requires-php": "7.4"

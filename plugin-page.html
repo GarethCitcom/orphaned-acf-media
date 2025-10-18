@@ -408,11 +408,11 @@
                     <div class="plugin-meta">
                         <div class="meta-item">
                             <span class="meta-label">Current Version</span>
-                            <span class="meta-value">1.2.0</span>
+                            <span class="meta-value">1.3.0</span>
                         </div>
                         <div class="meta-item">
                             <span class="meta-label">Last Updated</span>
-                            <span class="meta-value">2025-10-17</span>
+                            <span class="meta-value">2025-10-18</span>
                         </div>
                         <div class="meta-item">
                             <span class="meta-label">Requires WordPress</span>
@@ -445,12 +445,52 @@
             <section class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        🎉 What's New in Version 1.2.0
+                        🎉 What's New in Version 1.3.0
                     </h2>
                 </div>
                 <div class="section-content">
                     <div class="changelog">
-                        <div class="changelog-version">Oxygen Builder Integration & Enhanced Safety</div>
+                        <div class="changelog-version">Performance Optimization & WordPress Plugin Repository Compliance
+                        </div>
+                        <ul class="changelog-list">
+                            <li><strong>Comprehensive Caching System:</strong> Added wp_cache implementation for all
+                                database queries to significantly improve performance</li>
+                            <li><strong>WordPress Repository Ready:</strong> Fixed all Plugin Check warnings and errors
+                                for WordPress.org submission</li>
+                            <li><strong>Enhanced Input Validation:</strong> Improved $_POST handling with proper
+                                wp_unslash() and isset() checks</li>
+                            <li><strong>SQL Security Hardening:</strong> Fixed all SQL preparation issues and properly
+                                escaped LIKE wildcards</li>
+                            <li><strong>Performance Optimized:</strong> Added 5-minute caching for all media usage
+                                checks reducing database load</li>
+                            <li><strong>Cache Management:</strong> Enhanced cache clearing with wp_cache_flush_group for
+                                organized cache control</li>
+                            <li><strong>Method-Level Caching:</strong> Individual caching for ACF fields, content,
+                                widgets, customizer, and Oxygen Builder checks</li>
+                            <li><strong>Scalability Improved:</strong> Better performance with large media libraries
+                                through intelligent caching strategies</li>
+                        </ul>
+
+                        <div class="changelog-version">Previous Release (v1.2.2): Critical Oxygen Builder 6 JSON
+                            Structure Parsing</div>
+                        <ul class="changelog-list">
+                            <li><strong>Critical Fix:</strong> Now correctly parses the actual _oxygen_data meta field
+                                with complex JSON structure</li>
+                            <li><strong>JSON Parser:</strong> Added comprehensive parsing for {"tree_json_string":
+                                "..."} structure used by Oxygen v6</li>
+                            <li><strong>Media Pattern Detection:</strong> Detects media references in nested JSON
+                                including ID, filename, URL, and media object structures</li>
+                            <li><strong>Recursive Search:</strong> Implements deep search through complex nested Oxygen
+                                element trees</li>
+                            <li><strong>Multiple Patterns:</strong> Checks for "id":5964, "filename":"file.png", URLs,
+                                srcset, and media arrays</li>
+                            <li><strong>Database-Verified:</strong> Based on actual Oxygen v6 database structure
+                                analysis and testing</li>
+                            <li><strong>Real-World Compatible:</strong> Verified against actual Oxygen Builder 6
+                                installations</li>
+                        </ul>
+
+                        <div class="changelog-version">Previous Release (v1.2.0): Oxygen Builder Integration</div>
                         <ul class="changelog-list">
                             <li>Oxygen Builder Support: Comprehensive safety checks for Oxygen Builder content,
                                 templates, and reusable parts</li>
@@ -462,8 +502,6 @@
                                 stylesheets</li>
                             <li>Global Settings: Checks Oxygen VSB settings and global configurations for media
                                 references</li>
-                            <li>Enhanced Coverage: Now protects media used in 11+ different areas including page
-                                builders</li>
                             <li>Auto-Detection: Automatically detects if Oxygen Builder is active on the website</li>
                         </ul>
                     </div>
@@ -532,7 +570,18 @@
                     <div class="feature-grid">
                         <div class="feature-card">
                             <div class="feature-title">
-                                🛡️ Comprehensive Safety System
+                                � Performance Optimized
+                            </div>
+                            <div class="feature-description">
+                                Comprehensive wp_cache implementation with 5-minute caching for all database queries.
+                                Significantly improved performance for large media libraries with intelligent caching
+                                strategies.
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-title">
+                                �🛡️ Comprehensive Safety System
                             </div>
                             <div class="feature-description">
                                 Multi-layered safety checks across 10+ usage areas with real-time verification before
@@ -592,11 +641,12 @@
 
                         <div class="feature-card">
                             <div class="feature-title">
-                                🏗️ Oxygen Builder Support
+                                🏗️ Oxygen Builder 6 & Classic Support
                             </div>
                             <div class="feature-description">
-                                Full integration with Oxygen Builder 6 including templates, reusable parts, custom
-                                CSS/JS, and global settings protection.
+                                Enhanced integration with both Oxygen Builder 6 (Breakdance-based) and classic versions.
+                                Includes templates, reusable parts, custom CSS/JS, global settings, and comprehensive
+                                Breakdance meta field detection.
                             </div>
                         </div>
                     </div>
@@ -642,8 +692,9 @@
                             All meta tables, user profiles, options
                         </div>
                         <div class="safety-item">
-                            <strong>Oxygen Builder</strong><br>
-                            Templates, reusable parts, CSS/JS, global settings
+                            <strong>Oxygen Builder 6 & Classic</strong><br>
+                            Breakdance-based v6 (_breakdance_data), classic templates, reusable parts, CSS/JS, global
+                            settings
                         </div>
                     </div>
                 </div>
