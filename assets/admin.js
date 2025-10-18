@@ -819,7 +819,7 @@
                 url: orphanedACFMedia.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'delete_all_safe_media',
+                    action: 'delete_all_safe_orphaned_media',
                     batch_size: 10,
                     batch_offset: batchOffset,
                     nonce: orphanedACFMedia.nonce

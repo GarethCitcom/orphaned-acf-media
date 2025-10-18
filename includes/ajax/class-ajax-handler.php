@@ -32,6 +32,7 @@ class OrphanedACFMedia_AJAX
     {
         add_action('wp_ajax_scan_orphaned_media', array($this, 'handle_scan_orphaned_media'));
         add_action('wp_ajax_delete_orphaned_media', array($this, 'handle_delete_orphaned_media'));
+        add_action('wp_ajax_bulk_delete_orphaned_media', array($this, 'handle_delete_orphaned_media')); // Alias for bulk delete
         add_action('wp_ajax_delete_all_safe_orphaned_media', array($this, 'handle_delete_all_safe_orphaned_media'));
         add_action('wp_ajax_clear_orphaned_cache', array($this, 'handle_clear_orphaned_cache'));
     }
@@ -167,6 +168,10 @@ class OrphanedACFMedia_AJAX
         }
 
         try {
+            // Get batch parameters
+            $batch_size = isset($_POST['batch_size']) ? intval(wp_unslash($_POST['batch_size'])) : 10;
+            $batch_offset = isset($_POST['batch_offset']) ? intval(wp_unslash($_POST['batch_offset'])) : 0;
+
             // Get all safe to delete media
             $safe_media = $this->media_scanner->get_all_safe_to_delete_media();
 
@@ -174,15 +179,31 @@ class OrphanedACFMedia_AJAX
                 wp_send_json_error(array('message' => 'No safe files found to delete. Please perform a scan first.'));
             }
 
+            $total_files = count($safe_media);
+            
+            // Get the batch slice
+            $batch_media = array_slice($safe_media, $batch_offset, $batch_size);
+            
+            if (empty($batch_media)) {
+                // No more files to process
+                wp_send_json_success(array(
+                    'deleted_count' => 0,
+                    'failed_count' => 0,
+                    'total_files' => $total_files,
+                    'has_more' => false,
+                    'progress_percent' => 100,
+                    'message' => 'Batch processing complete'
+                ));
+            }
+
             $deleted_count = 0;
             $failed_deletions = array();
-            $total_files = count($safe_media);
 
-            foreach ($safe_media as $media) {
+            foreach ($batch_media as $media) {
                 $attachment_id = $media['id'];
 
                 // Final safety check
-                if ($media['is_truly_orphaned']) {
+                if (isset($media['is_truly_orphaned']) && $media['is_truly_orphaned']) {
                     $deleted = wp_delete_attachment($attachment_id, true);
 
                     if ($deleted) {
@@ -195,25 +216,35 @@ class OrphanedACFMedia_AJAX
                 }
             }
 
-            // Clear cache after deletions
+            // Calculate progress
+            $processed = $batch_offset + count($batch_media);
+            $progress_percent = round(($processed / $total_files) * 100, 2);
+            $has_more = $processed < $total_files;
+            $next_offset = $has_more ? $batch_offset + $batch_size : 0;
+
+            // Clear cache after each batch
             $this->clear_orphaned_cache();
 
             $response = array(
                 'deleted_count' => $deleted_count,
                 'failed_count' => count($failed_deletions),
                 'total_files' => $total_files,
+                'processed' => $processed,
+                'has_more' => $has_more,
+                'next_offset' => $next_offset,
+                'progress_percent' => $progress_percent,
                 'message' => sprintf(
-                    'Deleted %d out of %d safe files. %d file(s) could not be deleted.',
+                    'Processed batch: %d deleted, %d failed out of %d files in this batch',
                     $deleted_count,
-                    $total_files,
-                    count($failed_deletions)
+                    count($failed_deletions),
+                    count($batch_media)
                 )
             );
 
             wp_send_json_success($response);
         } catch (Exception $e) {
             error_log('OrphanedACFMedia: Error in delete_all_safe_orphaned_media - ' . $e->getMessage());
-            wp_send_json_error(array('message' => 'An error occurred while deleting safe files.'));
+            wp_send_json_error(array('message' => 'An error occurred while deleting safe files: ' . $e->getMessage()));
         }
     }
 
