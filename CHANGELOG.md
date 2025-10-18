@@ -5,7 +5,7 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.0] - 2025-10-18
 
 ### Added
 - **WooCommerce Integration**: Comprehensive safety checks for WooCommerce content including:
@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Safety System**: Extended safety checks to include WooCommerce e-commerce content
 - **Usage Detection**: Added "WooCommerce (Products/Categories)" to usage details display
 - **E-commerce Protection**: Prevents accidental deletion of critical WooCommerce media
+
+### Fixed
+- **Plugin Header Validation**: Resolved "The plugin does not have a valid header" activation error
+- **Delete All Safe Files**: Fixed AJAX action mismatch and batching issues for proper functionality
+- **Bulk Operations**: Added missing bulk delete handler and enhanced error handling
 
 ## [2.0.0] - 2025-10-18
 

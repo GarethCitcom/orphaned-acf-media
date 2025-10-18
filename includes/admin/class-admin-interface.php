@@ -112,6 +112,7 @@ class OrphanedACFMedia_Admin
                 <li><?php esc_html_e('Theme Customizer Settings', 'orphaned-acf-media'); ?></li>
                 <li><?php esc_html_e('Site Icon & Custom Headers/Backgrounds', 'orphaned-acf-media'); ?></li>
                 <li><?php esc_html_e('Oxygen Builder 6 & Classic Content (_oxygen_data)', 'orphaned-acf-media'); ?></li>
+                <li><?php esc_html_e('WooCommerce Integration - Product galleries, featured images, categories, settings, and content', 'orphaned-acf-media'); ?></li>
             </ul>
         </div>
     <?php

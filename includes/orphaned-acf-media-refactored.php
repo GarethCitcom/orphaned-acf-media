@@ -7,7 +7,7 @@
  * all plugin components and functionality.
  *
  * @package OrphanedACFMedia
- * @version 2.0.0
+ * @version 2.1.0
  * @author Gareth Hale, CitCom.
  * @link https://citcom.co.uk
  */
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ORPHANED_ACF_MEDIA_VERSION', '2.0.0');
+define('ORPHANED_ACF_MEDIA_VERSION', '2.1.0');
 define('ORPHANED_ACF_MEDIA_PLUGIN_DIR', plugin_dir_path(dirname(__FILE__)) . '/');
 define('ORPHANED_ACF_MEDIA_PLUGIN_URL', plugin_dir_url(dirname(__FILE__)) . '/');
 

@@ -1,8 +1,8 @@
 # Orphaned ACF Media
 
-A comprehensive WordPress plugin that finds and safely removes media files that are not used in any ACF (Advanced Custom Fields) fields. Features advanced safety checks, Oxygen Builder integration, filtering, pagination, and bulk operations to help clean up unused attachments and free up server storage space.
+A comprehensive WordPress plugin that finds and safely removes media files that are not used in any ACF (Advanced Custom Fields) fields. Features advanced safety checks, Oxygen Builder integration, WooCommerce e-commerce protection, filtering, pagination, and bulk operations to help clean up unused attachments and free up server storage space.
 
-**Version 2.0.0** introduces a completely refactored modular architecture, transforming the plugin from a monolithic structure into a modern, maintainable, and extensible WordPress plugin with enhanced performance and reliability.
+**Version 2.1.0** introduces comprehensive WooCommerce integration for complete e-commerce protection, building on the modular architecture from version 2.0.0 for enhanced performance and reliability.
 
 ## 🚀 Features
 
@@ -47,7 +47,7 @@ A comprehensive WordPress plugin that finds and safely removes media files that 
 - **Mobile Responsive**: Works perfectly on tablets and mobile devices
 - **Intuitive Controls**: Clear navigation with helpful tooltips and documentation
 
-## 🏗️ Architecture Overview (v2.0.0)
+## 🏗️ Architecture Overview (v2.0.0+)
 
 Version 2.0.0 introduces a completely refactored modular architecture that transforms the plugin from a 1,415-line monolithic file into organized, maintainable components.
 
@@ -176,7 +176,7 @@ The plugin performs comprehensive safety checks across multiple areas:
 ### E-commerce Integration
 - **WooCommerce Product Galleries**: Product image galleries and variations
 - **WooCommerce Featured Images**: Product thumbnail images
-- **WooCommerce Categories**: Category and tag thumbnail images  
+- **WooCommerce Categories**: Category and tag thumbnail images
 - **WooCommerce Settings**: Shop customizer settings and theme options
 - **WooCommerce Content**: Product descriptions and variation data
 
@@ -294,6 +294,17 @@ GNU General Public License for more details.
 - **Plugin Directory**: [https://plugins.citcom.support](https://plugins.citcom.support)
 
 ## 📝 Changelog
+
+### Version 2.1.0 - WooCommerce E-commerce Integration
+- 🛒 **WooCommerce Integration**: Comprehensive safety checks for WooCommerce e-commerce content
+- 🏷️ **Product Protection**: Safeguards for product galleries, featured images, and variation images
+- 📂 **Category Safety**: Protection for product category and tag thumbnails
+- ⚙️ **Shop Settings**: Safeguards for WooCommerce customizer settings and theme options
+- 📝 **Content Protection**: Safety checks for product descriptions and WooCommerce-specific configurations
+- 🔍 **Enhanced Detection**: Added "WooCommerce (Products/Categories)" to usage details display
+- 🔧 **Plugin Header Fix**: Resolved "The plugin does not have a valid header" activation error
+- ⚡ **Bulk Operations Fix**: Fixed "Delete All Safe Files" button and enhanced batch processing
+- 🚀 **Performance**: Optimized WooCommerce detection with 5-minute caching for better performance
 
 ### Version 2.0.0 - Major Architecture Refactor & Oxygen Builder Fix
 - 🏗️ **Complete Architecture Refactor**: Transformed 1,415-line monolithic file into modular object-oriented structure
