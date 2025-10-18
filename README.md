@@ -226,6 +226,25 @@ GNU General Public License for more details.
 
 ## 📝 Changelog
 
+### Version 1.3.1 - Bug Fixes & User Experience Improvements
+- 🐛 **Fixed Pagination Performance**: Page navigation now instant with subtle opacity fade instead of showing full scanning progress
+- 🐛 **Fixed "Delete All Safe Files" Button**: Corrected property checking from safety_status to is_truly_orphaned for proper safe file detection
+- ✅ **Enhanced Error Messages**: Improved user guidance with more descriptive messages for scan requirements and file states
+- ✅ **Better Button States**: "Delete All Safe Files" now shows "Scan Required" when no scan data is available
+- ✅ **Improved User Feedback**: Added specific notifications for different deletion scenarios and requirements
+- ✅ **Cache Consistency**: Fixed cache handling issues to ensure reliable safe file detection across all operations
+- ✅ **UI Polish**: Enhanced button initialization and state management for better user experience
+
+### Version 1.3.0 - Performance Optimization & WordPress Plugin Repository Compliance
+- 🚀 **Comprehensive Caching System**: Added wp_cache implementation for all database queries to significantly improve performance
+- ✅ **WordPress Repository Ready**: Fixed all Plugin Check warnings and errors for WordPress.org submission
+- ✅ **Enhanced Input Validation**: Improved $_POST handling with proper wp_unslash() and isset() checks
+- ✅ **SQL Security Hardening**: Fixed all SQL preparation issues and properly escaped LIKE wildcards
+- ✅ **Performance Optimized**: Added 5-minute caching for all media usage checks reducing database load
+- ✅ **Cache Management**: Enhanced cache clearing with wp_cache_flush_group for organized cache control
+- ✅ **Method-Level Caching**: Individual caching for ACF fields, content, widgets, customizer, and Oxygen Builder checks
+- ✅ **Scalability Improved**: Better performance with large media libraries through intelligent caching strategies
+
 ### Version 1.0.0 - Initial Release
 - ✅ **Comprehensive Safety System**: Multi-layered safety checks across 10+ usage areas
 - ✅ **Advanced Filtering**: Server-side filtering by file type and safety status

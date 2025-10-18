@@ -12,6 +12,10 @@
 
     $(document).ready(function() {
         initializeEventHandlers();
+
+        // Initialize button states on page load
+        updateDeleteAllSafeButton(0);
+        updateBulkDeleteButton();
     });
 
     function initializeEventHandlers() {
@@ -148,18 +152,23 @@
             },
             success: function(response) {
                 if (response.success) {
-                    // Reset pagination and scan fresh
-                    currentPage = 1;
-                    scanOrphanedMedia(1);
+                    // Show success message and reload page for complete refresh
+                    showNotice('success', 'Cache cleared successfully. Reloading page...');
+
+                    // Reload the page after a short delay to show the success message
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
                 } else {
                     showNotice('error', 'Failed to clear cache.');
+                    $('#refresh-scan').prop('disabled', false).text('Refresh');
+                    isScanning = false;
                 }
             },
             error: function() {
                 showNotice('error', 'An error occurred while clearing cache.');
-            },
-            complete: function() {
                 $('#refresh-scan').prop('disabled', false).text('Refresh');
+                isScanning = false;
             }
         });
     }
@@ -186,6 +195,7 @@
                 per_page: itemsPerPage,
                 file_type_filter: $('#file-type-filter').val() || 'all',
                 safety_status_filter: $('#safety-status-filter').val() || 'all',
+                scan_all: true, // Fresh scan for full scanning process
                 nonce: orphanedACFMedia.nonce
             },
             xhr: function() {
@@ -229,12 +239,56 @@
 
     function goToPage(page) {
         if (page !== currentPage && page >= 1 && page <= totalPages) {
-            scanOrphanedMedia(page);
+            loadPage(page);
         }
     }
 
     // Make goToPage globally accessible
     window.goToPage = goToPage;
+
+    function loadPage(page) {
+        if (isScanning) return;
+
+        // Simple page loading without full scan UI - just a subtle opacity change
+        currentPage = page;
+        const $results = $('#orphaned-media-results');
+        const $pagination = $('.pagination-controls');
+
+        $results.css('opacity', '0.6');
+        $pagination.css('opacity', '0.6');
+
+        $.ajax({
+            url: orphanedACFMedia.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'scan_orphaned_media',
+                page: currentPage,
+                per_page: itemsPerPage,
+                file_type_filter: $('#file-type-filter').val() || 'all',
+                safety_status_filter: $('#safety-status-filter').val() || 'all',
+                scan_all: false, // Use cached results for pagination
+                nonce: orphanedACFMedia.nonce
+            },
+            success: function(response) {
+                if (response.success) {
+                    orphanedMediaData = response.data.media;
+                    paginationData = response.data.pagination;
+                    totalPages = paginationData.total_pages;
+                    displayOrphanedMedia(orphanedMediaData);
+                    updatePaginationControls();
+                } else {
+                    showNotice('error', 'Failed to load page.');
+                }
+            },
+            error: function() {
+                showNotice('error', 'An error occurred while loading the page.');
+            },
+            complete: function() {
+                $results.css('opacity', '1');
+                $pagination.css('opacity', '1');
+            }
+        });
+    }
 
     function updatePaginationControls() {
         // Show pagination if we have multiple pages or items
@@ -702,7 +756,20 @@
     }
 
     function deleteAllSafeMedia() {
-        const confirmMessage = 'This will delete ALL safe-to-delete media files across your entire website. This action cannot be undone. Are you absolutely sure you want to continue?';
+        // Check if there are any orphaned media files to delete
+        if (orphanedMediaData.length === 0) {
+            showNotice('warning', 'No orphaned media files found. Please run a scan first to identify files that can be deleted.');
+            return;
+        }
+
+        // Check if there are any safe files to delete
+        const safeFiles = orphanedMediaData.filter(media => media.is_truly_orphaned);
+        if (safeFiles.length === 0) {
+            showNotice('info', 'No safe-to-delete files found in the current scan results.');
+            return;
+        }
+
+        const confirmMessage = `This will delete ALL ${safeFiles.length} safe-to-delete media files across your entire website. This action cannot be undone. Are you absolutely sure you want to continue?`;
 
         if (!confirm(confirmMessage)) {
             return;
@@ -846,7 +913,12 @@
         if (totalSafeFiles > 0) {
             $button.prop('disabled', false).text(`Delete All Safe Files (${totalSafeFiles})`);
         } else {
-            $button.prop('disabled', true).text('Delete All Safe Files (0)');
+            // Check if we have any orphaned media data at all
+            if (orphanedMediaData.length === 0) {
+                $button.prop('disabled', true).text('Delete All Safe Files (Scan Required)');
+            } else {
+                $button.prop('disabled', true).text('Delete All Safe Files (0)');
+            }
         }
     }
 

@@ -1,10 +1,10 @@
 === Orphaned ACF Media ===
 Contributors: citcom
-Tags: media, cleanup, acf, advanced-custom-fields, attachments, orphaned, optimization, storage, maintenance, admin
+Tags: media, cleanup, advanced-custom-fields, attachments, orphaned
 Requires at least: 5.0
-Tested up to: 6.8.3
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,18 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 5. **Advanced Filtering** - Server-side filtering by file type and safety status
 
 == Changelog ==
+
+= 1.3.1 - 2025-10-18 =
+
+**Bug Fixes & User Experience Improvements**
+
+* 🐛 **Fixed Pagination Performance**: Page navigation now instant with subtle opacity fade instead of showing full scanning progress
+* 🐛 **Fixed "Delete All Safe Files" Button**: Corrected property checking from safety_status to is_truly_orphaned for proper safe file detection
+* ✅ **Enhanced Error Messages**: Improved user guidance with more descriptive messages for scan requirements and file states
+* ✅ **Better Button States**: "Delete All Safe Files" now shows "Scan Required" when no scan data is available
+* ✅ **Improved User Feedback**: Added specific notifications for different deletion scenarios and requirements
+* ✅ **Cache Consistency**: Fixed cache handling issues to ensure reliable safe file detection across all operations
+* ✅ **UI Polish**: Enhanced button initialization and state management for better user experience
 
 = 1.3.0 - 2025-10-18 =
 

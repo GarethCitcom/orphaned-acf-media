@@ -513,6 +513,12 @@
     border-radius: 4px;
 }
 
+#orphaned-media-results .column-thumbnail .attachment-preview{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 #orphaned-media-results .column-thumbnail .attachment-preview .thumbnail {
     position: absolute;
     width: 100%;
@@ -818,6 +824,10 @@
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-right: 5px;
+}
+
+.widefat .check-column {
+    text-align: right;
 }
 
 @keyframes spin {

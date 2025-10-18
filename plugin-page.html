@@ -408,7 +408,7 @@
                     <div class="plugin-meta">
                         <div class="meta-item">
                             <span class="meta-label">Current Version</span>
-                            <span class="meta-value">1.3.0</span>
+                            <span class="meta-value">1.3.1</span>
                         </div>
                         <div class="meta-item">
                             <span class="meta-label">Last Updated</span>
@@ -424,7 +424,7 @@
                         </div>
                         <div class="meta-item">
                             <span class="meta-label">Tested up to</span>
-                            <span class="meta-value">WordPress 6.8.3</span>
+                            <span class="meta-value">WordPress 6.8</span>
                         </div>
                     </div>
                 </div>
@@ -445,13 +445,33 @@
             <section class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        🎉 What's New in Version 1.3.0
+                        🎉 What's New in Version 1.3.1
                     </h2>
                 </div>
                 <div class="section-content">
                     <div class="changelog">
-                        <div class="changelog-version">Performance Optimization & WordPress Plugin Repository Compliance
-                        </div>
+                        <div class="changelog-version">Bug Fixes & User Experience Improvements</div>
+                        <ul class="changelog-list">
+                            <li><strong>Fixed Pagination Performance:</strong> Page navigation now instant with subtle
+                                opacity fade instead of showing full scanning progress</li>
+                            <li><strong>Fixed "Delete All Safe Files" Button:</strong> Corrected property checking from
+                                safety_status to is_truly_orphaned for proper safe file detection</li>
+                            <li><strong>Enhanced Error Messages:</strong> Improved user guidance with more descriptive
+                                messages for scan requirements and file states</li>
+                            <li><strong>Better Button States:</strong> "Delete All Safe Files" now shows "Scan Required"
+                                when no scan data is available</li>
+                            <li><strong>Improved User Feedback:</strong> Added specific notifications for different
+                                deletion scenarios and requirements</li>
+                            <li><strong>Cache Consistency:</strong> Fixed cache handling issues to ensure reliable safe
+                                file detection across all operations</li>
+                            <li><strong>UI Polish:</strong> Enhanced button initialization and state management for
+                                better user experience</li>
+                        </ul>
+                    </div>
+
+                    <div class="changelog">
+                        <div class="changelog-version">Previous Version 1.3.0 - Performance Optimization & WordPress
+                            Plugin Repository Compliance</div>
                         <ul class="changelog-list">
                             <li><strong>Comprehensive Caching System:</strong> Added wp_cache implementation for all
                                 database queries to significantly improve performance</li>
