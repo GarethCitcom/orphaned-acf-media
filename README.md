@@ -6,6 +6,7 @@ A comprehensive WordPress plugin that finds and safely removes media files that 
 
 ### 🛡️ **Comprehensive Safety System**
 - **Multi-layered Safety Checks**: Scans ACF fields, featured images, post content, widgets, navigation menus, theme customizer, and site settings
+- **ACF Extended Support**: Full compatibility with ACF Extended Performance Mode (consolidated 'acf' meta field)
 - **Real-time Verification**: Final safety check performed before each deletion operation
 - **Detailed Usage Analysis**: Shows exactly where each media file is used across your website
 - **Backup Warnings**: Clear recommendations and safety documentation
@@ -225,6 +226,14 @@ GNU General Public License for more details.
 - **Plugin Directory**: [https://plugins.citcom.support](https://plugins.citcom.support)
 
 ## 📝 Changelog
+
+### Version 1.3.2 - ACF Extended Performance Mode Compatibility
+- ✅ **ACF Extended Support**: Added full compatibility with ACF Extended Performance Mode consolidated 'acf' meta field
+- ✅ **Enhanced Detection**: Now detects media usage in consolidated ACF data storage for improved performance setups
+- ✅ **Comprehensive Coverage**: Checks both standard ACF field storage and Performance Mode consolidated storage
+- ✅ **Options Support**: Includes ACF Extended Performance Mode detection for ACF options pages
+- 🔧 **Technical Improvement**: Prevents false positives when ACF Extended Performance Mode is enabled
+- 📚 **Documentation**: Added technical documentation explaining ACF Extended compatibility
 
 ### Version 1.3.1 - Bug Fixes & User Experience Improvements
 - 🐛 **Fixed Pagination Performance**: Page navigation now instant with subtle opacity fade instead of showing full scanning progress

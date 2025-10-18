@@ -33,6 +33,31 @@ This plugin uses direct database queries for performance reasons when scanning f
 4. **Theme Customizer**: Check theme modification options
 5. **Page Builder Content**: Parse Oxygen Builder JSON structures
 6. **Featured Images**: Check `_thumbnail_id` meta values
+7. **ACF Extended Performance Mode**: Search consolidated 'acf' meta field
+
+### ACF Extended Performance Mode Compatibility
+
+When ACF Extended Performance Mode is enabled, all ACF field data is consolidated into a single `acf` meta field instead of individual field keys. This optimization improves performance but requires specialized detection:
+
+**Standard ACF Storage**:
+```
+meta_key: field_123abc_image
+meta_value: 5964
+```
+
+**ACF Extended Performance Mode**:
+```
+meta_key: acf
+meta_value: {"field_123abc_image":5964,"field_456def_text":"content",...}
+```
+
+The plugin detects both storage methods by:
+- Searching standard individual ACF field keys
+- Searching within the consolidated 'acf' meta field using JSON pattern matching
+- Checking both serialized PHP format (`s:4:"5964";`) and JSON format (`"5964"`)
+- Scanning both post meta and options tables for ACF Extended data
+
+This ensures complete compatibility regardless of which ACF storage method is used.
 
 ### WordPress.org Compliance
 

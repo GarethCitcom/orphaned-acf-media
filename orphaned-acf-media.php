@@ -4,7 +4,7 @@
  * Plugin Name: Orphaned ACF Media
  * Plugin URI: https://plugins.citcom.support/orphaned-acf-media
  * Description: Find and delete media files that are not used in any ACF fields. Helps clean up unused attachments in your WordPress site.
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Gareth Hale, CitCom.
  * Author URI: https://citcom.co.uk
  * License: GPL2
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ORPHANED_ACF_MEDIA_VERSION', '1.3.1');
+define('ORPHANED_ACF_MEDIA_VERSION', '1.3.2');
 define('ORPHANED_ACF_MEDIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ORPHANED_ACF_MEDIA_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -628,7 +628,48 @@ class OrphanedACFMedia
             wp_cache_set($options_cache_key, $options_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
         }
 
-        return $options_count > 0;
+        if ($options_count > 0) {
+            return true;
+        }
+
+        // Check ACF Extended Performance Mode consolidated 'acf' meta field
+        // When ACF Extended Performance Mode is enabled, all ACF field data is stored
+        // in a single 'acf' meta field instead of individual field keys for better performance.
+        // We need to search within this consolidated field for media attachments.
+        $acfe_cache_key = 'orphaned_acf_extended_' . $attachment_id;
+        $acfe_count = wp_cache_get($acfe_cache_key, 'orphaned_acf_media');
+
+        if (false === $acfe_count) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- ACF Extended performance mode consolidated field search, cached result
+            $acfe_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->postmeta}
+                WHERE meta_key = 'acf'
+                AND (meta_value LIKE %s OR meta_value LIKE %s)
+            ", '%"' . $attachment_id . '"%', '%:' . $attachment_id . ';%'));
+            wp_cache_set($acfe_cache_key, $acfe_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        if ($acfe_count > 0) {
+            return true;
+        }
+
+        // Also check ACF Extended Performance Mode in options table
+        $acfe_options_cache_key = 'orphaned_acf_extended_options_' . $attachment_id;
+        $acfe_options_count = wp_cache_get($acfe_options_cache_key, 'orphaned_acf_media');
+
+        if (false === $acfe_options_count) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- ACF Extended options performance mode search, cached result
+            $acfe_options_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->options}
+                WHERE option_name = 'options_acf'
+                AND (option_value LIKE %s OR option_value LIKE %s)
+            ", '%"' . $attachment_id . '"%', '%:' . $attachment_id . ';%'));
+            wp_cache_set($acfe_options_cache_key, $acfe_options_count, 'orphaned_acf_media', 300); // Cache for 5 minutes
+        }
+
+        return $acfe_options_count > 0;
     }
 
     /**

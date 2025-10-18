@@ -4,7 +4,7 @@ Tags: media, cleanup, advanced-custom-fields, attachments, orphaned
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,17 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 5. **Advanced Filtering** - Server-side filtering by file type and safety status
 
 == Changelog ==
+
+= 1.3.2 - 2025-10-18 =
+
+**ACF Extended Performance Mode Compatibility**
+
+* ✅ **ACF Extended Support**: Added full compatibility with ACF Extended Performance Mode consolidated 'acf' meta field
+* ✅ **Enhanced Detection**: Now detects media usage in consolidated ACF data storage for improved performance setups
+* ✅ **Comprehensive Coverage**: Checks both standard ACF field storage and Performance Mode consolidated storage
+* ✅ **Options Support**: Includes ACF Extended Performance Mode detection for ACF options pages
+* 🔧 **Technical Improvement**: Prevents false positives when ACF Extended Performance Mode is enabled
+* 📚 **Documentation**: Added technical documentation explaining ACF Extended compatibility
 
 = 1.3.1 - 2025-10-18 =
 
