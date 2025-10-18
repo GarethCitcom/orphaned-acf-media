@@ -5,6 +5,37 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2025-10-18
+
+### Added
+- **ACF Extended Performance Mode Support**: Full compatibility with ACF Extended Performance Mode that consolidates all ACF field data into a single 'acf' meta field
+- **Consolidated Storage Detection**: Enhanced media detection to search within consolidated ACF data storage for improved performance setups
+- **Options Page Support**: Added detection for ACF Extended Performance Mode in ACF options pages (options_acf field)
+- **Comprehensive Pattern Matching**: Implemented detection for both JSON format (`"123"`) and PHP serialized format (`:123;`) within consolidated fields
+- **Technical Documentation**: Added comprehensive documentation explaining ACF Extended compatibility and implementation details
+
+### Fixed
+- **False Positive Prevention**: Prevents incorrect identification of media files as orphaned when ACF Extended Performance Mode is enabled
+- **Detection Coverage**: Ensures complete media usage detection regardless of which ACF storage method is used (standard vs Performance Mode)
+
+### Improved
+- **Compatibility**: Maintains backward compatibility with standard ACF field storage while adding Performance Mode support
+- **Performance**: All new detection queries include proper caching with 5-minute duration for optimal performance
+- **Documentation**: Enhanced technical notes with detailed explanations of ACF Extended storage methods and detection patterns
+
+## [1.3.1] - 2025-10-18
+
+### Fixed
+- **Pagination Performance**: Page navigation now instant with subtle opacity fade instead of showing full scanning progress spinner
+- **Delete All Safe Files Button**: Corrected property checking from safety_status to is_truly_orphaned for proper safe file detection
+- **Cache Consistency**: Fixed cache handling issues to ensure reliable safe file detection across all operations
+
+### Improved
+- **Error Messages**: Enhanced user guidance with more descriptive messages for scan requirements and file states
+- **Button States**: "Delete All Safe Files" now shows "Scan Required" when no scan data is available
+- **User Feedback**: Added specific notifications for different deletion scenarios and requirements
+- **UI Polish**: Enhanced button initialization and state management for better user experience
+
 ## [1.3.0] - 2025-10-18
 
 ### Added
