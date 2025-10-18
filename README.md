@@ -227,6 +227,15 @@ GNU General Public License for more details.
 
 ## 📝 Changelog
 
+### Version 1.3.3 - User Experience Improvements
+- ✅ **Added User Consent**: Implemented backup consent system requiring user confirmation before enabling scan operations
+- ✅ **Enhanced Loading Feedback**: Added quick loading spinners for filter changes, pagination, and items per page adjustments
+- ✅ **Improved Interface Flow**: Backup consent section automatically hides after successful scan completion
+- ✅ **Better Filter UX**: Filter and pagination operations now show subtle loading indicators instead of full scan progress
+- ✅ **Consistent Loading States**: Unified loading experience across all user interactions with quick spinners and opacity changes
+- ✅ **Enhanced Safety**: Users must explicitly confirm backup creation before accessing potentially destructive operations
+- ✅ **Streamlined Workflow**: Controls and filters remain visible even when no orphaned media is found for better usability
+
 ### Version 1.3.2 - ACF Extended Performance Mode Compatibility
 - ✅ **ACF Extended Support**: Added full compatibility with ACF Extended Performance Mode consolidated 'acf' meta field
 - ✅ **Enhanced Detection**: Now detects media usage in consolidated ACF data storage for improved performance setups

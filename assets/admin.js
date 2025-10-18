@@ -19,16 +19,31 @@
     });
 
     function initializeEventHandlers() {
+        // Backup consent checkbox
+        $('#backup-consent-checkbox').on('change', function() {
+            const isChecked = $(this).prop('checked');
+            const $scanBtn = $('#scan-orphaned-media');
+            const $refreshBtn = $('#refresh-scan');
+
+            if (isChecked) {
+                $scanBtn.prop('disabled', false).attr('title', 'Scan for orphaned media files');
+                $refreshBtn.prop('disabled', false).attr('title', 'Clear cache and perform fresh scan');
+            } else {
+                $scanBtn.prop('disabled', true).attr('title', 'Please confirm backup before scanning');
+                $refreshBtn.prop('disabled', true).attr('title', 'Please confirm backup before scanning');
+            }
+        });
+
         // Scan button click
         $('#scan-orphaned-media').on('click', function() {
-            if (!isScanning) {
+            if (!isScanning && !$(this).prop('disabled')) {
                 scanOrphanedMedia();
             }
         });
 
         // Refresh button click
         $('#refresh-scan').on('click', function() {
-            if (!isScanning) {
+            if (!isScanning && !$(this).prop('disabled')) {
                 refreshScan();
             }
         });
@@ -109,7 +124,7 @@
         $('#items-per-page-select').on('change', function() {
             itemsPerPage = parseInt($(this).val());
             currentPage = 1;
-            scanOrphanedMedia();
+            loadPage(1);
         });
 
         // Filter controls
@@ -117,16 +132,16 @@
             $('#file-type-filter').val('all');
             $('#safety-status-filter').val('all');
             $('.filter-results-count').text('');
-            // Trigger a new scan without filters
+            // Use loadPage for consistent UX with quick spinner
             currentPage = 1;
-            scanOrphanedMedia(1);
+            loadPage(1);
         });
 
         // Apply filters when dropdown changes
         $('#file-type-filter, #safety-status-filter').on('change', function() {
             // Auto-apply filters when dropdown changes
             currentPage = 1;
-            scanOrphanedMedia(1);
+            loadPage(1);
         });
 
         // Media Library button click
@@ -221,6 +236,9 @@
                     totalPages = paginationData.total_pages;
                     displayOrphanedMedia(orphanedMediaData);
                     updatePaginationControls();
+
+                    // Hide backup consent section after successful scan
+                    $('.backup-consent').fadeOut(500);
                 } else {
                     showNotice('error', 'Failed to scan for orphaned media files.');
                 }
@@ -249,13 +267,15 @@
     function loadPage(page) {
         if (isScanning) return;
 
-        // Simple page loading without full scan UI - just a subtle opacity change
+        // Simple page loading with opacity change and small spinner
         currentPage = page;
         const $results = $('#orphaned-media-results');
         const $pagination = $('.pagination-controls');
+        const $quickSpinner = $('#quick-loading-spinner');
 
         $results.css('opacity', '0.6');
         $pagination.css('opacity', '0.6');
+        $quickSpinner.show();
 
         $.ajax({
             url: orphanedACFMedia.ajaxUrl,
@@ -286,6 +306,7 @@
             complete: function() {
                 $results.css('opacity', '1');
                 $pagination.css('opacity', '1');
+                $quickSpinner.hide();
             }
         });
     }
@@ -337,7 +358,9 @@
 
         if (totalItems === 0) {
             // No orphaned files found at all
-            $results.hide();
+            $results.show(); // Keep the results container visible
+            $('.wp-list-table').hide(); // Hide only the table
+            $('.pagination-controls').hide(); // Hide pagination
             showNoOrphanedMedia();
             return;
         }
@@ -373,6 +396,7 @@
 
         // Show results
         $results.show();
+        $('.wp-list-table').show(); // Ensure table is visible when we have results
 
         // Reset checkboxes and buttons
         $('#cb-select-all').prop('checked', false);

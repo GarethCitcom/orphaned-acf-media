@@ -5,6 +5,25 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.3] - 2025-10-18
+
+### Added
+- **User Consent System**: Implemented backup consent checkbox requiring user confirmation before enabling scan operations for enhanced safety
+- **Quick Loading Spinners**: Added subtle loading indicators for filter changes, pagination, and items per page adjustments for better user feedback
+- **Enhanced Safety Flow**: Backup consent section automatically hides after successful scan completion for streamlined workflow
+
+### Improved
+- **Filter UX**: Filter and pagination operations now show quick loading spinners instead of full scan progress for more appropriate feedback
+- **Consistent Loading States**: Unified loading experience across all user interactions with quick spinners and opacity changes
+- **Interface Workflow**: Controls and filters remain visible even when no orphaned media is found for better usability
+- **User Safety**: Users must explicitly confirm backup creation before accessing potentially destructive operations
+- **Loading Feedback**: Enhanced visual feedback for all interactive operations with professional loading animations
+
+### Changed
+- **Loading Behavior**: Clear Filters button now uses quick loading spinner consistent with other filter operations
+- **Consent Flow**: Scan buttons are disabled by default until user confirms backup creation
+- **Interface Persistence**: Results container remains visible with controls accessible even when no orphaned media found
+
 ## [1.3.2] - 2025-10-18
 
 ### Added

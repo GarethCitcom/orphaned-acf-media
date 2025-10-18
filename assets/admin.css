@@ -54,6 +54,15 @@
     border-radius: 0 4px 4px 0;
 }
 
+.danger-note {
+    background: #d63638;
+    border-left: 3px solid #89080b;
+    color: #fff!important;
+    padding: 10px 15px;
+    margin: 10px 0 0 0;
+    border-radius: 0 4px 4px 0;
+}
+
 .scan-buttons {
     display: flex;
     gap: 10px;
@@ -118,6 +127,76 @@
     color: #856404;
 }
 
+/* Backup Consent Styles */
+.backup-consent {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.backup-consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    color: #856404;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.backup-consent-checkbox {
+    margin: 0;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.backup-consent-checkbox:checked {
+    accent-color: #d63384;
+}
+
+.backup-consent-text {
+    flex-grow: 1;
+}
+
+/* Quick Loading Spinner for Filters/Pagination */
+#quick-loading-spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 100;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    padding: 20px;
+}
+
+.quick-spinner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #555;
+}
+
+.spinner-icon {
+    animation: spin 1s linear infinite;
+    color: #0073aa;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .safety-status.danger {
     background: #f8d7da;
     color: #721c24;
@@ -164,6 +243,10 @@
     background: #f0f0f1;
     border-radius: 3px;
     font-size: 12px;
+}
+
+#orphaned-media-results {
+    position: relative;
 }
 
 #orphaned-media-results .column-safety-status {

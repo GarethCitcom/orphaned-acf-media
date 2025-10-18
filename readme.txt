@@ -4,7 +4,7 @@ Tags: media, cleanup, advanced-custom-fields, attachments, orphaned
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,18 @@ WordPress media deletions are permanent. That's why we strongly recommend:
 5. **Advanced Filtering** - Server-side filtering by file type and safety status
 
 == Changelog ==
+
+= 1.3.3 - 2025-10-18 =
+
+**User Experience Improvements**
+
+* ✅ **Added User Consent**: Implemented backup consent system requiring user confirmation before enabling scan operations
+* ✅ **Enhanced Loading Feedback**: Added quick loading spinners for filter changes, pagination, and items per page adjustments
+* ✅ **Improved Interface Flow**: Backup consent section automatically hides after successful scan completion
+* ✅ **Better Filter UX**: Filter and pagination operations now show subtle loading indicators instead of full scan progress
+* ✅ **Consistent Loading States**: Unified loading experience across all user interactions with quick spinners and opacity changes
+* ✅ **Enhanced Safety**: Users must explicitly confirm backup creation before accessing potentially destructive operations
+* ✅ **Streamlined Workflow**: Controls and filters remain visible even when no orphaned media is found for better usability
 
 = 1.3.2 - 2025-10-18 =
 

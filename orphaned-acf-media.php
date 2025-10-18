@@ -4,7 +4,7 @@
  * Plugin Name: Orphaned ACF Media
  * Plugin URI: https://plugins.citcom.support/orphaned-acf-media
  * Description: Find and delete media files that are not used in any ACF fields. Helps clean up unused attachments in your WordPress site.
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: Gareth Hale, CitCom.
  * Author URI: https://citcom.co.uk
  * License: GPL2
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ORPHANED_ACF_MEDIA_VERSION', '1.3.2');
+define('ORPHANED_ACF_MEDIA_VERSION', '1.3.3');
 define('ORPHANED_ACF_MEDIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ORPHANED_ACF_MEDIA_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -135,13 +135,14 @@ class OrphanedACFMedia
 
             <div class="orphaned-acf-media-header">
                 <p><?php esc_html_e('This tool helps you find and delete media files that are not used in any ACF fields. Files may still be used elsewhere on your website - check the Safety Status column for details.', 'orphaned-acf-media'); ?></p>
-                <p class="safety-note"><strong><?php esc_html_e('Note:', 'orphaned-acf-media'); ?></strong> <?php esc_html_e('A final safety check is performed before each deletion. Files found to be in use will not be deleted.', 'orphaned-acf-media'); ?></p>
+                <p><i><strong><?php esc_html_e('Note:', 'orphaned-acf-media'); ?></strong> <?php esc_html_e('A final safety check is performed before each deletion. Files found to be in use will not be deleted.', 'orphaned-acf-media'); ?></i></p>
 
                 <div class="safety-warning">
                     <h3><span class="dashicons dashicons-warning"></span> <?php esc_html_e('Safety Features', 'orphaned-acf-media'); ?></h3>
                     <p><?php esc_html_e('This plugin includes comprehensive safety checks to prevent accidental deletion of media files. It scans for usage in:', 'orphaned-acf-media'); ?></p>
                     <ul>
                         <li><?php esc_html_e('ACF Fields (all types including repeaters)', 'orphaned-acf-media'); ?></li>
+                        <li><?php esc_html_e('ACF Extended (performance mode)', 'orphaned-acf-media'); ?></li>
                         <li><?php esc_html_e('Featured Images', 'orphaned-acf-media'); ?></li>
                         <li><?php esc_html_e('Post/Page Content', 'orphaned-acf-media'); ?></li>
                         <li><?php esc_html_e('Widgets & Sidebars', 'orphaned-acf-media'); ?></li>
@@ -155,20 +156,35 @@ class OrphanedACFMedia
                 <div class="backup-warning">
                     <h3><span class="dashicons dashicons-warning"></span> <?php esc_html_e('Important Backup Warning', 'orphaned-acf-media'); ?></h3>
                     <p><?php esc_html_e('Although this plugin includes comprehensive safety checks and multiple layers of protection, we strongly recommend creating a complete backup of your website (including files and database) before performing any media deletion operations.', 'orphaned-acf-media'); ?></p>
-                    <p><?php esc_html_e('While every precaution has been taken to safely identify and remove only truly orphaned media files, we cannot be held responsible for any unintended deletions. Always backup first!', 'orphaned-acf-media'); ?></p>
+                </div>
+
+                <div class="backup-consent">
+                    <p class="danger-note"><?php esc_html_e('While every precaution has been taken to safely identify and remove only truly orphaned media files, we cannot be held responsible for any unintended deletions. Always backup first!', 'orphaned-acf-media'); ?></p>
+                    <label class="backup-consent-label">
+                        <input type="checkbox" id="backup-consent-checkbox" class="backup-consent-checkbox" />
+                        <?php esc_html_e('I confirm that I have created a complete backup of my website (including files and database) and understand that media deletion operations cannot be undone.', 'orphaned-acf-media'); ?>
+                    </label>
                 </div>
 
                 <div class="scan-buttons">
-                    <button id="scan-orphaned-media" class="button button-primary">
+                    <button id="scan-orphaned-media" class="button button-primary" disabled title="<?php esc_attr_e('Please confirm backup before scanning', 'orphaned-acf-media'); ?>">
                         <?php esc_html_e('Scan for Orphaned Media', 'orphaned-acf-media'); ?>
                     </button>
-                    <button id="refresh-scan" class="button" title="<?php esc_attr_e('Clear cache and perform fresh scan', 'orphaned-acf-media'); ?>">
+                    <button id="refresh-scan" class="button" disabled title="<?php esc_attr_e('Please confirm backup before scanning', 'orphaned-acf-media'); ?>">
                         <?php esc_html_e('Refresh', 'orphaned-acf-media'); ?>
                     </button>
                 </div>
             </div>
 
             <div id="orphaned-media-results" style="display: none;">
+                <!-- Small loading spinner for filters/pagination -->
+                <div id="quick-loading-spinner" style="display: none;">
+                    <div class="quick-spinner">
+                        <span class="dashicons dashicons-update-alt spinner-icon"></span>
+                        <span class="loading-text"><?php esc_html_e('Loading...', 'orphaned-acf-media'); ?></span>
+                    </div>
+                </div>
+
                 <div class="orphaned-media-controls">
                     <div class="bulk-actions-left">
                         <button id="select-all-orphaned" class="button">
