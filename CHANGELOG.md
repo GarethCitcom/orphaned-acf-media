@@ -5,6 +5,23 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **WooCommerce Integration**: Comprehensive safety checks for WooCommerce content including:
+  - Product gallery images (_product_image_gallery)
+  - Product featured images (_thumbnail_id)
+  - Product category and tag thumbnails
+  - Product variations and variation images
+  - WooCommerce customizer settings and theme options
+  - Product descriptions and content
+  - WooCommerce-specific options and configurations
+
+### Enhanced
+- **Safety System**: Extended safety checks to include WooCommerce e-commerce content
+- **Usage Detection**: Added "WooCommerce (Products/Categories)" to usage details display
+- **E-commerce Protection**: Prevents accidental deletion of critical WooCommerce media
+
 ## [2.0.0] - 2025-10-18
 
 ### Added

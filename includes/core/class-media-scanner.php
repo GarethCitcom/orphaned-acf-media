@@ -166,6 +166,12 @@ class OrphanedACFMedia_MediaScanner
             $used_in_oxygen = $this->check_usage_in_oxygen_builder($attachment_id, $file_url, $filename);
         }
 
+        // Check if WooCommerce is active and scan its data
+        $used_in_woocommerce = false;
+        if (is_plugin_active('woocommerce/woocommerce.php') || class_exists('WooCommerce')) {
+            $used_in_woocommerce = $this->check_usage_in_woocommerce($attachment_id, $file_url, $filename);
+        }
+
         // Add catch-all check for any other post meta (like original)
         // This is what catches Oxygen Builder and other page builders
         $used_in_other_meta = $this->check_usage_in_all_post_meta($attachment_id, $file_url, $filename);
@@ -174,7 +180,7 @@ class OrphanedACFMedia_MediaScanner
         $used_in_user_meta = $this->check_usage_in_user_meta($attachment_id, $file_url, $filename);
 
         $used = $used_as_featured || $used_in_content || $used_in_widgets ||
-            $used_in_menus || $used_in_customizer || $used_in_oxygen || $used_in_other_meta || $used_in_user_meta;
+            $used_in_menus || $used_in_customizer || $used_in_oxygen || $used_in_woocommerce || $used_in_other_meta || $used_in_user_meta;
 
         // Cache for 5 minutes
         wp_cache_set($cache_key, $used, 'orphaned_acf_media', 300);
@@ -235,6 +241,11 @@ class OrphanedACFMedia_MediaScanner
         // Add Oxygen Builder check if plugin is active
         if (is_plugin_active('oxygen/plugin.php') || class_exists('CT_Component')) {
             $checks['oxygen_builder'] = 'Oxygen Builder';
+        }
+
+        // Add WooCommerce check if plugin is active
+        if (is_plugin_active('woocommerce/woocommerce.php') || class_exists('WooCommerce')) {
+            $checks['woocommerce'] = 'WooCommerce (Products/Categories)';
         }
 
         // Add catch-all check for any other post meta (like original)
@@ -654,6 +665,144 @@ class OrphanedACFMedia_MediaScanner
         wp_cache_set($cache_key, $result, 'orphaned_acf_media', 300);
 
         return $result;
+    }
+
+    /**
+     * Check if attachment is used in WooCommerce
+     * Includes product galleries, featured images, category images, shop customizer settings
+     *
+     * @param int $attachment_id
+     * @param string $file_url
+     * @param string $filename
+     * @return bool
+     */
+    private function check_usage_in_woocommerce($attachment_id, $file_url, $filename)
+    {
+        // Check cache first
+        $cache_key = 'orphaned_woocommerce_' . $attachment_id;
+        $cached_result = wp_cache_get($cache_key, 'orphaned_acf_media');
+
+        if ($cached_result !== false) {
+            return $cached_result;
+        }
+
+        global $wpdb;
+        $usage_found = false;
+
+        // 1. Check WooCommerce product galleries (_product_image_gallery)
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce gallery search for performance, cached result
+        $gallery_count = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*)
+            FROM {$wpdb->postmeta} pm
+            INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+            WHERE p.post_type = 'product'
+            AND pm.meta_key = '_product_image_gallery'
+            AND pm.meta_value LIKE %s
+        ", '%' . $attachment_id . '%'));
+
+        if ($gallery_count > 0) {
+            $usage_found = true;
+        }
+
+        // 2. Check WooCommerce product featured images (_thumbnail_id)
+        if (!$usage_found) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce thumbnail search for performance, cached result
+            $thumbnail_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->postmeta} pm
+                INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+                WHERE p.post_type = 'product'
+                AND pm.meta_key = '_thumbnail_id'
+                AND pm.meta_value = %s
+            ", $attachment_id));
+
+            if ($thumbnail_count > 0) {
+                $usage_found = true;
+            }
+        }
+
+        // 3. Check WooCommerce category/tag thumbnails
+        if (!$usage_found) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce term meta search for performance, cached result
+            $term_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->termmeta} tm
+                INNER JOIN {$wpdb->term_taxonomy} tt ON tm.term_id = tt.term_id
+                WHERE tt.taxonomy IN ('product_cat', 'product_tag')
+                AND tm.meta_key = 'thumbnail_id'
+                AND tm.meta_value = %s
+            ", $attachment_id));
+
+            if ($term_count > 0) {
+                $usage_found = true;
+            }
+        }
+
+        // 4. Check WooCommerce customizer settings (shop headers, backgrounds, etc.)
+        if (!$usage_found) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce customizer search for performance, cached result
+            $customizer_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->options}
+                WHERE option_name LIKE 'theme_mods_%'
+                AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
+            ", '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
+
+            if ($customizer_count > 0) {
+                $usage_found = true;
+            }
+        }
+
+        // 5. Check WooCommerce-specific options and settings
+        if (!$usage_found) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce options search for performance, cached result
+            $woo_options_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->options}
+                WHERE option_name LIKE 'woocommerce_%'
+                AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
+            ", '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
+
+            if ($woo_options_count > 0) {
+                $usage_found = true;
+            }
+        }
+
+        // 6. Check WooCommerce product content and short descriptions
+        if (!$usage_found) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce product content search for performance, cached result
+            $content_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->posts}
+                WHERE post_type = 'product'
+                AND (post_content LIKE %s OR post_content LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s)
+            ", '%' . $attachment_id . '%', '%' . $file_url . '%', '%' . $attachment_id . '%', '%' . $file_url . '%'));
+
+            if ($content_count > 0) {
+                $usage_found = true;
+            }
+        }
+
+        // 7. Check WooCommerce variations and variation images
+        if (!$usage_found) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce variation search for performance, cached result
+            $variation_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->postmeta} pm
+                INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+                WHERE p.post_type = 'product_variation'
+                AND (pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
+            ", '%' . $attachment_id . '%', '%' . $file_url . '%'));
+
+            if ($variation_count > 0) {
+                $usage_found = true;
+            }
+        }
+
+        // Cache the result for 5 minutes
+        wp_cache_set($cache_key, $usage_found, 'orphaned_acf_media', 300);
+
+        return $usage_found;
     }
 
     /**

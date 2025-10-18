@@ -10,6 +10,7 @@ A comprehensive WordPress plugin that finds and safely removes media files that 
 - **Multi-layered Safety Checks**: Scans ACF fields, featured images, post content, widgets, navigation menus, theme customizer, and site settings
 - **ACF Extended Support**: Full compatibility with ACF Extended Performance Mode (consolidated 'acf' meta field)
 - **Oxygen Builder v6 Support**: Complete integration with Oxygen Builder including `_oxygen_data` fields
+- **WooCommerce Integration**: Comprehensive protection for WooCommerce product galleries, categories, and e-commerce content
 - **Real-time Verification**: Final safety check performed before each deletion operation
 - **Detailed Usage Analysis**: Shows exactly where each media file is used across your website
 - **Backup Warnings**: Clear recommendations and safety documentation
@@ -171,6 +172,13 @@ The plugin performs comprehensive safety checks across multiple areas:
 - Serialized data in custom fields
 - Gallery relationships and parent-child attachments
 - Custom post type meta fields
+
+### E-commerce Integration
+- **WooCommerce Product Galleries**: Product image galleries and variations
+- **WooCommerce Featured Images**: Product thumbnail images
+- **WooCommerce Categories**: Category and tag thumbnail images  
+- **WooCommerce Settings**: Shop customizer settings and theme options
+- **WooCommerce Content**: Product descriptions and variation data
 
 ## ⚙️ Technical Specifications
 

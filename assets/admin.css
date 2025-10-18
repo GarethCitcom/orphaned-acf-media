@@ -138,16 +138,62 @@
 
 .backup-consent-label {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
     cursor: pointer;
-    color: #856404;
+    color: #fff;
+    background: #d63638;
+    border: 1px solid #d63638;
+    border-left: 3px solid #89080b;
+    border-radius: 4px;
     font-weight: 500;
+    font-size: 18px;
     line-height: 1.5;
+    padding: 10px 15px;
+    animation: backup-consent-pulse 2.5s ease-in-out infinite;
+    animation-delay: 0.2s;
+    transform-origin: center;
+    box-shadow: 0 0 0 rgba(214,54,56,0);
+    will-change: transform, box-shadow;
+    transition: all 0.3s ease-in-out;
+}
+
+.backup-consent-label:hover {
+    background: #fff;
+    text-decoration: none;
+    color: #d63638;
+}
+
+/* stop pulsing when user checks the consent checkbox (requires :has support) */
+.backup-consent-label:has(.backup-consent-checkbox:checked) {
+    animation: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    background: #fff;
+    text-decoration: none;
+    color: #d63638;
+}
+
+/* subtle pulse to draw attention */
+@keyframes backup-consent-pulse {
+    0%   { transform: translateY(0) scale(1);    box-shadow: 0 0 0 rgba(214,54,56,0); }
+    25%  { transform: translateY(-1px) scale(1.005); box-shadow: 0 8px 22px rgba(214,54,56,0.15); }
+    50%  { transform: translateY(0) scale(1);    box-shadow: 0 12px 30px rgba(214,54,56,0.30); }
+    75%  { transform: translateY(-1px) scale(1.005); box-shadow: 0 8px 22px rgba(214,54,56,0.15); }
+    100% { transform: translateY(0) scale(1);    box-shadow: 0 0 0 rgba(214,54,56,0); }
+}
+
+/* respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .backup-consent-label,
+    .backup-consent-label:has(.backup-consent-checkbox:checked) {
+        animation: none !important;
+        transition: none !important;
+    }
 }
 
 .backup-consent-checkbox {
-    margin: 0;
+    margin: 0 !important;
     margin-top: 3px;
     flex-shrink: 0;
 }
