@@ -5,6 +5,45 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.4] - 2025-10-19
+
+### Fixed
+- **WooCommerce False Positives**: Resolved critical issue where attachment IDs were incorrectly matched against WooCommerce configuration values
+  - Fixed: Coincidental numeric matches (e.g., attachment 300 matching `woocommerce_thumbnail_image_width = 300`)
+  - Fixed: Color codes containing attachment IDs (e.g., attachment 111 matching `#111111` colors)
+  - Fixed: Configuration settings incorrectly flagging media as WooCommerce-related
+- **Detection Accuracy**: Replaced broad `woocommerce_%` search with targeted media-specific options only
+- **Performance**: Reduced false database matches by limiting checks to actual media-related WooCommerce settings
+
+### Enhanced
+- **Media Detection**: Now only checks WooCommerce options that can actually contain media references:
+  - `woocommerce_catalog_image`, `woocommerce_single_image`, `woocommerce_thumbnail_image`
+  - `woocommerce_placeholder_image`, `woocommerce_shop_header_image`, `woocommerce_email_header_image`
+  - WooCommerce page IDs: shop, cart, checkout, account, terms pages
+- **Debugging**: Added and removed temporary debugging to identify false positive sources
+- **Accuracy**: Eliminated false "used in content WooCommerce (Products/Categories)" detections
+
+## [2.1.3] - 2025-10-19
+
+### Fixed
+- **Orphaned Meta Entries**: Resolved detection of orphaned postmeta entries from deleted posts
+  - Added proper post validation with INNER JOIN to posts table
+  - Fixed issue where deleted custom posts left behind `_thumbnail_id` meta entries
+  - Only considers meta from existing posts with valid status (`publish`, `private`, `draft`, `pending`, `future`)
+- **Meta Key Exclusions**: Added explicit exclusion for `_thumbnail_id` and `_product_image_gallery` in general meta search
+- **Data Integrity**: Improved database query validation to prevent false positives from orphaned data
+
+## [2.1.2] - 2025-10-19
+
+### Fixed
+- **WooCommerce Empty Installation**: Added early optimization check for WooCommerce content existence
+  - Skip detailed product/category scanning when no WooCommerce products exist
+  - Improved performance by avoiding unnecessary database queries
+  - Fixed overly broad theme customizer detection
+- **Customizer Detection**: Enhanced WooCommerce-specific customizer settings detection
+  - Only check WooCommerce-related customizer options, not general theme settings
+  - Prevent false attribution of theme customizer media to WooCommerce
+
 ## [2.1.1] - 2025-10-19
 
 ### Fixed

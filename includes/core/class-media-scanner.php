@@ -707,7 +707,7 @@ class OrphanedACFMedia_MediaScanner
             // Exclude configuration options that might contain coincidental numeric matches
             $media_related_options = array(
                 'woocommerce_catalog_image',
-                'woocommerce_single_image', 
+                'woocommerce_single_image',
                 'woocommerce_thumbnail_image',
                 'woocommerce_shop_page_id',
                 'woocommerce_cart_page_id',
@@ -718,9 +718,9 @@ class OrphanedACFMedia_MediaScanner
                 'woocommerce_shop_header_image',
                 'woocommerce_email_header_image'
             );
-            
+
             $usage_found = false;
-            
+
             // Only check specific media-related WooCommerce options
             foreach ($media_related_options as $option_key) {
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce specific options search for performance, cached result
@@ -810,7 +810,7 @@ class OrphanedACFMedia_MediaScanner
             // Only check WooCommerce options that can actually contain media references
             $media_related_options = array(
                 'woocommerce_catalog_image',
-                'woocommerce_single_image', 
+                'woocommerce_single_image',
                 'woocommerce_thumbnail_image',
                 'woocommerce_shop_page_id',
                 'woocommerce_cart_page_id',
@@ -821,7 +821,7 @@ class OrphanedACFMedia_MediaScanner
                 'woocommerce_shop_header_image',
                 'woocommerce_email_header_image'
             );
-            
+
             // Only check specific media-related WooCommerce options
             foreach ($media_related_options as $option_key) {
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce specific options search for performance, cached result
