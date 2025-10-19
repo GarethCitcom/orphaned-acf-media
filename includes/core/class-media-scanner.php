@@ -701,46 +701,46 @@ class OrphanedACFMedia_MediaScanner
             LIMIT 1
         ");
 
-        // Debug: Log product count (temporary)
-        error_log("DEBUG: WooCommerce product count for attachment {$attachment_id}: {$has_woo_content} products found");
-
         // If no products exist, check only WooCommerce-specific settings (not general theme settings)
         if ($has_woo_content == 0) {
-            // Only check WooCommerce-specific options when no products exist
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce options search for performance, cached result
-            $woo_options_count = $wpdb->get_var($wpdb->prepare("
-                SELECT COUNT(*)
-                FROM {$wpdb->options}
-                WHERE option_name LIKE %s
-                AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-            ", 'woocommerce_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
-
-            // Debug: Log what we're finding (temporary)
-            if ($woo_options_count > 0) {
-                error_log("DEBUG: WooCommerce options detection for attachment {$attachment_id}: Found {$woo_options_count} matches");
-                
-                // Get specific options for debugging
-                $debug_options = $wpdb->get_results($wpdb->prepare("
-                    SELECT option_name, option_value
+            // Only check WooCommerce options that can actually contain media references
+            // Exclude configuration options that might contain coincidental numeric matches
+            $media_related_options = array(
+                'woocommerce_catalog_image',
+                'woocommerce_single_image', 
+                'woocommerce_thumbnail_image',
+                'woocommerce_shop_page_id',
+                'woocommerce_cart_page_id',
+                'woocommerce_checkout_page_id',
+                'woocommerce_myaccount_page_id',
+                'woocommerce_terms_page_id',
+                'woocommerce_placeholder_image',
+                'woocommerce_shop_header_image',
+                'woocommerce_email_header_image'
+            );
+            
+            $usage_found = false;
+            
+            // Only check specific media-related WooCommerce options
+            foreach ($media_related_options as $option_key) {
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce specific options search for performance, cached result
+                $option_count = $wpdb->get_var($wpdb->prepare("
+                    SELECT COUNT(*)
                     FROM {$wpdb->options}
-                    WHERE option_name LIKE %s
-                    AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-                    LIMIT 5
-                ", 'woocommerce_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
-                
-                foreach ($debug_options as $option) {
-                    error_log("DEBUG: Found in option: {$option->option_name} = " . substr($option->option_value, 0, 100) . "...");
+                    WHERE option_name = %s
+                    AND (option_value = %s OR option_value LIKE %s OR option_value LIKE %s)
+                ", $option_key, $attachment_id, '%' . $filename . '%', '%' . $file_url . '%'));
+
+                if ($option_count > 0) {
+                    $usage_found = true;
+                    break;
                 }
             }
-
-            $usage_found = $woo_options_count > 0;
 
             // Cache and return early
             wp_cache_set($cache_key, $usage_found, 'orphaned_acf_media', 300);
             return $usage_found;
-        }
-
-        // 1. Check WooCommerce product galleries (_product_image_gallery)
+        }        // 1. Check WooCommerce product galleries (_product_image_gallery)
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce gallery search for performance, cached result
         $gallery_count = $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(*)
@@ -807,16 +807,35 @@ class OrphanedACFMedia_MediaScanner
 
         // 5. Check WooCommerce-specific options and settings
         if (!$usage_found) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce options search for performance, cached result
-            $woo_options_count = $wpdb->get_var($wpdb->prepare("
-                SELECT COUNT(*)
-                FROM {$wpdb->options}
-                WHERE option_name LIKE %s
-                AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-            ", 'woocommerce_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
+            // Only check WooCommerce options that can actually contain media references
+            $media_related_options = array(
+                'woocommerce_catalog_image',
+                'woocommerce_single_image', 
+                'woocommerce_thumbnail_image',
+                'woocommerce_shop_page_id',
+                'woocommerce_cart_page_id',
+                'woocommerce_checkout_page_id',
+                'woocommerce_myaccount_page_id',
+                'woocommerce_terms_page_id',
+                'woocommerce_placeholder_image',
+                'woocommerce_shop_header_image',
+                'woocommerce_email_header_image'
+            );
+            
+            // Only check specific media-related WooCommerce options
+            foreach ($media_related_options as $option_key) {
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce specific options search for performance, cached result
+                $option_count = $wpdb->get_var($wpdb->prepare("
+                    SELECT COUNT(*)
+                    FROM {$wpdb->options}
+                    WHERE option_name = %s
+                    AND (option_value = %s OR option_value LIKE %s OR option_value LIKE %s)
+                ", $option_key, $attachment_id, '%' . $filename . '%', '%' . $file_url . '%'));
 
-            if ($woo_options_count > 0) {
-                $usage_found = true;
+                if ($option_count > 0) {
+                    $usage_found = true;
+                    break;
+                }
             }
         }
 
