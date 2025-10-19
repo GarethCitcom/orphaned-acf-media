@@ -5,6 +5,21 @@ All notable changes to the Orphaned ACF Media plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2025-10-19
+
+### Fixed
+- **Fatal Error Fix**: Resolved critical fatal error when ACF plugin is missing during activation
+  - Fixed: `Call to a member function acf_missing_notice() on null` error
+  - Replaced admin_interface dependency with self-contained notice method
+  - Enhanced error handling for missing ACF dependency
+- **Activation Reliability**: Improved plugin activation process and error handling
+- **User Experience**: Added clear ACF installation guidance with direct plugin install link
+
+### Enhanced
+- **Dependency Management**: Better handling of missing required plugins
+- **Error Messages**: More informative and actionable error notices
+- **Production Stability**: Prevents activation failures on fresh WordPress installations
+
 ## [2.1.0] - 2025-10-18
 
 ### Added
