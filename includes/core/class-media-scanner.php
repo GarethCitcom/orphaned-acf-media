@@ -701,6 +701,9 @@ class OrphanedACFMedia_MediaScanner
             LIMIT 1
         ");
 
+        // Debug: Log product count (temporary)
+        error_log("DEBUG: WooCommerce product count for attachment {$attachment_id}: {$has_woo_content} products found");
+
         // If no products exist, check only WooCommerce-specific settings (not general theme settings)
         if ($has_woo_content == 0) {
             // Only check WooCommerce-specific options when no products exist
@@ -711,6 +714,24 @@ class OrphanedACFMedia_MediaScanner
                 WHERE option_name LIKE %s
                 AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
             ", 'woocommerce_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
+
+            // Debug: Log what we're finding (temporary)
+            if ($woo_options_count > 0) {
+                error_log("DEBUG: WooCommerce options detection for attachment {$attachment_id}: Found {$woo_options_count} matches");
+                
+                // Get specific options for debugging
+                $debug_options = $wpdb->get_results($wpdb->prepare("
+                    SELECT option_name, option_value
+                    FROM {$wpdb->options}
+                    WHERE option_name LIKE %s
+                    AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
+                    LIMIT 5
+                ", 'woocommerce_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
+                
+                foreach ($debug_options as $option) {
+                    error_log("DEBUG: Found in option: {$option->option_name} = " . substr($option->option_value, 0, 100) . "...");
+                }
+            }
 
             $usage_found = $woo_options_count > 0;
 
