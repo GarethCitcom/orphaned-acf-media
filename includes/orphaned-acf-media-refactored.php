@@ -102,7 +102,25 @@ class OrphanedACFMedia
      */
     public function acf_missing_notice()
     {
-        $this->admin_interface->acf_missing_notice();
+        ?>
+        <div class="notice notice-error is-dismissible">
+            <h3><?php esc_html_e('Orphaned ACF Media: ACF Plugin Required', 'orphaned-acf-media'); ?></h3>
+            <p>
+                <?php
+                printf(
+                    /* translators: %s: Advanced Custom Fields plugin name */
+                    esc_html__('The Orphaned ACF Media plugin requires %s to be installed and activated.', 'orphaned-acf-media'),
+                    '<strong>Advanced Custom Fields</strong>'
+                );
+                ?>
+            </p>
+            <p>
+                <a href="<?php echo esc_url(admin_url('plugin-install.php?s=advanced+custom+fields&tab=search&type=term')); ?>" class="button button-primary">
+                    <?php esc_html_e('Install Advanced Custom Fields', 'orphaned-acf-media'); ?>
+                </a>
+            </p>
+        </div>
+        <?php
     }
 }
 
