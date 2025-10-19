@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ORPHANED_ACF_MEDIA_VERSION', '2.1.3');
+define('ORPHANED_ACF_MEDIA_VERSION', '2.1.4');
 define('ORPHANED_ACF_MEDIA_PLUGIN_DIR', plugin_dir_path(dirname(__FILE__)) . '/');
 define('ORPHANED_ACF_MEDIA_PLUGIN_URL', plugin_dir_url(dirname(__FILE__)) . '/');
 
