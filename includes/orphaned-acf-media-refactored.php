@@ -7,7 +7,7 @@
  * all plugin components and functionality.
  *
  * @package OrphanedACFMedia
- * @version 2.1.0
+ * @version 2.1.1
  * @author Gareth Hale, CitCom.
  * @link https://citcom.co.uk
  */
@@ -102,7 +102,7 @@ class OrphanedACFMedia
      */
     public function acf_missing_notice()
     {
-        ?>
+?>
         <div class="notice notice-error is-dismissible">
             <h3><?php esc_html_e('Orphaned ACF Media: ACF Plugin Required', 'orphaned-acf-media'); ?></h3>
             <p>
@@ -120,7 +120,7 @@ class OrphanedACFMedia
                 </a>
             </p>
         </div>
-        <?php
+<?php
     }
 }
 
