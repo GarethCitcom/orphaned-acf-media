@@ -713,7 +713,7 @@ class OrphanedACFMedia_MediaScanner
             ", 'woocommerce_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
 
             $usage_found = $woo_options_count > 0;
-            
+
             // Cache and return early
             wp_cache_set($cache_key, $usage_found, 'orphaned_acf_media', 300);
             return $usage_found;
@@ -858,12 +858,16 @@ class OrphanedACFMedia_MediaScanner
         }
 
         // This is the original catch-all query that made Oxygen Builder work
+        // Now with proper post validation to exclude orphaned meta entries
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Comprehensive meta search for performance, cached result
         $all_meta_count = $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(*)
-            FROM {$wpdb->postmeta}
-            WHERE (meta_value = %s OR meta_value LIKE %s OR meta_value LIKE %s)
-            AND meta_key NOT LIKE %s
+            FROM {$wpdb->postmeta} pm
+            INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+            WHERE (pm.meta_value = %s OR pm.meta_value LIKE %s OR pm.meta_value LIKE %s)
+            AND pm.meta_key NOT LIKE %s
+            AND pm.meta_key NOT IN ('_thumbnail_id', '_product_image_gallery')
+            AND p.post_status IN ('publish', 'private', 'draft', 'pending', 'future')
         ", $attachment_id, '%' . $file_url . '%', '%' . $filename . '%', '_%'));
 
         $result = $all_meta_count > 0;
