@@ -691,6 +691,34 @@ class OrphanedACFMedia_MediaScanner
         global $wpdb;
         $usage_found = false;
 
+        // Early optimization: Check if WooCommerce has any content to scan
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Quick count for optimization, cached result
+        $has_woo_content = $wpdb->get_var("
+            SELECT COUNT(*)
+            FROM {$wpdb->posts}
+            WHERE post_type IN ('product', 'product_variation')
+            AND post_status IN ('publish', 'private', 'draft')
+            LIMIT 1
+        ");
+
+        // If no products exist, check only WooCommerce-specific settings (not general theme settings)
+        if ($has_woo_content == 0) {
+            // Only check WooCommerce-specific options when no products exist
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce options search for performance, cached result
+            $woo_options_count = $wpdb->get_var($wpdb->prepare("
+                SELECT COUNT(*)
+                FROM {$wpdb->options}
+                WHERE option_name LIKE %s
+                AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
+            ", 'woocommerce_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
+
+            $usage_found = $woo_options_count > 0;
+            
+            // Cache and return early
+            wp_cache_set($cache_key, $usage_found, 'orphaned_acf_media', 300);
+            return $usage_found;
+        }
+
         // 1. Check WooCommerce product galleries (_product_image_gallery)
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce gallery search for performance, cached result
         $gallery_count = $wpdb->get_var($wpdb->prepare("
@@ -740,15 +768,16 @@ class OrphanedACFMedia_MediaScanner
             }
         }
 
-        // 4. Check WooCommerce customizer settings (shop headers, backgrounds, etc.)
+        // 4. Check WooCommerce-specific customizer settings (shop headers, backgrounds, etc.)
         if (!$usage_found) {
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- WooCommerce customizer search for performance, cached result
             $customizer_count = $wpdb->get_var($wpdb->prepare("
                 SELECT COUNT(*)
                 FROM {$wpdb->options}
                 WHERE option_name LIKE %s
+                AND option_name LIKE %s
                 AND (option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s)
-            ", 'theme_mods_%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
+            ", 'theme_mods_%', '%woocommerce%', '%' . $attachment_id . '%', '%' . $filename . '%', '%' . $file_url . '%'));
 
             if ($customizer_count > 0) {
                 $usage_found = true;
